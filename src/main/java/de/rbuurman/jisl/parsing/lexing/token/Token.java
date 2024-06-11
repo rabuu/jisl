@@ -1,7 +1,10 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-public interface Token {
-	default boolean exit() {
+public abstract class Token {
+	@Override
+	public abstract String toString();
+
+	public boolean exit() {
 		return false;
 	}
 }

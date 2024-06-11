@@ -24,7 +24,11 @@ public class Cursor {
 	}
 
 	public char peek() {
-		return this.chars.peek();
+		try {
+			return this.chars.peek();
+		} catch (EmptyStackException e) {
+			return EOF;
+		}
 	}
 
 	public char bump() {

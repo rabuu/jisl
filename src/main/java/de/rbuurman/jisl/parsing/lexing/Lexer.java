@@ -2,12 +2,18 @@ package de.rbuurman.jisl.parsing.lexing;
 
 import java.util.Stack;
 
+import de.rbuurman.jisl.parsing.lexing.matcher.AlphabeticMatcher;
 import de.rbuurman.jisl.parsing.lexing.matcher.CharMatcher;
 import de.rbuurman.jisl.parsing.lexing.matcher.InverseMatcher;
 import de.rbuurman.jisl.parsing.lexing.matcher.LineMatcher;
+import de.rbuurman.jisl.parsing.lexing.matcher.NumericMatcher;
 import de.rbuurman.jisl.parsing.lexing.matcher.WhitespaceMatcher;
 import de.rbuurman.jisl.parsing.lexing.token.CommentToken;
+import de.rbuurman.jisl.parsing.lexing.token.FloatToken;
+import de.rbuurman.jisl.parsing.lexing.token.IdentToken;
+import de.rbuurman.jisl.parsing.lexing.token.IntegerToken;
 import de.rbuurman.jisl.parsing.lexing.token.PrimitiveToken;
+import de.rbuurman.jisl.parsing.lexing.token.PrimitiveTokenType;
 import de.rbuurman.jisl.parsing.lexing.token.StringToken;
 import de.rbuurman.jisl.parsing.lexing.token.Token;
 
@@ -35,7 +41,8 @@ public class Lexer extends Cursor {
 	public Token advance() {
 		this.eat(new WhitespaceMatcher());
 
-		switch (this.peek()) {
+		final char firstCharacter = this.peek();
+		switch (firstCharacter) {
 			case ';':
 				this.eat(new CharMatcher(';'));
 				this.eat(new WhitespaceMatcher());
@@ -50,22 +57,42 @@ public class Lexer extends Cursor {
 				return new StringToken(string);
 
 			case '(':
-				return PrimitiveToken.PAREN_OPEN;
+				this.bump();
+				return new PrimitiveToken(PrimitiveTokenType.PAREN_OPEN);
 			case ')':
-				return PrimitiveToken.PAREN_CLOSE;
+				this.bump();
+				return new PrimitiveToken(PrimitiveTokenType.PAREN_CLOSE);
 			case '[':
-				return PrimitiveToken.BRACKET_OPEN;
+				this.bump();
+				return new PrimitiveToken(PrimitiveTokenType.BRACKET_OPEN);
 			case ']':
-				return PrimitiveToken.BRACKET_CLOSE;
+				this.bump();
+				return new PrimitiveToken(PrimitiveTokenType.BRACKET_CLOSE);
 			case '+':
-				return PrimitiveToken.PLUS;
+				this.bump();
+				return new PrimitiveToken(PrimitiveTokenType.PLUS);
 			case '-':
-				return PrimitiveToken.MINUS;
+				this.bump();
+				return new PrimitiveToken(PrimitiveTokenType.MINUS);
 
 			default:
 				break;
 		}
 
-		return PrimitiveToken.EOF;
+		if (Character.isDigit(firstCharacter)) {
+			final String numeric = this.eat(new NumericMatcher());
+			if (numeric.contains(".")) {
+				final float f = Float.parseFloat(numeric);
+				return new FloatToken(f);
+			} else {
+				final int i = Integer.parseInt(numeric);
+				return new IntegerToken(i);
+			}
+		} else if (Character.isAlphabetic(firstCharacter)) {
+			final String name = this.eat(new AlphabeticMatcher());
+			return new IdentToken(name);
+		}
+
+		return new PrimitiveToken(PrimitiveTokenType.EOF);
 	}
 }
