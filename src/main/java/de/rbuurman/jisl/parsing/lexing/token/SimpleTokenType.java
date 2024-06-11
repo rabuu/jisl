@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-public enum PrimitiveTokenType {
+public enum SimpleTokenType {
 	PAREN_OPEN,
 	PAREN_CLOSE,
 	BRACKET_OPEN,
@@ -8,6 +8,8 @@ public enum PrimitiveTokenType {
 
 	PLUS,
 	MINUS,
+
+	DEFINE,
 
 	EOF;
 
@@ -26,6 +28,8 @@ public enum PrimitiveTokenType {
 				return "+";
 			case MINUS:
 				return "-";
+			case DEFINE:
+				return "define";
 			case EOF:
 				return "EOF";
 			default:

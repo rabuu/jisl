@@ -1,18 +1,12 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-public final class StringToken extends Token {
-	private String string;
-
+public final class StringToken extends StateToken<String> {
 	public StringToken(String string) {
-		this.string = string;
-	}
-
-	public String getString() {
-		return string;
+		super(string);
 	}
 
 	@Override
-	public String toString() {
-		return "String: " + this.string;
+	public boolean compareState(String cmp) {
+		return this.getState().equals(cmp);
 	}
 }

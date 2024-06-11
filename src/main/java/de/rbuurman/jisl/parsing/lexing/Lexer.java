@@ -24,12 +24,11 @@ public class Lexer {
 		this.chars = chars;
 	}
 
-	public static Stack<Token> tokenize(String text) throws LexingException {
-		final var cursor = new Lexer(text);
+	public Stack<Token> tokenize() throws LexingException {
 		var tokens = new Stack<Token>();
 
 		while (true) {
-			var token = cursor.advance();
+			var token = this.advance();
 			final boolean exit = token.exit();
 			tokens.push(token);
 
@@ -44,7 +43,7 @@ public class Lexer {
 		this.eat(new WhitespaceMatcher());
 
 		if (this.isEOF()) {
-			return new PrimitiveToken(PrimitiveTokenType.EOF);
+			return new SimpleToken(SimpleTokenType.EOF);
 		}
 
 		final char firstCharacter = this.peek();
@@ -78,22 +77,22 @@ public class Lexer {
 
 			case '(':
 				this.bump();
-				return new PrimitiveToken(PrimitiveTokenType.PAREN_OPEN);
+				return new SimpleToken(SimpleTokenType.PAREN_OPEN);
 			case ')':
 				this.bump();
-				return new PrimitiveToken(PrimitiveTokenType.PAREN_CLOSE);
+				return new SimpleToken(SimpleTokenType.PAREN_CLOSE);
 			case '[':
 				this.bump();
-				return new PrimitiveToken(PrimitiveTokenType.BRACKET_OPEN);
+				return new SimpleToken(SimpleTokenType.BRACKET_OPEN);
 			case ']':
 				this.bump();
-				return new PrimitiveToken(PrimitiveTokenType.BRACKET_CLOSE);
+				return new SimpleToken(SimpleTokenType.BRACKET_CLOSE);
 			case '+':
 				this.bump();
-				return new PrimitiveToken(PrimitiveTokenType.PLUS);
+				return new SimpleToken(SimpleTokenType.PLUS);
 			case '-':
 				this.bump();
-				return new PrimitiveToken(PrimitiveTokenType.MINUS);
+				return new SimpleToken(SimpleTokenType.MINUS);
 		}
 
 		if (Character.isDigit(firstCharacter)) {
@@ -117,7 +116,7 @@ public class Lexer {
 			final String name = this.eat(new WordMatcher());
 			switch (name) {
 				case "define":
-					return new KeywordToken(Keyword.DEFINE);
+					return new SimpleToken(SimpleTokenType.DEFINE);
 				default:
 					return new IdentToken(name);
 			}

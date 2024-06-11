@@ -1,18 +1,12 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-public final class FloatToken extends Token {
-	private float fl;
-
+public final class FloatToken extends StateToken<Float> {
 	public FloatToken(float fl) {
-		this.fl = fl;
-	}
-
-	public float getFloat() {
-		return fl;
+		super(fl);
 	}
 
 	@Override
-	public String toString() {
-		return "Float: " + this.fl;
+	public boolean compareState(Float cmp) {
+		return Math.abs(this.getState() - cmp) < 0.0000001;
 	}
 }

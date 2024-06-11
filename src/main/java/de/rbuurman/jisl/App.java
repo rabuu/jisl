@@ -11,7 +11,8 @@ public class App {
         final String text = "; comment\n(define a 1)\n(#true and #false true-false 1.0 0.1 1.)[]";
 
         try {
-            final Stack<Token> tokens = Lexer.tokenize(text);
+            var lexer = new Lexer(text);
+            final Stack<Token> tokens = lexer.tokenize();
             for (Token token : tokens) {
                 System.out.println(token);
             }

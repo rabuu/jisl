@@ -1,18 +1,12 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-public final class CommentToken extends Token {
-	private String comment;
-
+public final class CommentToken extends StateToken<String> {
 	public CommentToken(String comment) {
-		this.comment = comment;
-	}
-
-	public String getComment() {
-		return comment;
+		super(comment);
 	}
 
 	@Override
-	public String toString() {
-		return "Comment: " + this.comment;
+	public boolean compareState(String cmp) {
+		return this.getState().equals(cmp);
 	}
 }

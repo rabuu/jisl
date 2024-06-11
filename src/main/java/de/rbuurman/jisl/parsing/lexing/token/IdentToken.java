@@ -1,19 +1,12 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-public final class IdentToken extends Token {
-	private String ident;
-
+public final class IdentToken extends StateToken<String> {
 	public IdentToken(String ident) {
-		this.ident = ident;
-	}
-
-	public String getIdent() {
-		return ident;
+		super(ident);
 	}
 
 	@Override
-	public String toString() {
-		return "Identifier: " + this.ident;
+	public boolean compareState(String cmp) {
+		return this.getState().equals(cmp);
 	}
-
 }
