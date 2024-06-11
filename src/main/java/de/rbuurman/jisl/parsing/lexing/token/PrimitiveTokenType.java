@@ -9,5 +9,27 @@ public enum PrimitiveTokenType {
 	PLUS,
 	MINUS,
 
-	EOF,
+	EOF;
+
+	@Override
+	public String toString() {
+		switch (this) {
+			case PAREN_OPEN:
+				return "(";
+			case PAREN_CLOSE:
+				return ")";
+			case BRACKET_OPEN:
+				return "[";
+			case BRACKET_CLOSE:
+				return "]";
+			case PLUS:
+				return "+";
+			case MINUS:
+				return "-";
+			case EOF:
+				return "EOF";
+			default:
+				return null;
+		}
+	}
 }

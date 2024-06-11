@@ -14,24 +14,6 @@ public final class PrimitiveToken extends Token {
 
 	@Override
 	public String toString() {
-		switch (this.type) {
-			case PAREN_OPEN:
-				return "(";
-			case PAREN_CLOSE:
-				return ")";
-			case BRACKET_OPEN:
-				return "[";
-			case BRACKET_CLOSE:
-				return "]";
-			case PLUS:
-				return "+";
-			case MINUS:
-				return "-";
-			case EOF:
-				return "EOF";
-			default:
-				assert false;
-				return "";
-		}
+		return "Primitive: " + this.type;
 	}
 }
