@@ -92,7 +92,12 @@ public class Lexer {
 			}
 		} else if (Character.isAlphabetic(firstCharacter)) {
 			final String name = this.eat(new AlphabeticMatcher());
-			return new IdentToken(name);
+			switch (name) {
+				case "define":
+					return new KeywordToken(Keyword.DEFINE);
+				default:
+					return new IdentToken(name);
+			}
 		}
 
 		return new PrimitiveToken(PrimitiveTokenType.EOF);
