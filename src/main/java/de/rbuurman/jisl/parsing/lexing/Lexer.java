@@ -58,6 +58,18 @@ public class Lexer {
 				assert closingDel == '"';
 				return new StringToken(string);
 
+			case '#':
+				this.bump();
+				final String boolStr = this.eat(new AlphabeticMatcher());
+				switch (boolStr) {
+					case "true":
+						return new BooleanToken(true);
+					case "false":
+						return new BooleanToken(false);
+					default:
+						return null;
+				}
+
 			case '(':
 				this.bump();
 				return new PrimitiveToken(PrimitiveTokenType.PAREN_OPEN);
