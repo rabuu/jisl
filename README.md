@@ -8,3 +8,6 @@ mvn clean compile exec:java # to run the project
 mvn test                    # to run the test suite
 mvn clean package           # to generate a JAR executable
 ```
+
+## More resources
+- [K. Ostermann, Lehrskript Praktische Informatik 1](https://ps-tuebingen.github.io/informatik-1-skript/)
