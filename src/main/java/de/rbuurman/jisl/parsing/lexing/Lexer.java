@@ -1,25 +1,27 @@
 package de.rbuurman.jisl.parsing.lexing;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
-import de.rbuurman.jisl.parsing.lexing.matcher.AlphabeticMatcher;
-import de.rbuurman.jisl.parsing.lexing.matcher.CharMatcher;
-import de.rbuurman.jisl.parsing.lexing.matcher.InverseMatcher;
-import de.rbuurman.jisl.parsing.lexing.matcher.LineMatcher;
-import de.rbuurman.jisl.parsing.lexing.matcher.NumericMatcher;
-import de.rbuurman.jisl.parsing.lexing.matcher.WhitespaceMatcher;
-import de.rbuurman.jisl.parsing.lexing.token.CommentToken;
-import de.rbuurman.jisl.parsing.lexing.token.FloatToken;
-import de.rbuurman.jisl.parsing.lexing.token.IdentToken;
-import de.rbuurman.jisl.parsing.lexing.token.IntegerToken;
-import de.rbuurman.jisl.parsing.lexing.token.PrimitiveToken;
-import de.rbuurman.jisl.parsing.lexing.token.PrimitiveTokenType;
-import de.rbuurman.jisl.parsing.lexing.token.StringToken;
-import de.rbuurman.jisl.parsing.lexing.token.Token;
+import de.rbuurman.jisl.parsing.lexing.matcher.*;
+import de.rbuurman.jisl.parsing.lexing.token.*;
 
-public class Lexer extends Cursor {
-	public Lexer(String text) {
-		super(text);
+public class Lexer {
+	final static char EOF = '\0';
+
+	private Stack<Character> chars;
+
+	public Lexer(final String text) {
+		final var chars = new Stack<Character>();
+
+		var revText = new StringBuilder(text);
+		revText.reverse();
+
+		for (char c : revText.toString().toCharArray()) {
+			chars.push(c);
+		}
+
+		this.chars = chars;
 	}
 
 	public static Stack<Token> tokenize(String text) {
@@ -38,7 +40,7 @@ public class Lexer extends Cursor {
 		return tokens;
 	}
 
-	public Token advance() {
+	private Token advance() {
 		this.eat(new WhitespaceMatcher());
 
 		final char firstCharacter = this.peek();
@@ -94,5 +96,35 @@ public class Lexer extends Cursor {
 		}
 
 		return new PrimitiveToken(PrimitiveTokenType.EOF);
+	}
+
+	private char peek() {
+		try {
+			return this.chars.peek();
+		} catch (EmptyStackException e) {
+			return EOF;
+		}
+	}
+
+	private char bump() {
+		try {
+			final char c = this.chars.pop();
+			return c;
+		} catch (EmptyStackException e) {
+			return EOF;
+		}
+	}
+
+	private String eat(Matcher matcher) {
+		var builder = new StringBuilder();
+		while (!this.isEOF() && matcher.matches(this.peek())) {
+			builder.append(this.bump());
+		}
+
+		return builder.toString();
+	}
+
+	private boolean isEOF() {
+		return this.chars.empty();
 	}
 }
