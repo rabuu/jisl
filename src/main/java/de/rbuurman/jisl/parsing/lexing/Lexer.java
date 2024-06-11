@@ -24,7 +24,7 @@ public class Lexer {
 		this.chars = chars;
 	}
 
-	public static Stack<Token> tokenize(String text) {
+	public static Stack<Token> tokenize(String text) throws LexingException {
 		final var cursor = new Lexer(text);
 		var tokens = new Stack<Token>();
 
@@ -40,8 +40,12 @@ public class Lexer {
 		return tokens;
 	}
 
-	private Token advance() {
+	private Token advance() throws LexingException {
 		this.eat(new WhitespaceMatcher());
+
+		if (this.isEOF()) {
+			return new PrimitiveToken(PrimitiveTokenType.EOF);
+		}
 
 		final char firstCharacter = this.peek();
 		switch (firstCharacter) {
@@ -55,19 +59,21 @@ public class Lexer {
 				this.bump();
 				final String string = this.eat(new InverseMatcher(new CharMatcher('"')));
 				final char closingDel = this.bump();
-				assert closingDel == '"';
+				if (closingDel != '"') {
+					throw new LexingException("Unterminated string literal");
+				}
 				return new StringToken(string);
 
 			case '#':
 				this.bump();
-				final String boolStr = this.eat(new AlphabeticMatcher());
+				final String boolStr = this.eat(new WordMatcher());
 				switch (boolStr) {
 					case "true":
 						return new BooleanToken(true);
 					case "false":
 						return new BooleanToken(false);
 					default:
-						return null;
+						throw new LexingException("The # symbol has to be followed by either `true` or `false`");
 				}
 
 			case '(':
@@ -88,22 +94,27 @@ public class Lexer {
 			case '-':
 				this.bump();
 				return new PrimitiveToken(PrimitiveTokenType.MINUS);
-
-			default:
-				break;
 		}
 
 		if (Character.isDigit(firstCharacter)) {
 			final String numeric = this.eat(new NumericMatcher());
 			if (numeric.contains(".")) {
-				final float f = Float.parseFloat(numeric);
-				return new FloatToken(f);
+				try {
+					final float f = Float.parseFloat(numeric);
+					return new FloatToken(f);
+				} catch (NumberFormatException e) {
+					throw new LexingException("Couldn't parse float");
+				}
 			} else {
-				final int i = Integer.parseInt(numeric);
-				return new IntegerToken(i);
+				try {
+					final int i = Integer.parseInt(numeric);
+					return new IntegerToken(i);
+				} catch (Exception e) {
+					throw new LexingException("Couldn't parse integer");
+				}
 			}
 		} else if (Character.isAlphabetic(firstCharacter)) {
-			final String name = this.eat(new AlphabeticMatcher());
+			final String name = this.eat(new WordMatcher());
 			switch (name) {
 				case "define":
 					return new KeywordToken(Keyword.DEFINE);
@@ -112,7 +123,7 @@ public class Lexer {
 			}
 		}
 
-		return new PrimitiveToken(PrimitiveTokenType.EOF);
+		throw new LexingException("Illegal character: " + firstCharacter);
 	}
 
 	private char peek() {
