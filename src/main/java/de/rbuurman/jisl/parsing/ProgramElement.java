@@ -9,8 +9,8 @@ public interface ProgramElement {
     public static ProgramElement parseProgramElement(Queue<Token> tokens) throws ParsingException {
         boolean removedOpen = false;
         if (tokens.peek().equals(SimpleTokenType.OPEN.toToken())) {
-            removedOpen = true;
             tokens.remove();
+            removedOpen = true;
         }
 
         boolean definition = false;
@@ -18,7 +18,7 @@ public interface ProgramElement {
             definition = true;
 
         if (definition) {
-            return Definition.parse(tokens, removedOpen);
+            return Definition.parse(tokens);
         } else {
             return Expression.parseExpression(tokens, removedOpen);
         }

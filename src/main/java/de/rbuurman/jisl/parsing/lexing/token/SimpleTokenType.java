@@ -8,6 +8,7 @@ public enum SimpleTokenType {
 	MINUS,
 
 	DEFINE,
+	LAMBDA,
 
 	EOF;
 
@@ -28,6 +29,8 @@ public enum SimpleTokenType {
 				return "-";
 			case DEFINE:
 				return "define";
+			case LAMBDA:
+				return "lambda";
 			case EOF:
 				return "EOF";
 			default:

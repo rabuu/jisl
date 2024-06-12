@@ -113,6 +113,8 @@ public final class Lexer {
 			switch (name) {
 				case "define":
 					return new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
+				case "lambda":
+					return new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
 				default:
 					return new IdentToken(name, firstPosition);
 			}
