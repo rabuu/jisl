@@ -7,6 +7,7 @@ import de.rbuurman.jisl.parsing.lexing.Lexer;
 import de.rbuurman.jisl.parsing.lexing.LexingException;
 import de.rbuurman.jisl.parsing.lexing.token.CommentToken;
 import de.rbuurman.jisl.parsing.lexing.token.Token;
+import de.rbuurman.jisl.elements.*;
 
 public final class Parser {
     private Queue<Token> tokens;
@@ -28,8 +29,9 @@ public final class Parser {
                 continue;
             }
 
-            program.add(ProgramElement.parseProgramElement(this.tokens));
+            program.add(ProgramElementParser.parseProgramElement(this.tokens));
         }
         return program;
     }
+
 }

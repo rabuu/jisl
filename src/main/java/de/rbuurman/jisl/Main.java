@@ -7,8 +7,8 @@ import java.util.Queue;
 
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.ParsingException;
-import de.rbuurman.jisl.parsing.ProgramElement;
 import de.rbuurman.jisl.parsing.lexing.LexingException;
+import de.rbuurman.jisl.elements.ProgramElement;
 
 public class Main {
     public static String USAGE = "USAGE: jisl <SOURCE-FILE>";
