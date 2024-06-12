@@ -1,0 +1,15 @@
+<program>     ::= <def-or-expr>+
+<def-or-expr> ::= <definition> | <expression>
+
+<definition>  ::= ( define <name> <expression> )
+
+<expression>  ::= ( <expression> <expression>+ )
+			    | <name>
+			    | <value>
+
+<value>       ::= ( lambda ( <name>+ ) <expression> )
+                | <integer>
+			    | <float>
+			    | <boolean>
+			    | <string>
+			    | <primitive>
