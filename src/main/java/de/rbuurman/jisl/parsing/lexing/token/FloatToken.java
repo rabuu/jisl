@@ -1,8 +1,10 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
+import de.rbuurman.jisl.parsing.lexing.SourcePosition;
+
 public final class FloatToken extends StateToken<Float> {
-	public FloatToken(float fl) {
-		super(fl);
+	public FloatToken(float fl, SourcePosition sourcePosition) {
+		super(fl, sourcePosition);
 	}
 
 	@Override

@@ -1,9 +1,12 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
+import de.rbuurman.jisl.parsing.lexing.SourcePosition;
+
 public abstract class StateToken<T> extends Token {
 	private T state;
 
-	public StateToken(T state) {
+	public StateToken(T state, SourcePosition sourcePosition) {
+		super(sourcePosition);
 		this.state = state;
 	}
 
@@ -17,7 +20,7 @@ public abstract class StateToken<T> extends Token {
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.getState();
+		return this.getClass().getSimpleName() + ": " + this.getState() + " " + this.getSourcePosition();
 	}
 
 	@Override
