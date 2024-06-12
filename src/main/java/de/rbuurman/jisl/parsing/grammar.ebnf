@@ -1,13 +1,13 @@
 <program>     ::= <def-or-expr>+
 <def-or-expr> ::= <definition> | <expression>
 
-<definition>  ::= ( define <name> <expression> )
+<definition>  ::= ( define <ident> <expression> )
 
 <expression>  ::= ( <expression> <expression>+ )
-			    | <name>
+			    | <ident>
 			    | <value>
 
-<value>       ::= ( lambda ( <name>+ ) <expression> )
+<value>       ::= ( lambda ( <ident>+ ) <expression> )
                 | <integer>
 			    | <float>
 			    | <boolean>
