@@ -20,7 +20,7 @@ public abstract class StateToken<T> extends Token {
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.getState() + " " + this.getSourcePosition();
+		return this.getClass().getSimpleName() + ":\t" + this.getState() + " " + this.getSourcePosition();
 	}
 
 	@Override
