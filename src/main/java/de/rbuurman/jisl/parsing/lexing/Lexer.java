@@ -1,38 +1,35 @@
 package de.rbuurman.jisl.parsing.lexing;
 
-import java.util.EmptyStackException;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import de.rbuurman.jisl.parsing.lexing.matcher.*;
 import de.rbuurman.jisl.parsing.lexing.token.*;
 
-public class Lexer {
+public final class Lexer {
 	final static char EOF = '\0';
 
-	private Stack<Character> chars;
+	private Queue<Character> chars;
 	private SourcePosition position;
 
 	public Lexer(final String text) {
-		final var chars = new Stack<Character>();
+		final var chars = new LinkedList<Character>();
 
-		var revText = new StringBuilder(text);
-		revText.reverse();
-
-		for (char c : revText.toString().toCharArray()) {
-			chars.push(c);
+		for (char c : text.toCharArray()) {
+			chars.add(c);
 		}
 
 		this.chars = chars;
 		this.position = new SourcePosition(1, 1);
 	}
 
-	public Stack<Token> tokenize() throws LexingException {
-		var tokens = new Stack<Token>();
+	public Queue<Token> tokenize() throws LexingException {
+		var tokens = new LinkedList<Token>();
 
 		while (true) {
 			var token = this.advance();
 			final boolean exit = token.exit();
-			tokens.push(token);
+			tokens.add(token);
 
 			if (exit)
 				break;
@@ -79,17 +76,13 @@ public class Lexer {
 				}
 
 			case '(':
-				this.bump();
-				return new SimpleToken(SimpleTokenType.PAREN_OPEN, firstPosition);
-			case ')':
-				this.bump();
-				return new SimpleToken(SimpleTokenType.PAREN_CLOSE, firstPosition);
 			case '[':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.BRACKET_OPEN, firstPosition);
+				return new SimpleToken(SimpleTokenType.OPEN, firstPosition);
+			case ')':
 			case ']':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.BRACKET_CLOSE, firstPosition);
+				return new SimpleToken(SimpleTokenType.CLOSE, firstPosition);
 			case '+':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
@@ -129,27 +122,26 @@ public class Lexer {
 	}
 
 	private char peek() {
-		try {
-			return this.chars.peek();
-		} catch (EmptyStackException e) {
+		final Character c = this.chars.peek();
+
+		if (c == null)
 			return EOF;
-		}
+		else
+			return c;
 	}
 
 	private char bump() {
-		try {
-			final char c = this.chars.pop();
-
-			if (c == '\n') {
-				this.position = new SourcePosition(this.position.row() + 1, 1);
-			} else {
-				this.position = new SourcePosition(this.position.row(), this.position.column() + 1);
-			}
-
-			return c;
-		} catch (EmptyStackException e) {
+		final Character c = this.chars.poll();
+		if (c == null)
 			return EOF;
+
+		if (c == '\n') {
+			this.position = new SourcePosition(this.position.row() + 1, 1);
+		} else {
+			this.position = new SourcePosition(this.position.row(), this.position.column() + 1);
 		}
+
+		return c;
 	}
 
 	private String eat(Matcher matcher) {
@@ -162,6 +154,6 @@ public class Lexer {
 	}
 
 	private boolean isEOF() {
-		return this.chars.empty();
+		return this.chars.isEmpty();
 	}
 }

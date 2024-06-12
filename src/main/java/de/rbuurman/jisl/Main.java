@@ -3,11 +3,12 @@ package de.rbuurman.jisl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Stack;
+import java.util.Queue;
 
-import de.rbuurman.jisl.parsing.lexing.Lexer;
+import de.rbuurman.jisl.parsing.Parser;
+import de.rbuurman.jisl.parsing.ParsingException;
+import de.rbuurman.jisl.parsing.ProgramElement;
 import de.rbuurman.jisl.parsing.lexing.LexingException;
-import de.rbuurman.jisl.parsing.lexing.token.Token;
 
 public class Main {
     public static String USAGE = "USAGE: jisl <SOURCE-FILE>";
@@ -23,15 +24,18 @@ public class Main {
             System.out.println(code);
             System.out.println("-----------------------------------------------------");
 
-            final var lexer = new Lexer(code);
-            final Stack<Token> tokens = lexer.tokenize();
+            final var parser = new Parser(code);
+            final Queue<ProgramElement> program = parser.parse();
 
-            for (Token token : tokens) {
-                System.out.println(token);
+            for (ProgramElement elem : program) {
+                System.out.println(elem);
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (LexingException e) {
+            throw new RuntimeException(e);
+        } catch (ParsingException e) {
             throw new RuntimeException(e);
         }
     }

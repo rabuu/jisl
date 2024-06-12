@@ -1,5 +1,5 @@
-<program>     ::= <def-or-expr>+
-<def-or-expr> ::= <definition> | <expression>
+<program>     ::= <element>+
+<element>     ::= <definition> | <expression>
 
 <definition>  ::= ( define <ident> <expression> )
 

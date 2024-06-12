@@ -3,7 +3,7 @@ package de.rbuurman.jisl.parsing.lexing;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Stack;
+import java.util.Queue;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,20 +14,20 @@ public class LexerTest {
 	@Test
 	void tokenizeCorrectInput() throws LexingException {
 		var lexer = new Lexer("(define 1 a) ; comment\n [ 0.567 #true]");
-		final Stack<Token> tokens = lexer.tokenize();
+		final Queue<Token> tokens = lexer.tokenize();
 
 		final Token[] expected = {
-				new SimpleToken(SimpleTokenType.PAREN_OPEN),
-				new SimpleToken(SimpleTokenType.DEFINE),
-				new IntegerToken(1),
-				new IdentToken("a"),
-				new SimpleToken(SimpleTokenType.PAREN_CLOSE),
-				new CommentToken("comment"),
-				new SimpleToken(SimpleTokenType.BRACKET_OPEN),
-				new FloatToken(0.567f),
-				new BooleanToken(true),
-				new SimpleToken(SimpleTokenType.BRACKET_CLOSE),
-				new SimpleToken(SimpleTokenType.EOF),
+				SimpleTokenType.OPEN.toToken(),
+				SimpleTokenType.DEFINE.toToken(),
+				new IntegerToken(1, null),
+				new IdentToken("a", null),
+				SimpleTokenType.CLOSE.toToken(),
+				new CommentToken("comment", null),
+				SimpleTokenType.OPEN.toToken(),
+				new FloatToken(0.567f, null),
+				new BooleanToken(true, null),
+				SimpleTokenType.CLOSE.toToken(),
+				SimpleTokenType.EOF.toToken(),
 		};
 
 		assertArrayEquals(expected, tokens.toArray());

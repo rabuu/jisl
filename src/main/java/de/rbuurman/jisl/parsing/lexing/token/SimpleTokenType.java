@@ -1,10 +1,8 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
 public enum SimpleTokenType {
-	PAREN_OPEN,
-	PAREN_CLOSE,
-	BRACKET_OPEN,
-	BRACKET_CLOSE,
+	OPEN,
+	CLOSE,
 
 	PLUS,
 	MINUS,
@@ -13,17 +11,17 @@ public enum SimpleTokenType {
 
 	EOF;
 
+	public SimpleToken toToken() {
+		return new SimpleToken(this, null);
+	}
+
 	@Override
 	public String toString() {
 		switch (this) {
-			case PAREN_OPEN:
+			case OPEN:
 				return "(";
-			case PAREN_CLOSE:
+			case CLOSE:
 				return ")";
-			case BRACKET_OPEN:
-				return "[";
-			case BRACKET_CLOSE:
-				return "]";
 			case PLUS:
 				return "+";
 			case MINUS:
