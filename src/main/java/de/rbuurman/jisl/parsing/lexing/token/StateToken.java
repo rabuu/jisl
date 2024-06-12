@@ -1,21 +1,14 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-import de.rbuurman.jisl.parsing.lexing.SourcePosition;
+public abstract class StateToken<S> extends Token {
+	private S state;
 
-public abstract class StateToken<T> extends Token {
-	private T state;
-
-	public StateToken(T state, SourcePosition sourcePosition) {
-		super(sourcePosition);
+	public StateToken(S state) {
 		this.state = state;
 	}
 
-	public T getState() {
+	public S getState() {
 		return state;
-	}
-
-	public boolean compareState(T cmp) {
-		return this.state == cmp;
 	}
 
 	@Override
@@ -28,15 +21,18 @@ public abstract class StateToken<T> extends Token {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof StateToken<?>) {
-			StateToken<?> tok = (StateToken<?>) obj;
-			try {
-				return this.compareState((T) tok.getState());
-			} catch (ClassCastException e) {
-				return false;
-			}
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+
+		StateToken<S> other = (StateToken<S>) obj;
+		if (!this.state.equals(other.state)) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 }

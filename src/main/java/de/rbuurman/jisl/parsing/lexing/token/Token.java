@@ -5,8 +5,9 @@ import de.rbuurman.jisl.parsing.lexing.SourcePosition;
 public abstract class Token {
 	private SourcePosition sourcePosition;
 
-	public Token(SourcePosition sourcePosition) {
+	public Token withSourcePosition(SourcePosition sourcePosition) {
 		this.sourcePosition = sourcePosition;
+		return this;
 	}
 
 	@Override

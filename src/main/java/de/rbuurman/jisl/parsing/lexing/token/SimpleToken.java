@@ -1,14 +1,47 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-import de.rbuurman.jisl.parsing.lexing.SourcePosition;
+public final class SimpleToken extends StateToken<SimpleToken.Type> {
+	public enum Type {
+		OPEN,
+		CLOSE,
 
-public final class SimpleToken extends StateToken<SimpleTokenType> {
-	public SimpleToken(SimpleTokenType type, SourcePosition sourcePosition) {
-		super(type, sourcePosition);
+		PLUS,
+		MINUS,
+
+		DEFINE,
+		LAMBDA,
+
+		EOF;
+
+		@Override
+		public String toString() {
+			switch (this) {
+				case OPEN:
+					return "(";
+				case CLOSE:
+					return ")";
+				case PLUS:
+					return "+";
+				case MINUS:
+					return "-";
+				case DEFINE:
+					return "define";
+				case LAMBDA:
+					return "lambda";
+				case EOF:
+					return "EOF";
+				default:
+					return null;
+			}
+		}
+	}
+
+	public SimpleToken(Type type) {
+		super(type);
 	}
 
 	@Override
 	public boolean exit() {
-		return this.getState() == SimpleTokenType.EOF;
+		return this.getState() == Type.EOF;
 	}
 }

@@ -3,8 +3,10 @@ package de.rbuurman.jisl.parsing.lexing;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import de.rbuurman.jisl.primitive.*;
 import de.rbuurman.jisl.parsing.lexing.matcher.*;
 import de.rbuurman.jisl.parsing.lexing.token.*;
+import de.rbuurman.jisl.parsing.lexing.token.SimpleToken.Type;
 
 public final class Lexer {
 	final static char EOF = '\0';
@@ -42,7 +44,7 @@ public final class Lexer {
 		this.eat(new WhitespaceMatcher());
 
 		if (this.isEOF()) {
-			return new SimpleToken(SimpleTokenType.EOF, this.position);
+			return new SimpleToken(Type.EOF).withSourcePosition(this.position);
 		}
 
 		final char firstCharacter = this.peek();
@@ -52,7 +54,7 @@ public final class Lexer {
 				this.eat(new CharMatcher(';'));
 				this.eat(new WhitespaceMatcher());
 				final String comment = this.eat(new LineMatcher());
-				return new CommentToken(comment, firstPosition);
+				return new CommentToken(comment).withSourcePosition(firstPosition);
 
 			case '"':
 				this.bump();
@@ -61,16 +63,16 @@ public final class Lexer {
 				if (closingDel != '"') {
 					throw new LexingException("Unterminated string literal", this.position);
 				}
-				return new StringToken(string, firstPosition);
+				return new StringPrimitive(string).toToken().withSourcePosition(firstPosition);
 
 			case '#':
 				this.bump();
 				final String boolStr = this.eat(new WordMatcher());
 				switch (boolStr) {
 					case "true":
-						return new BooleanToken(true, firstPosition);
+						return new BooleanPrimitive(true).toToken().withSourcePosition(firstPosition);
 					case "false":
-						return new BooleanToken(false, firstPosition);
+						return new BooleanPrimitive(false).toToken().withSourcePosition(firstPosition);
 					default:
 						throw new LexingException("Invalid Boolean: #" + boolStr, firstPosition);
 				}
@@ -78,17 +80,17 @@ public final class Lexer {
 			case '(':
 			case '[':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.OPEN, firstPosition);
+				return new SimpleToken(Type.OPEN).withSourcePosition(firstPosition);
 			case ')':
 			case ']':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.CLOSE, firstPosition);
+				return new SimpleToken(Type.CLOSE).withSourcePosition(firstPosition);
 			case '+':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
+				return new SimpleToken(Type.PLUS).withSourcePosition(firstPosition);
 			case '-':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.MINUS, firstPosition);
+				return new SimpleToken(Type.MINUS).withSourcePosition(firstPosition);
 		}
 
 		if (Character.isDigit(firstCharacter)) {
@@ -96,14 +98,14 @@ public final class Lexer {
 			if (numeric.contains(".")) {
 				try {
 					final float f = Float.parseFloat(numeric);
-					return new FloatToken(f, firstPosition);
+					return new FloatPrimitive(f).toToken().withSourcePosition(firstPosition);
 				} catch (NumberFormatException e) {
 					throw new LexingException("Couldn't parse float", firstPosition);
 				}
 			} else {
 				try {
 					final int i = Integer.parseInt(numeric);
-					return new IntegerToken(i, firstPosition);
+					return new IntegerPrimitive(i).toToken().withSourcePosition(firstPosition);
 				} catch (Exception e) {
 					throw new LexingException("Couldn't parse integer", firstPosition);
 				}
@@ -112,11 +114,11 @@ public final class Lexer {
 			final String name = this.eat(new WordMatcher());
 			switch (name) {
 				case "define":
-					return new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
+					return new SimpleToken(Type.DEFINE).withSourcePosition(firstPosition);
 				case "lambda":
-					return new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
+					return new SimpleToken(Type.LAMBDA).withSourcePosition(firstPosition);
 				default:
-					return new IdentToken(name, firstPosition);
+					return new IdentToken(name).withSourcePosition(firstPosition);
 			}
 		}
 
