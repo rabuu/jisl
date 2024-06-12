@@ -5,6 +5,7 @@ import java.util.Queue;
 
 import de.rbuurman.jisl.parsing.lexing.Lexer;
 import de.rbuurman.jisl.parsing.lexing.LexingException;
+import de.rbuurman.jisl.parsing.lexing.token.CommentToken;
 import de.rbuurman.jisl.parsing.lexing.token.Token;
 
 public final class Parser {
@@ -22,6 +23,11 @@ public final class Parser {
     public Queue<ProgramElement> parse() throws ParsingException {
         var program = new LinkedList<ProgramElement>();
         while (!tokens.isEmpty() && !tokens.peek().exit()) {
+            if (tokens.peek() instanceof CommentToken) {
+                tokens.remove();
+                continue;
+            }
+
             program.add(ProgramElement.parseProgramElement(this.tokens));
         }
         return program;

@@ -1,7 +1,5 @@
 package de.rbuurman.jisl.parsing.lexing.token;
 
-import java.lang.reflect.ParameterizedType;
-
 import de.rbuurman.jisl.parsing.lexing.SourcePosition;
 
 public abstract class StateToken<T> extends Token {
@@ -30,14 +28,13 @@ public abstract class StateToken<T> extends Token {
 
 	@Override
 	public boolean equals(Object obj) {
-		Class<T> stateType = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
-
-		if (obj instanceof StateToken) {
-			StateToken<T> tok = (StateToken<T>) obj;
-			return this.compareState(tok.state);
-		} else if (stateType.isInstance(obj)) {
-			return this.compareState(stateType.cast(obj));
+		if (obj instanceof StateToken<?>) {
+			StateToken<?> tok = (StateToken<?>) obj;
+			try {
+				return this.compareState((T) tok.getState());
+			} catch (ClassCastException e) {
+				return false;
+			}
 		}
 
 		return false;

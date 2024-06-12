@@ -7,7 +7,9 @@ import de.rbuurman.jisl.parsing.lexing.token.Token;
 
 public interface ProgramElement {
     public static ProgramElement parseProgramElement(Queue<Token> tokens) throws ParsingException {
+        boolean removedOpen = false;
         if (tokens.peek().equals(SimpleTokenType.OPEN.toToken())) {
+            removedOpen = true;
             tokens.remove();
         }
 
@@ -16,10 +18,9 @@ public interface ProgramElement {
             definition = true;
 
         if (definition) {
-            System.err.println("DEFINITION");
-            return Definition.parse(tokens);
+            return Definition.parse(tokens, removedOpen);
         } else {
-            return null;
+            return Expression.parseExpression(tokens, removedOpen);
         }
     }
 }
