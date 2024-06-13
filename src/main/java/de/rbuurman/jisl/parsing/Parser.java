@@ -3,11 +3,11 @@ package de.rbuurman.jisl.parsing;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import de.rbuurman.jisl.element.*;
 import de.rbuurman.jisl.parsing.lexing.Lexer;
 import de.rbuurman.jisl.parsing.lexing.LexingException;
 import de.rbuurman.jisl.parsing.lexing.token.CommentToken;
 import de.rbuurman.jisl.parsing.lexing.token.Token;
-import de.rbuurman.jisl.elements.*;
 
 public final class Parser {
     private Queue<Token> tokens;

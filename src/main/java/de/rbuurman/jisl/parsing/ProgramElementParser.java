@@ -3,8 +3,7 @@ package de.rbuurman.jisl.parsing;
 import java.util.ArrayList;
 import java.util.Queue;
 
-import de.rbuurman.jisl.elements.*;
-import de.rbuurman.jisl.elements.value.*;
+import de.rbuurman.jisl.element.*;
 import de.rbuurman.jisl.parsing.lexing.token.*;
 import de.rbuurman.jisl.parsing.lexing.token.SimpleToken.Type;
 
@@ -44,7 +43,7 @@ public class ProgramElementParser {
             }
 
             if (tokens.peek().equals(new SimpleToken(Type.LAMBDA))) {
-                return parseLambdaValue(tokens);
+                return parseLambda(tokens);
             }
             return parseCompoundExpression(tokens);
         } else if (firstToken instanceof IdentToken) {
@@ -96,14 +95,14 @@ public class ProgramElementParser {
             return null;
         }
 
-        if (firstToken instanceof ValueToken) {
-            return ((ValueToken) firstToken).toValue();
+        if (firstToken instanceof PrimitiveToken<?>) {
+            return ((PrimitiveToken<?>) firstToken).getState();
         }
 
         throw new ParsingException("Couldn't parse " + firstToken + " to value");
     }
 
-    public static LambdaValue parseLambdaValue(Queue<Token> tokens) throws ParsingException {
+    public static Lambda parseLambda(Queue<Token> tokens) throws ParsingException {
         ParsingUtils.expectToken(tokens, new SimpleToken(Type.LAMBDA));
         ParsingUtils.expectToken(tokens, new SimpleToken(Type.OPEN));
 
@@ -120,6 +119,6 @@ public class ProgramElementParser {
         final var expr = parseExpression(tokens);
         ParsingUtils.expectToken(tokens, new SimpleToken(Type.CLOSE));
 
-        return new LambdaValue(idents, expr);
+        return new Lambda(idents, expr);
     }
 }

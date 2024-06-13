@@ -1,8 +1,9 @@
 package de.rbuurman.jisl.primitive;
 
 import de.rbuurman.jisl.parsing.lexing.token.PrimitiveToken;
+import de.rbuurman.jisl.element.Value;
 
-public abstract class Primitive<T> {
+public abstract class Primitive<T> implements Value {
     private T inner;
 
     public Primitive(T inner) {

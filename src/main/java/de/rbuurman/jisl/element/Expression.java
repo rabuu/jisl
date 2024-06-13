@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.elements;
+package de.rbuurman.jisl.element;
 
 public interface Expression extends ProgramElement {
 }
