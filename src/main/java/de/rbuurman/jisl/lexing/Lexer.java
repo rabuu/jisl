@@ -29,10 +29,9 @@ public final class Lexer {
 
 		while (true) {
 			var token = this.advance();
-			final boolean exit = token.exit();
 			tokens.add(token);
 
-			if (exit)
+			if (token.exit())
 				break;
 		}
 

@@ -45,6 +45,7 @@ public class ProgramElementParser {
                 tokens.remove();
             }
 
+            // FIXME: lambdas are values!
             if (tokens.peek().equals(new SimpleToken(Type.LAMBDA))) {
                 return parseLambda(tokens);
             }
