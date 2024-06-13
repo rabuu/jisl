@@ -45,7 +45,7 @@ public class ProgramElementParser {
             if (tokens.peek().equals(new SimpleToken(Type.LAMBDA))) {
                 return parseLambda(tokens);
             }
-            return parseCompoundExpression(tokens);
+            return parseSExpression(tokens);
         } else if (firstToken instanceof IdentToken) {
             return parseIdent(tokens);
         } else {
@@ -57,7 +57,7 @@ public class ProgramElementParser {
         return parseExpression(tokens, false);
     }
 
-    public static CompoundExpression parseCompoundExpression(Queue<Token> tokens) throws ParsingException {
+    public static SExpression parseSExpression(Queue<Token> tokens) throws ParsingException {
         final var op = parseExpression(tokens);
 
         var args = new ArrayList<Expression>();
@@ -71,7 +71,7 @@ public class ProgramElementParser {
 
         ParsingUtils.expectToken(tokens, new SimpleToken(Type.CLOSE));
 
-        return new CompoundExpression(op, args);
+        return new SExpression(op, args);
     }
 
     public static Ident parseIdent(Queue<Token> tokens) throws ParsingException {
