@@ -1,12 +1,11 @@
-package de.rbuurman.jisl.parsing.lexing;
+package de.rbuurman.jisl.lexing;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 import de.rbuurman.jisl.primitive.*;
-import de.rbuurman.jisl.parsing.lexing.matcher.*;
-import de.rbuurman.jisl.parsing.lexing.token.*;
-import de.rbuurman.jisl.parsing.lexing.token.SimpleToken.Type;
+import de.rbuurman.jisl.lexing.matcher.*;
+import de.rbuurman.jisl.lexing.token.*;
 
 public final class Lexer {
 	final static char EOF = '\0';
@@ -44,7 +43,7 @@ public final class Lexer {
 		this.eat(new WhitespaceMatcher());
 
 		if (this.isEOF()) {
-			return new SimpleToken(Type.EOF).withSourcePosition(this.position);
+			return new SimpleToken(SimpleToken.Type.EOF).withSourcePosition(this.position);
 		}
 
 		final char firstCharacter = this.peek();
@@ -80,17 +79,17 @@ public final class Lexer {
 			case '(':
 			case '[':
 				this.bump();
-				return new SimpleToken(Type.OPEN).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleToken.Type.OPEN).withSourcePosition(firstPosition);
 			case ')':
 			case ']':
 				this.bump();
-				return new SimpleToken(Type.CLOSE).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleToken.Type.CLOSE).withSourcePosition(firstPosition);
 			case '+':
 				this.bump();
-				return new SimpleToken(Type.PLUS).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleToken.Type.PLUS).withSourcePosition(firstPosition);
 			case '-':
 				this.bump();
-				return new SimpleToken(Type.MINUS).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleToken.Type.MINUS).withSourcePosition(firstPosition);
 		}
 
 		if (Character.isDigit(firstCharacter)) {
@@ -114,9 +113,9 @@ public final class Lexer {
 			final String name = this.eat(new WordMatcher());
 			switch (name) {
 				case "define":
-					return new SimpleToken(Type.DEFINE).withSourcePosition(firstPosition);
+					return new SimpleToken(SimpleToken.Type.DEFINE).withSourcePosition(firstPosition);
 				case "lambda":
-					return new SimpleToken(Type.LAMBDA).withSourcePosition(firstPosition);
+					return new SimpleToken(SimpleToken.Type.LAMBDA).withSourcePosition(firstPosition);
 				default:
 					return new IdentToken(name).withSourcePosition(firstPosition);
 			}

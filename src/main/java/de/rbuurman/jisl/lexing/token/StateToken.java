@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.parsing.lexing.token;
+package de.rbuurman.jisl.lexing.token;
 
 public abstract class StateToken<S> extends Token {
 	private S state;

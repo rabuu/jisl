@@ -2,7 +2,7 @@ package de.rbuurman.jisl.parsing;
 
 import java.util.Queue;
 
-import de.rbuurman.jisl.parsing.lexing.token.Token;
+import de.rbuurman.jisl.lexing.token.Token;
 
 public class ParsingUtils {
     public static void expectToken(Queue<Token> tokens, Token expected) throws ParsingException {

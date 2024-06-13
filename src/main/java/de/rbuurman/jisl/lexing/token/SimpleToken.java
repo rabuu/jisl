@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.parsing.lexing.token;
+package de.rbuurman.jisl.lexing.token;
 
 public final class SimpleToken extends StateToken<SimpleToken.Type> {
 	public enum Type {

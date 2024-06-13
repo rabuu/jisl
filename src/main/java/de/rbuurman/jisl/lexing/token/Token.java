@@ -1,6 +1,6 @@
-package de.rbuurman.jisl.parsing.lexing.token;
+package de.rbuurman.jisl.lexing.token;
 
-import de.rbuurman.jisl.parsing.lexing.SourcePosition;
+import de.rbuurman.jisl.lexing.SourcePosition;
 
 public abstract class Token {
 	private SourcePosition sourcePosition;

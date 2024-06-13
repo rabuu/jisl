@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.parsing.lexing.matcher;
+package de.rbuurman.jisl.lexing.matcher;
 
 public interface Matcher {
 	public boolean matches(char c);

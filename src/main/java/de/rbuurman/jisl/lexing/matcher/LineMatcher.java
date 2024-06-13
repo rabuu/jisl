@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.parsing.lexing.matcher;
+package de.rbuurman.jisl.lexing.matcher;
 
 public final class LineMatcher implements Matcher {
 

@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.parsing.lexing;
+package de.rbuurman.jisl.lexing;
 
 public record SourcePosition(int row, int column) {
 	@Override

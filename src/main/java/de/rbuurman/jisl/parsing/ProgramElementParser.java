@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 import de.rbuurman.jisl.element.*;
-import de.rbuurman.jisl.parsing.lexing.token.*;
-import de.rbuurman.jisl.parsing.lexing.token.SimpleToken.Type;
+import de.rbuurman.jisl.lexing.token.IdentToken;
+import de.rbuurman.jisl.lexing.token.PrimitiveToken;
+import de.rbuurman.jisl.lexing.token.SimpleToken;
+import de.rbuurman.jisl.lexing.token.Token;
+import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
 
 public class ProgramElementParser {
     public static ProgramElement parseProgramElement(Queue<Token> tokens) throws ParsingException {
