@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing.lexing.matcher;
 
-public final class WordMatcher extends Matcher {
+public final class WordMatcher implements Matcher {
 
 	@Override
 	public boolean matches(char c) {

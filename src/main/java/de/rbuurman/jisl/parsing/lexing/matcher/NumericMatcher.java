@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing.lexing.matcher;
 
-public final class NumericMatcher extends Matcher {
+public final class NumericMatcher implements Matcher {
 
 	@Override
 	public boolean matches(char c) {

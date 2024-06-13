@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing.lexing.matcher;
 
-public final class CharMatcher extends Matcher {
+public final class CharMatcher implements Matcher {
 	private char character;
 
 	public CharMatcher(char character) {

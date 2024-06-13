@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing.lexing.matcher;
 
-public final class InverseMatcher extends Matcher {
+public final class InverseMatcher implements Matcher {
 	private Matcher matcher;
 
 	public InverseMatcher(Matcher matcher) {
