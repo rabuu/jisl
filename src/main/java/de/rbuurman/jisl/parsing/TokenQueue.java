@@ -3,7 +3,9 @@ package de.rbuurman.jisl.parsing;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import de.rbuurman.jisl.lexing.token.SimpleToken;
 import de.rbuurman.jisl.lexing.token.Token;
+import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
 
 public class TokenQueue {
 	private Deque<Token> tokens = new ArrayDeque<Token>();
@@ -45,11 +47,15 @@ public class TokenQueue {
 		return this.tokens.size();
 	}
 
-	public boolean isEmpty() {
-		return this.size() == 0;
+	public boolean finished() {
+		return this.size() == 0 || this.tokens.peek().exit();
 	}
 
-	public void expectToken(Token expected) throws ParsingException {
+	public boolean endOfExpression() {
+		return this.finished() || this.tokens.peek().isType(Type.CLOSE);
+	}
+
+	public Token expect(Token expected) throws ParsingException {
 		final var token = this.poll();
 		if (token == null)
 			throw ParsingException.EmptyTokenQueueException;
@@ -57,9 +63,20 @@ public class TokenQueue {
 		if (!token.equals(expected)) {
 			throw new ParsingException("Expected " + expected + " but got " + token);
 		}
+
+		return token;
+	}
+
+	public Token expect(SimpleToken.Type expected) throws ParsingException {
+		return this.expect(new SimpleToken(expected));
 	}
 
 	public Object[] toArray() {
 		return this.tokens.toArray();
+	}
+
+	@Override
+	public String toString() {
+		return this.tokens.toString();
 	}
 }

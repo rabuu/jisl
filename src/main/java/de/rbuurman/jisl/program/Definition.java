@@ -1,4 +1,4 @@
 package de.rbuurman.jisl.program;
 
-public record Definition(Ident ident, Expression expr) implements ProgramElement {
+public record Definition(Identifier identifier, Expression expression) implements ProgramElement {
 }

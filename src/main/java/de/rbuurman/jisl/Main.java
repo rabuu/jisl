@@ -3,12 +3,11 @@ package de.rbuurman.jisl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Queue;
 
-import de.rbuurman.jisl.program.ProgramElement;
-import de.rbuurman.jisl.parsing.Parser;
-import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.lexing.LexingException;
+import de.rbuurman.jisl.parsing.ParsingException;
+import de.rbuurman.jisl.parsing.ProgramParser;
+import de.rbuurman.jisl.program.Program;
 
 public class Main {
     public static String USAGE = "USAGE: jisl <SOURCE-FILE>";
@@ -21,13 +20,12 @@ public class Main {
 
         try {
             final String code = Files.readString(Path.of(args[0]));
-            System.out.println(code);
+            System.out.print(code);
             System.out.println("-----------------------------------------------------");
 
-            final var parser = new Parser(code);
-            final Queue<ProgramElement> program = parser.parse();
+            final Program program = new ProgramParser().parse(code);
 
-            for (ProgramElement elem : program) {
+            for (Object elem : program.toArray()) {
                 System.out.println(elem);
             }
 

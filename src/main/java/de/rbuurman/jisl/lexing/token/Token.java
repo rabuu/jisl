@@ -16,6 +16,10 @@ public abstract class Token {
 	@Override
 	public abstract boolean equals(Object obj);
 
+	public boolean isType(SimpleToken.Type type) {
+		return this.equals(new SimpleToken(type));
+	}
+
 	public boolean exit() {
 		return false;
 	}

@@ -117,7 +117,7 @@ public final class Lexer {
 				case "lambda":
 					return new SimpleToken(SimpleToken.Type.LAMBDA).withSourcePosition(firstPosition);
 				default:
-					return new IdentToken(name).withSourcePosition(firstPosition);
+					return new IdentifierToken(name).withSourcePosition(firstPosition);
 			}
 		}
 
