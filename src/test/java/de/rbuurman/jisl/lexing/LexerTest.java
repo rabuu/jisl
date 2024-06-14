@@ -3,7 +3,7 @@ package de.rbuurman.jisl.lexing;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.junit.jupiter.api.Test;
 
-import de.rbuurman.jisl.element.primitive.*;
+import de.rbuurman.jisl.program.primitive.*;
 import de.rbuurman.jisl.lexing.token.*;
 import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
 import de.rbuurman.jisl.parsing.TokenQueue;

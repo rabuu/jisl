@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.element.primitive;
+package de.rbuurman.jisl.program.primitive;
 
 public final class FloatPrimitive extends Primitive<Float> {
     public FloatPrimitive(Float inner) {

@@ -3,7 +3,7 @@ package de.rbuurman.jisl.lexing;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import de.rbuurman.jisl.element.primitive.*;
+import de.rbuurman.jisl.program.primitive.*;
 import de.rbuurman.jisl.lexing.matcher.*;
 import de.rbuurman.jisl.lexing.token.*;
 import de.rbuurman.jisl.parsing.TokenQueue;

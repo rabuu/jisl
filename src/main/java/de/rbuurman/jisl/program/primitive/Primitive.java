@@ -1,7 +1,7 @@
-package de.rbuurman.jisl.element.primitive;
+package de.rbuurman.jisl.program.primitive;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
-import de.rbuurman.jisl.element.Value;
+import de.rbuurman.jisl.program.Value;
 
 public abstract class Primitive<T> implements Value {
     private T inner;

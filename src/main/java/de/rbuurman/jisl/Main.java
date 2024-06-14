@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Queue;
 
-import de.rbuurman.jisl.element.ProgramElement;
+import de.rbuurman.jisl.program.ProgramElement;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.lexing.LexingException;

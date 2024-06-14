@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.element.primitive;
+package de.rbuurman.jisl.program.primitive;
 
 public final class IntegerPrimitive extends Primitive<Integer> {
     public IntegerPrimitive(Integer inner) {
