@@ -6,6 +6,7 @@ import java.util.Queue;
 import de.rbuurman.jisl.element.primitive.*;
 import de.rbuurman.jisl.lexing.matcher.*;
 import de.rbuurman.jisl.lexing.token.*;
+import de.rbuurman.jisl.parsing.TokenQueue;
 
 public final class Lexer {
 	final static char EOF = '\0';
@@ -24,12 +25,12 @@ public final class Lexer {
 		this.position = new SourcePosition(1, 1);
 	}
 
-	public Queue<Token> tokenize() throws LexingException {
-		var tokens = new LinkedList<Token>();
+	public TokenQueue tokenize() throws LexingException {
+		var tokens = new TokenQueue();
 
 		while (true) {
 			var token = this.advance();
-			tokens.add(token);
+			tokens.queue(token);
 
 			if (token.exit())
 				break;

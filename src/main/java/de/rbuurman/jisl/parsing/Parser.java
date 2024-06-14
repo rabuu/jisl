@@ -10,9 +10,9 @@ import de.rbuurman.jisl.lexing.token.CommentToken;
 import de.rbuurman.jisl.lexing.token.Token;
 
 public final class Parser {
-    private Queue<Token> tokens;
+    private TokenQueue tokens;
 
-    public Parser(Queue<Token> tokens) {
+    public Parser(TokenQueue tokens) {
         this.tokens = tokens;
     }
 

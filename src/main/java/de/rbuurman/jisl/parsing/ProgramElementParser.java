@@ -1,7 +1,6 @@
 package de.rbuurman.jisl.parsing;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 import de.rbuurman.jisl.element.*;
 import de.rbuurman.jisl.lexing.token.IdentToken;
@@ -11,7 +10,7 @@ import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
 
 public class ProgramElementParser {
-    public static ProgramElement parseProgramElement(Queue<Token> tokens) throws ParsingException {
+    public static ProgramElement parseProgramElement(TokenQueue tokens) throws ParsingException {
         boolean removedOpen = false;
         if (tokens.peek().equals(new SimpleToken(Type.OPEN))) {
             tokens.remove();
@@ -29,16 +28,16 @@ public class ProgramElementParser {
         }
     }
 
-    public static Definition parseDefinition(Queue<Token> tokens) throws ParsingException {
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.DEFINE));
+    public static Definition parseDefinition(TokenQueue tokens) throws ParsingException {
+        tokens.expectToken(new SimpleToken(Type.DEFINE));
         final var ident = parseIdent(tokens);
         final var expr = parseExpression(tokens);
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.CLOSE));
+        tokens.expectToken(new SimpleToken(Type.CLOSE));
 
         return new Definition(ident, expr);
     }
 
-    public static Expression parseExpression(Queue<Token> tokens, final boolean removedOpen) throws ParsingException {
+    public static Expression parseExpression(TokenQueue tokens, final boolean removedOpen) throws ParsingException {
         final var firstToken = tokens.peek();
         if (removedOpen || firstToken.equals(new SimpleToken(Type.OPEN))) {
             if (!removedOpen) {
@@ -57,11 +56,11 @@ public class ProgramElementParser {
         }
     }
 
-    public static Expression parseExpression(Queue<Token> tokens) throws ParsingException {
+    public static Expression parseExpression(TokenQueue tokens) throws ParsingException {
         return parseExpression(tokens, false);
     }
 
-    public static SExpression parseSExpression(Queue<Token> tokens) throws ParsingException {
+    public static SExpression parseSExpression(TokenQueue tokens) throws ParsingException {
         final var op = parseExpression(tokens);
 
         var args = new ArrayList<Expression>();
@@ -73,12 +72,12 @@ public class ProgramElementParser {
             throw new ParsingException("Empty expression");
         }
 
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.CLOSE));
+        tokens.expectToken(new SimpleToken(Type.CLOSE));
 
         return new SExpression(op, args);
     }
 
-    public static Ident parseIdent(Queue<Token> tokens) throws ParsingException {
+    public static Ident parseIdent(TokenQueue tokens) throws ParsingException {
         final var token = tokens.poll();
         if (token == null)
             throw ParsingException.EmptyTokenQueueException;
@@ -90,7 +89,7 @@ public class ProgramElementParser {
         throw new ParsingException("Expected ident but got " + token);
     }
 
-    public static Value parseValue(Queue<Token> tokens) throws ParsingException {
+    public static Value parseValue(TokenQueue tokens) throws ParsingException {
         final var firstToken = tokens.poll();
         if (firstToken == null)
             throw ParsingException.EmptyTokenQueueException;
@@ -106,22 +105,22 @@ public class ProgramElementParser {
         throw new ParsingException("Couldn't parse " + firstToken + " to value");
     }
 
-    public static Lambda parseLambda(Queue<Token> tokens) throws ParsingException {
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.LAMBDA));
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.OPEN));
+    public static Lambda parseLambda(TokenQueue tokens) throws ParsingException {
+        tokens.expectToken(new SimpleToken(Type.LAMBDA));
+        tokens.expectToken(new SimpleToken(Type.OPEN));
 
         var idents = new ArrayList<Ident>();
         while (!tokens.peek().equals(new SimpleToken(Type.CLOSE)) && !tokens.peek().exit()) {
             idents.add(parseIdent(tokens));
         }
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.CLOSE));
+        tokens.expectToken(new SimpleToken(Type.CLOSE));
 
         if (idents.size() == 0) {
             throw new ParsingException("Lambda expression invalid without idents");
         }
 
         final var expr = parseExpression(tokens);
-        ParsingUtils.expectToken(tokens, new SimpleToken(Type.CLOSE));
+        tokens.expectToken(new SimpleToken(Type.CLOSE));
 
         return new Lambda(idents, expr);
     }

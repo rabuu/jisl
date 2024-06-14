@@ -3,18 +3,17 @@ package de.rbuurman.jisl.lexing;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.junit.jupiter.api.Test;
 
-import java.util.Queue;
-
 import de.rbuurman.jisl.element.primitive.*;
 import de.rbuurman.jisl.lexing.token.*;
 import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
+import de.rbuurman.jisl.parsing.TokenQueue;
 
 public class LexerTest {
 
 	@Test
 	void tokenizeCorrectInput() throws LexingException {
 		var lexer = new Lexer("(define 1 a \"hello world\") ; comment\n [ 0.567 #true]");
-		final Queue<Token> tokens = lexer.tokenize();
+		final TokenQueue tokens = lexer.tokenize();
 
 		final Token[] expected = {
 				new SimpleToken(Type.OPEN),
