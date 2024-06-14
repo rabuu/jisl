@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.primitive;
+package de.rbuurman.jisl.element.primitive;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.element.Value;

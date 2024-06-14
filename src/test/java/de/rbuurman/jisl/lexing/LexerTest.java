@@ -1,19 +1,12 @@
-package de.rbuurman.jisl.parsing.lexing;
+package de.rbuurman.jisl.lexing;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.util.Queue;
 
-import de.rbuurman.jisl.lexing.Lexer;
-import de.rbuurman.jisl.lexing.LexingException;
-import de.rbuurman.jisl.lexing.token.CommentToken;
-import de.rbuurman.jisl.lexing.token.IdentToken;
-import de.rbuurman.jisl.lexing.token.SimpleToken;
-import de.rbuurman.jisl.lexing.token.Token;
-import org.junit.jupiter.api.Test;
-
-import de.rbuurman.jisl.primitive.*;
+import de.rbuurman.jisl.element.primitive.*;
+import de.rbuurman.jisl.lexing.token.*;
 import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
 
 public class LexerTest {

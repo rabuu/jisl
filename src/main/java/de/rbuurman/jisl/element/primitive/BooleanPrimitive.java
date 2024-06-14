@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.primitive;
+package de.rbuurman.jisl.element.primitive;
 
 public final class BooleanPrimitive extends Primitive<Boolean> {
     public BooleanPrimitive(Boolean inner) {
