@@ -3,6 +3,7 @@ package de.rbuurman.jisl.lexing;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import de.rbuurman.jisl.utils.SourcePosition;
 import de.rbuurman.jisl.program.primitive.*;
 import de.rbuurman.jisl.lexing.matcher.*;
 import de.rbuurman.jisl.lexing.token.*;
@@ -140,9 +141,9 @@ public final class Lexer {
 			return EOF;
 
 		if (c == '\n') {
-			this.position = new SourcePosition(this.position.row() + 1, 1);
+			this.position = this.position.nextRow();
 		} else {
-			this.position = new SourcePosition(this.position.row(), this.position.column() + 1);
+			this.position = this.position.nextColumn();
 		}
 
 		return c;

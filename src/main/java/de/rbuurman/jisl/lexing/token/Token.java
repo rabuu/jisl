@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.lexing.token;
 
-import de.rbuurman.jisl.lexing.SourcePosition;
+import de.rbuurman.jisl.utils.SourcePosition;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 
 /**
