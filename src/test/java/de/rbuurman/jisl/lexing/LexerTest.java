@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import de.rbuurman.jisl.program.primitive.*;
 import de.rbuurman.jisl.lexing.token.*;
-import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
+import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.TokenQueue;
 
 public class LexerTest {
@@ -16,18 +16,18 @@ public class LexerTest {
 		final TokenQueue tokens = lexer.tokenize();
 
 		final Token[] expected = {
-				new SimpleToken(Type.OPEN),
-				new SimpleToken(Type.DEFINE),
+				new SimpleToken(SimpleTokenType.OPEN),
+				new SimpleToken(SimpleTokenType.DEFINE),
 				new IntegerPrimitive(1).toToken(),
 				new IdentifierToken("a"),
 				new StringPrimitive("hello world").toToken(),
-				new SimpleToken(Type.CLOSE),
+				new SimpleToken(SimpleTokenType.CLOSE),
 				new CommentToken("comment"),
-				new SimpleToken(Type.OPEN),
+				new SimpleToken(SimpleTokenType.OPEN),
 				new FloatPrimitive(0.567f).toToken(),
 				new BooleanPrimitive(true).toToken(),
-				new SimpleToken(Type.CLOSE),
-				new SimpleToken(Type.EOF),
+				new SimpleToken(SimpleTokenType.CLOSE),
+				new SimpleToken(SimpleTokenType.EOF),
 		};
 
 		assertArrayEquals(expected, tokens.toArray());

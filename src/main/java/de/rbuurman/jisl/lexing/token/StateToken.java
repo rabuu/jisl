@@ -12,14 +12,6 @@ public abstract class StateToken<S> extends Token {
 	}
 
 	@Override
-	public String toString() {
-		if (this.getSourcePosition() == null) {
-			return this.getClass().getSimpleName() + ": " + this.getState();
-		}
-		return this.getClass().getSimpleName() + ": " + this.getState() + " " + this.getSourcePosition();
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -28,11 +20,13 @@ public abstract class StateToken<S> extends Token {
 		if (getClass() != obj.getClass())
 			return false;
 
+		@SuppressWarnings("unchecked")
 		StateToken<S> other = (StateToken<S>) obj;
-		if (!this.state.equals(other.state)) {
-			return false;
-		}
+		return this.state.equals(other.state);
+	}
 
-		return true;
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName() + ": " + this.getState().toString();
 	}
 }

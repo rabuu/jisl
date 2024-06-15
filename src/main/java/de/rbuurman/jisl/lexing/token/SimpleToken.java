@@ -1,7 +1,7 @@
 package de.rbuurman.jisl.lexing.token;
 
-public final class SimpleToken extends StateToken<SimpleToken.Type> {
-	public enum Type {
+public final class SimpleToken extends StateToken<SimpleToken.SimpleTokenType> {
+	public enum SimpleTokenType {
 		OPEN,
 		CLOSE,
 
@@ -12,36 +12,24 @@ public final class SimpleToken extends StateToken<SimpleToken.Type> {
 		LAMBDA,
 
 		EOF;
-
-		@Override
-		public String toString() {
-			switch (this) {
-				case OPEN:
-					return "(";
-				case CLOSE:
-					return ")";
-				case PLUS:
-					return "+";
-				case MINUS:
-					return "-";
-				case DEFINE:
-					return "define";
-				case LAMBDA:
-					return "lambda";
-				case EOF:
-					return "EOF";
-				default:
-					return null;
-			}
-		}
 	}
 
-	public SimpleToken(Type type) {
+	public SimpleToken(SimpleTokenType type) {
 		super(type);
 	}
 
 	@Override
+	public boolean is(SimpleTokenType type) {
+		return this.getState() == type;
+	}
+
+	@Override
 	public boolean exit() {
-		return this.getState() == Type.EOF;
+		return this.getState() == SimpleTokenType.EOF;
+	}
+
+	@Override
+	public String toString() {
+		return this.getState().toString();
 	}
 }

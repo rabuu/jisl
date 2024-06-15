@@ -15,7 +15,7 @@ public final class IdentifierParser extends Parser<Identifier> {
         if (token instanceof IdentifierToken) {
             return ((IdentifierToken) token).toIdentifier();
         } else {
-            throw new ParsingException("No identifier: " + token);
+            throw new ParsingException("No identifier: " + token, token.getSourcePosition());
         }
     }
 

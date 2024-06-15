@@ -1,30 +1,34 @@
 package de.rbuurman.jisl.lexing.token;
 
 import de.rbuurman.jisl.lexing.SourcePosition;
+import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 
+/**
+ * Token
+ */
 public abstract class Token {
 	private SourcePosition sourcePosition;
 
-	public Token withSourcePosition(SourcePosition sourcePosition) {
-		this.sourcePosition = sourcePosition;
-		return this;
-	}
-
-	@Override
-	public abstract String toString();
-
-	@Override
-	public abstract boolean equals(Object obj);
-
-	public boolean isType(SimpleToken.Type type) {
-		return this.equals(new SimpleToken(type));
+	public boolean is(SimpleTokenType token) {
+		return false;
 	}
 
 	public boolean exit() {
 		return false;
 	}
 
-	public SourcePosition getSourcePosition() {
-		return sourcePosition;
+	public Token withPosition(SourcePosition sourcePosition) {
+		this.sourcePosition = sourcePosition;
+		return this;
 	}
+
+	public SourcePosition getSourcePosition() {
+		return this.sourcePosition;
+	}
+
+	@Override
+	public abstract boolean equals(Object obj);
+
+	@Override
+	public abstract String toString();
 }

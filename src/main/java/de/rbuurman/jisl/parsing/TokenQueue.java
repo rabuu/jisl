@@ -3,9 +3,8 @@ package de.rbuurman.jisl.parsing;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import de.rbuurman.jisl.lexing.token.SimpleToken;
 import de.rbuurman.jisl.lexing.token.Token;
-import de.rbuurman.jisl.lexing.token.SimpleToken.Type;
+import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 
 public class TokenQueue {
 	private Deque<Token> tokens = new ArrayDeque<Token>();
@@ -52,23 +51,19 @@ public class TokenQueue {
 	}
 
 	public boolean endOfExpression() {
-		return this.finished() || this.tokens.peek().isType(Type.CLOSE);
+		return this.finished() || this.tokens.peek().is(SimpleTokenType.CLOSE);
 	}
 
-	public Token expect(Token expected) throws ParsingException {
+	public Token expect(SimpleTokenType expected) throws ParsingException {
 		final var token = this.poll();
 		if (token == null)
 			throw ParsingException.EmptyTokenQueueException;
 
-		if (!token.equals(expected)) {
-			throw new ParsingException("Expected " + expected + " but got " + token);
+		if (!token.is(expected)) {
+			throw new ParsingException("Expected " + expected + " but got " + token, token.getSourcePosition());
 		}
 
 		return token;
-	}
-
-	public Token expect(SimpleToken.Type expected) throws ParsingException {
-		return this.expect(new SimpleToken(expected));
 	}
 
 	public Object[] toArray() {

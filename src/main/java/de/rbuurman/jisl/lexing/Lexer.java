@@ -6,6 +6,7 @@ import java.util.Queue;
 import de.rbuurman.jisl.program.primitive.*;
 import de.rbuurman.jisl.lexing.matcher.*;
 import de.rbuurman.jisl.lexing.token.*;
+import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.TokenQueue;
 
 public final class Lexer {
@@ -43,7 +44,7 @@ public final class Lexer {
 		this.eat(new WhitespaceMatcher());
 
 		if (this.isEOF()) {
-			return new SimpleToken(SimpleToken.Type.EOF).withSourcePosition(this.position);
+			return new SimpleToken(SimpleTokenType.EOF).withPosition(this.position);
 		}
 
 		final char firstCharacter = this.peek();
@@ -53,7 +54,7 @@ public final class Lexer {
 				this.eat(new CharMatcher(';'));
 				this.eat(new WhitespaceMatcher());
 				final String comment = this.eat(new LineMatcher());
-				return new CommentToken(comment).withSourcePosition(firstPosition);
+				return new CommentToken(comment).withPosition(firstPosition);
 
 			case '"':
 				this.bump();
@@ -62,16 +63,16 @@ public final class Lexer {
 				if (closingDel != '"') {
 					throw new LexingException("Unterminated string literal", this.position);
 				}
-				return new StringPrimitive(string).toToken().withSourcePosition(firstPosition);
+				return new StringPrimitive(string).toToken().withPosition(firstPosition);
 
 			case '#':
 				this.bump();
 				final String boolStr = this.eat(new WordMatcher());
 				switch (boolStr) {
 					case "true":
-						return new BooleanPrimitive(true).toToken().withSourcePosition(firstPosition);
+						return new BooleanPrimitive(true).toToken().withPosition(firstPosition);
 					case "false":
-						return new BooleanPrimitive(false).toToken().withSourcePosition(firstPosition);
+						return new BooleanPrimitive(false).toToken().withPosition(firstPosition);
 					default:
 						throw new LexingException("Invalid Boolean: #" + boolStr, firstPosition);
 				}
@@ -79,17 +80,17 @@ public final class Lexer {
 			case '(':
 			case '[':
 				this.bump();
-				return new SimpleToken(SimpleToken.Type.OPEN).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.OPEN).withPosition(firstPosition);
 			case ')':
 			case ']':
 				this.bump();
-				return new SimpleToken(SimpleToken.Type.CLOSE).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.CLOSE).withPosition(firstPosition);
 			case '+':
 				this.bump();
-				return new SimpleToken(SimpleToken.Type.PLUS).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.PLUS).withPosition(firstPosition);
 			case '-':
 				this.bump();
-				return new SimpleToken(SimpleToken.Type.MINUS).withSourcePosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.MINUS).withPosition(firstPosition);
 		}
 
 		if (Character.isDigit(firstCharacter)) {
@@ -97,14 +98,14 @@ public final class Lexer {
 			if (numeric.contains(".")) {
 				try {
 					final float f = Float.parseFloat(numeric);
-					return new FloatPrimitive(f).toToken().withSourcePosition(firstPosition);
+					return new FloatPrimitive(f).toToken().withPosition(firstPosition);
 				} catch (NumberFormatException e) {
 					throw new LexingException("Couldn't parse float", firstPosition);
 				}
 			} else {
 				try {
 					final int i = Integer.parseInt(numeric);
-					return new IntegerPrimitive(i).toToken().withSourcePosition(firstPosition);
+					return new IntegerPrimitive(i).toToken().withPosition(firstPosition);
 				} catch (Exception e) {
 					throw new LexingException("Couldn't parse integer", firstPosition);
 				}
@@ -113,11 +114,11 @@ public final class Lexer {
 			final String name = this.eat(new WordMatcher());
 			switch (name) {
 				case "define":
-					return new SimpleToken(SimpleToken.Type.DEFINE).withSourcePosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.DEFINE).withPosition(firstPosition);
 				case "lambda":
-					return new SimpleToken(SimpleToken.Type.LAMBDA).withSourcePosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.LAMBDA).withPosition(firstPosition);
 				default:
-					return new IdentifierToken(name).withSourcePosition(firstPosition);
+					return new IdentifierToken(name).withPosition(firstPosition);
 			}
 		}
 
