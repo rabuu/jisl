@@ -32,6 +32,7 @@ public abstract class Primitive<T> implements Value {
         if (this.getClass() != obj.getClass())
             return false;
 
+        @SuppressWarnings("unchecked")
         Primitive<T> other = (Primitive<T>) obj;
         if (!this.inner.equals(other.inner))
             return false;
