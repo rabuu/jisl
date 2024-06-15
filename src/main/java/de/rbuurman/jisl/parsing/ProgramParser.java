@@ -9,7 +9,7 @@ public final class ProgramParser extends Parser<Program> {
         var program = new Program();
 
         while (!tokens.finished()) {
-            program.add(new ProgramElementParser().parse(tokens));
+            program.queue(new ProgramElementParser().parse(tokens));
         }
 
         return program;
