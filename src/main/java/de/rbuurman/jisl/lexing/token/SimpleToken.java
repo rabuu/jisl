@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.lexing.token;
 
-public final class SimpleToken extends StateToken<SimpleToken.SimpleTokenType> {
+public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 	public enum SimpleTokenType {
 		OPEN,
 		CLOSE,

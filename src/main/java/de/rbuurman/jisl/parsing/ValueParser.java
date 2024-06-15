@@ -17,7 +17,7 @@ public final class ValueParser extends Parser<Value> {
 
         final var token = tokens.poll();
         if (token instanceof PrimitiveToken) {
-            return ((PrimitiveToken<?>) token).getState();
+            return ((PrimitiveToken<?>) token).getPrimitive();
         }
 
         throw new ParsingException("Couldn't parse " + token + " to value", token.getSourcePosition());

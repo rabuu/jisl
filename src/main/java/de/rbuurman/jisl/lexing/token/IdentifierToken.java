@@ -2,7 +2,7 @@ package de.rbuurman.jisl.lexing.token;
 
 import de.rbuurman.jisl.program.Identifier;
 
-public final class IdentifierToken extends StateToken<String> {
+public final class IdentifierToken extends Token<String> {
 	public IdentifierToken(String identifier) {
 		super(identifier);
 	}
