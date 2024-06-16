@@ -18,7 +18,7 @@ public class TokenQueueTest {
 
 		assertEquals(new NumberPrimitive(42.).toToken(), queue.peek());
 		assertEquals(new NumberPrimitive(42.).toToken(), queue.poll());
-		assertEquals(new NumberPrimitive(69.).toToken(), queue.peekNth(2));
+		assertEquals(new NumberPrimitive(69.).toToken(), queue.peekSecond());
 		queue.remove();
 		assertEquals(queue.size(), 1);
 	}

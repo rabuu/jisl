@@ -30,8 +30,7 @@ public final class Lexer {
 	public TokenQueue tokenize() throws LexingException {
 		var tokens = new TokenQueue();
 
-		while (true) {
-			var token = this.advance();
+		for (var token = this.advance();; token = this.advance()) {
 			tokens.queue(token);
 
 			if (token.exit())
@@ -59,21 +58,70 @@ public final class Lexer {
 
 			case '"':
 				this.bump();
-				final String string = this.eat(new InverseMatcher(new CharMatcher('"')));
-				final char closingDel = this.bump();
-				if (closingDel != '"') {
-					throw new LexingException("Unterminated string literal", this.position);
+				var string = new String();
+				for (;;) {
+					final String s = this
+							.eat(new InverseMatcher(new OrMatcher(new CharMatcher('\\'), new CharMatcher('"'))));
+
+					final char delimiter = this.bump();
+
+					// escape codes
+					if (delimiter == '\\') {
+						final var escapeCodePosition = this.position;
+						final var escapeCode = this.bump();
+						switch (escapeCode) {
+							case '"':
+								string += s + '"';
+								continue;
+
+							default:
+								throw new LexingException("Invalid escape code " + escapeCode, escapeCodePosition);
+						}
+					} else if (delimiter == '"') {
+						string += s;
+						this.bump();
+						break;
+					} else {
+						throw new LexingException("Unterminated string literal", this.position);
+					}
 				}
 				return new StringPrimitive(string).toToken().withPosition(firstPosition);
 
 			case '#':
 				this.bump();
+
+				// character
+				if (this.peek() == '\\') {
+					this.bump();
+					final String charString = this.eat(new WordMatcher());
+
+					if (charString.length() == 1) {
+						return new CharacterPrimitive(charString.charAt(0)).toToken().withPosition(firstPosition);
+					}
+
+					switch (charString) {
+						case "space":
+							return new CharacterPrimitive(' ').toToken().withPosition(firstPosition);
+						default:
+							throw new LexingException("Unknown character: " + charString, firstPosition);
+					}
+				}
+
+				// booleans & specials
 				final String boolStr = this.eat(new WordMatcher());
 				switch (boolStr) {
 					case "true":
+					case "t":
+					case "T":
 						return new BooleanPrimitive(true).toToken().withPosition(firstPosition);
 					case "false":
+					case "f":
+					case "F":
 						return new BooleanPrimitive(false).toToken().withPosition(firstPosition);
+					case "reader":
+						// ignore
+						this.eat(new LineMatcher());
+						return this.advance();
 					default:
 						throw new LexingException("Invalid Boolean: #" + boolStr, firstPosition);
 				}
@@ -103,14 +151,27 @@ public final class Lexer {
 		if (Character.isDigit(firstCharacter)) {
 			final String numeric = this.eat(new NumericMatcher());
 			try {
+				if (numeric.contains("/")) {
+					String[] fraction = numeric.split("/");
+					if (fraction.length != 2) {
+						throw new LexingException("Invalid fraction literal: " + numeric, firstPosition);
+					}
+					final var dividend = Double.parseDouble(fraction[0]);
+					final var divisor = Double.parseDouble(fraction[1]);
+					return new NumberPrimitive(dividend / divisor).toToken().withPosition(firstPosition);
+				}
 				var num = Double.parseDouble(numeric);
 				return new NumberPrimitive(num).toToken().withPosition(firstPosition);
 			} catch (NumberFormatException e) {
 				throw new LexingException("Couldn't parse " + numeric + " to number", firstPosition);
 			}
-		} else if (Character.isAlphabetic(firstCharacter)) {
-			final String name = this.eat(new WordMatcher());
+		} else if (new IdentifierMatcher().matches(firstCharacter)) {
+			final String name = this.eat(new IdentifierMatcher());
 			switch (name) {
+				case "true":
+					return new BooleanPrimitive(true).toToken().withPosition(firstPosition);
+				case "false":
+					return new BooleanPrimitive(false).toToken().withPosition(firstPosition);
 				case "define":
 					return new SimpleToken(SimpleTokenType.DEFINE).withPosition(firstPosition);
 				case "lambda":

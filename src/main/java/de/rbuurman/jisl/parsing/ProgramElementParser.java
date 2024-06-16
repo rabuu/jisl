@@ -7,7 +7,7 @@ public final class ProgramElementParser extends Parser<ProgramElement> {
 
     @Override
     public ProgramElement parse(TokenQueue tokens) throws ParsingException {
-        if (tokens.peekNth(2).is(SimpleTokenType.DEFINE)) {
+        if (tokens.peekSecond().is(SimpleTokenType.DEFINE)) {
             return new DefinitionParser().parse(tokens);
         } else {
             return new ExpressionParser().parse(tokens);

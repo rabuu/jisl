@@ -25,21 +25,12 @@ public class PeekableQueue<T> {
 		return this.elements.peekFirst();
 	}
 
-	public T peekNth(int n) {
-		if (n <= 0)
-			return null;
+	public T peekSecond() {
+		final var temp = this.elements.pollFirst();
+		T second = this.elements.peek();
+		this.elements.addFirst(temp);
 
-		for (int i = 0; i < n - 1; i++) {
-			this.elements.addLast(this.elements.pollFirst());
-		}
-
-		T nth = this.elements.peek();
-
-		for (int i = 0; i < n - 1; ++i) {
-			this.elements.addFirst(this.elements.pollLast());
-		}
-
-		return nth;
+		return second;
 	}
 
 	public int size() {

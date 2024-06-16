@@ -1,11 +1,6 @@
 package de.rbuurman.jisl.lexing.matcher;
 
-public final class InverseMatcher implements Matcher {
-	private Matcher matcher;
-
-	public InverseMatcher(Matcher matcher) {
-		this.matcher = matcher;
-	}
+public record InverseMatcher(Matcher matcher) implements Matcher {
 
 	@Override
 	public boolean matches(char c) {

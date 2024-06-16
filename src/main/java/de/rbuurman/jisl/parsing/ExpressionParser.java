@@ -14,7 +14,7 @@ public final class ExpressionParser extends Parser<Expression> {
     public Expression parse(TokenQueue tokens) throws ParsingException {
         if (tokens.peek().is(SimpleTokenType.OPEN)) {
 
-            final Token<?> next = tokens.peekNth(2);
+            final Token<?> next = tokens.peekSecond();
             if (next.is(SimpleTokenType.LAMBDA)) {
                 return new LambdaParser().parse(tokens);
             } else if (next.is(SimpleTokenType.COND)) {

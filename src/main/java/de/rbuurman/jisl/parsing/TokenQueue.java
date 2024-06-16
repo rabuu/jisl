@@ -4,7 +4,7 @@ import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.utils.PeekableQueue;
 
-public class TokenQueue extends PeekableQueue<Token> {
+public class TokenQueue extends PeekableQueue<Token<?>> {
 	public boolean finished() {
 		return this.size() == 0 || this.elements.peek().exit();
 	}
@@ -13,7 +13,7 @@ public class TokenQueue extends PeekableQueue<Token> {
 		return this.finished() || this.elements.peek().is(SimpleTokenType.CLOSE);
 	}
 
-	public Token expect(SimpleTokenType expected) throws ParsingException {
+	public Token<?> expect(SimpleTokenType expected) throws ParsingException {
 		final var token = this.poll();
 		if (token == null)
 			throw ParsingException.EmptyTokenQueueException;

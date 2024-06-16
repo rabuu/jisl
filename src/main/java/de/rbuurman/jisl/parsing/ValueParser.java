@@ -14,7 +14,7 @@ public final class ValueParser extends Parser<Value> {
 
     @Override
     public Value parse(TokenQueue tokens) throws ParsingException {
-        if (tokens.peekNth(2).is(SimpleTokenType.LAMBDA)) {
+        if (tokens.peekSecond().is(SimpleTokenType.LAMBDA)) {
             return new LambdaParser().parse(tokens);
         }
 
