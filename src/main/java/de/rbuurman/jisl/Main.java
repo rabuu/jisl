@@ -1,13 +1,11 @@
 package de.rbuurman.jisl;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import de.rbuurman.jisl.lexing.LexingException;
-import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.parsing.ProgramParser;
 import de.rbuurman.jisl.program.Program;
+import de.rbuurman.jisl.program.Value;
 
 public class Main {
     public static String USAGE = "USAGE: jisl <SOURCE-FILE>";
@@ -25,15 +23,11 @@ public class Main {
 
             final Program program = new ProgramParser().parse(code);
 
-            for (Object elem : program.toArray()) {
+            for (Value elem : program.run()) {
                 System.out.println(elem);
             }
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LexingException e) {
-            throw new RuntimeException(e);
-        } catch (ParsingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

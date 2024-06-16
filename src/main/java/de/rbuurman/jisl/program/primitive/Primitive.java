@@ -2,6 +2,8 @@ package de.rbuurman.jisl.program.primitive;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.program.Value;
+import de.rbuurman.jisl.program.evaluation.Environment;
+import de.rbuurman.jisl.program.evaluation.EvaluationException;
 
 public abstract class Primitive<T> implements Value {
     private T inner;
@@ -16,6 +18,11 @@ public abstract class Primitive<T> implements Value {
 
     public PrimitiveToken<Primitive<T>> toToken() {
         return new PrimitiveToken<Primitive<T>>(this);
+    }
+
+    @Override
+    public Value evaluate(Environment environment) throws EvaluationException {
+        return this;
     }
 
     @Override
