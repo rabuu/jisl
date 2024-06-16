@@ -41,7 +41,7 @@ public final class Lexer {
 		return tokens;
 	}
 
-	private Token advance() throws LexingException {
+	private Token<?> advance() throws LexingException {
 		this.eat(new WhitespaceMatcher());
 
 		if (this.isEOF()) {
@@ -92,24 +92,21 @@ public final class Lexer {
 			case '-':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.MINUS).withPosition(firstPosition);
+			case '*':
+				this.bump();
+				return new SimpleToken(SimpleTokenType.ASTERISK).withPosition(firstPosition);
+			case '/':
+				this.bump();
+				return new SimpleToken(SimpleTokenType.SLASH).withPosition(firstPosition);
 		}
 
 		if (Character.isDigit(firstCharacter)) {
 			final String numeric = this.eat(new NumericMatcher());
-			if (numeric.contains(".")) {
-				try {
-					final float f = Float.parseFloat(numeric);
-					return new FloatPrimitive(f).toToken().withPosition(firstPosition);
-				} catch (NumberFormatException e) {
-					throw new LexingException("Couldn't parse float", firstPosition);
-				}
-			} else {
-				try {
-					final int i = Integer.parseInt(numeric);
-					return new IntegerPrimitive(i).toToken().withPosition(firstPosition);
-				} catch (Exception e) {
-					throw new LexingException("Couldn't parse integer", firstPosition);
-				}
+			try {
+				var num = Double.parseDouble(numeric);
+				return new NumberPrimitive(num).toToken().withPosition(firstPosition);
+			} catch (NumberFormatException e) {
+				throw new LexingException("Couldn't parse " + numeric + " to number", firstPosition);
 			}
 		} else if (Character.isAlphabetic(firstCharacter)) {
 			final String name = this.eat(new WordMatcher());
@@ -118,6 +115,8 @@ public final class Lexer {
 					return new SimpleToken(SimpleTokenType.DEFINE).withPosition(firstPosition);
 				case "lambda":
 					return new SimpleToken(SimpleTokenType.LAMBDA).withPosition(firstPosition);
+				case "identity":
+					return new SimpleToken(SimpleTokenType.IDENTITY).withPosition(firstPosition);
 				default:
 					return new IdentifierToken(name).withPosition(firstPosition);
 			}

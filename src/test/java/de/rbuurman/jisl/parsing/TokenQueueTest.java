@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import de.rbuurman.jisl.program.primitive.IntegerPrimitive;
+import de.rbuurman.jisl.program.primitive.NumberPrimitive;
 
 public class TokenQueueTest {
 
@@ -12,13 +12,13 @@ public class TokenQueueTest {
 	public void generalFunctionality() {
 		TokenQueue queue = new TokenQueue();
 
-		queue.queue(new IntegerPrimitive(42).toToken());
-		queue.queue(new IntegerPrimitive(0).toToken());
-		queue.queue(new IntegerPrimitive(69).toToken());
+		queue.queue(new NumberPrimitive(42.).toToken());
+		queue.queue(new NumberPrimitive(0.).toToken());
+		queue.queue(new NumberPrimitive(69.).toToken());
 
-		assertEquals(new IntegerPrimitive(42).toToken(), queue.peek());
-		assertEquals(new IntegerPrimitive(42).toToken(), queue.poll());
-		assertEquals(new IntegerPrimitive(69).toToken(), queue.peekNth(2));
+		assertEquals(new NumberPrimitive(42.).toToken(), queue.peek());
+		assertEquals(new NumberPrimitive(42.).toToken(), queue.poll());
+		assertEquals(new NumberPrimitive(69.).toToken(), queue.peekNth(2));
 		queue.remove();
 		assertEquals(queue.size(), 1);
 	}

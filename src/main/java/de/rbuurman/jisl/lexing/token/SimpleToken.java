@@ -7,6 +7,10 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 
 		PLUS,
 		MINUS,
+		ASTERISK,
+		SLASH,
+
+		IDENTITY,
 
 		DEFINE,
 		LAMBDA,
