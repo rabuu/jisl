@@ -10,7 +10,12 @@ import de.rbuurman.jisl.program.Value;
  * Environment
  */
 public class Environment {
+
 	private Map<Identifier, Value> definitions = new HashMap<>();
+
+	protected Map<Identifier, Value> getDefinitions() {
+		return this.definitions;
+	}
 
 	public void addDefinition(Identifier identifier, Value value) throws EvaluationException {
 		if (this.definitions.containsKey(identifier)) {
@@ -28,4 +33,19 @@ public class Environment {
 
 		return value;
 	}
+
+	public static Environment merge(Environment base, Environment local) throws EvaluationException {
+		var env = new Environment();
+
+		for (Map.Entry<Identifier, Value> entry : base.getDefinitions().entrySet()) {
+			env.getDefinitions().put(entry.getKey(), entry.getValue());
+		}
+
+		for (Map.Entry<Identifier, Value> entry : local.getDefinitions().entrySet()) {
+			env.getDefinitions().put(entry.getKey(), entry.getValue());
+		}
+
+		return env;
+	}
+
 }

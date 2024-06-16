@@ -5,6 +5,7 @@ import java.util.Queue;
 import de.rbuurman.jisl.program.Value;
 import de.rbuurman.jisl.program.builtin.Builtin;
 import de.rbuurman.jisl.program.evaluation.Applicable;
+import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.primitive.NumberPrimitive;
 
@@ -20,7 +21,7 @@ public abstract class DyadicArithmeticBuiltin extends Builtin implements Value, 
     }
 
     @Override
-    public Value apply(Queue<Value> arguments) throws EvaluationException {
+    public Value apply(Queue<Value> arguments, Environment environment) throws EvaluationException {
         if (arguments.size() < 1) {
             throw new EvaluationException(this + " expects at least one argument");
         }

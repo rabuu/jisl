@@ -9,5 +9,5 @@ import de.rbuurman.jisl.program.Value;
  */
 public interface Applicable {
 
-	public Value apply(Queue<Value> arguments) throws EvaluationException;
+	public Value apply(Queue<Value> arguments, Environment environment) throws EvaluationException;
 }

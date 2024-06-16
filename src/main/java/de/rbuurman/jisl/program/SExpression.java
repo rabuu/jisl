@@ -22,6 +22,6 @@ public record SExpression(Expression function, Queue<Expression> arguments) impl
             arguments.add(arg.evaluate(environment));
         }
 
-        return applicable.apply(arguments);
+        return applicable.apply(arguments, environment);
     }
 }
