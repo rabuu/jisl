@@ -10,6 +10,13 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		ASTERISK,
 		SLASH,
 
+		COND,
+		ELSE,
+		IF,
+		AND,
+		OR,
+		NOT,
+
 		IDENTITY,
 
 		DEFINE,

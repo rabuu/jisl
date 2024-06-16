@@ -4,7 +4,8 @@ import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.program.Value;
 import de.rbuurman.jisl.program.builtin.arithmetic.*;
-import de.rbuurman.jisl.program.builtin.Identity;
+import de.rbuurman.jisl.program.builtin.conditional.*;
+import de.rbuurman.jisl.program.builtin.*;
 
 /**
  * ValueParser
@@ -29,6 +30,8 @@ public final class ValueParser extends Parser<Value> {
             return new Multiplication();
         } else if (token.is(SimpleTokenType.SLASH)) {
             return new Division();
+        } else if (token.is(SimpleTokenType.IF)) {
+            return new If();
         } else if (token instanceof PrimitiveToken) {
             return ((PrimitiveToken<?>) token).getPrimitive();
         }

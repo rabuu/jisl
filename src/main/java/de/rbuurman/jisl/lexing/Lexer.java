@@ -115,6 +115,18 @@ public final class Lexer {
 					return new SimpleToken(SimpleTokenType.DEFINE).withPosition(firstPosition);
 				case "lambda":
 					return new SimpleToken(SimpleTokenType.LAMBDA).withPosition(firstPosition);
+				case "cond":
+					return new SimpleToken(SimpleTokenType.COND).withPosition(firstPosition);
+				case "else":
+					return new SimpleToken(SimpleTokenType.ELSE).withPosition(firstPosition);
+				case "if":
+					return new SimpleToken(SimpleTokenType.IF).withPosition(firstPosition);
+				case "and":
+					return new SimpleToken(SimpleTokenType.AND).withPosition(firstPosition);
+				case "or":
+					return new SimpleToken(SimpleTokenType.OR).withPosition(firstPosition);
+				case "not":
+					return new SimpleToken(SimpleTokenType.NOT).withPosition(firstPosition);
 				case "identity":
 					return new SimpleToken(SimpleTokenType.IDENTITY).withPosition(firstPosition);
 				default:

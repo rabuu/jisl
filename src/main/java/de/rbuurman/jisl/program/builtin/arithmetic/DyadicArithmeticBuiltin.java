@@ -12,7 +12,7 @@ import de.rbuurman.jisl.program.primitive.NumberPrimitive;
 /**
  * Add
  */
-public abstract class DyadicArithmeticBuiltin extends Builtin implements Value, Applicable {
+public abstract class DyadicArithmeticBuiltin extends Builtin implements Applicable {
 
     protected abstract double operation(double x, double y);
 
