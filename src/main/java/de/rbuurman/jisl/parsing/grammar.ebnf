@@ -4,8 +4,10 @@
 <require>     ::= ( require <string> )
 
 <definition>  ::= ( define <identifier> <expression> )
+				| ( define ( <identifier> <identifier>+ ) <expression> )
 
 <expression>  ::= ( <expression> <expression>+ )
+				| ( local ( <definition>+ ) )
 			    | <identifier>
 			    | <value>
 
