@@ -18,4 +18,9 @@ public abstract class Applicable extends Value {
 			return false;
 		return getClass() == obj.getClass();
 	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }

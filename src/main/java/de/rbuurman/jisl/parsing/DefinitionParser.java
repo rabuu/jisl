@@ -10,6 +10,7 @@ public final class DefinitionParser extends Parser<Definition> {
         if (tokens.peekThird().is(SimpleTokenType.OPEN)) {
             return new FunctionDefinitionParser().parse(tokens);
         }
+
         tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.DEFINE);
         var identifier = new IdentifierParser().parse(tokens);

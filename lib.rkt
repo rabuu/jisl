@@ -1,1 +1,1 @@
-(define foo (lambda (x y) (+ x y)))
+(define (foo x y) (- x y))

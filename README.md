@@ -19,6 +19,7 @@ mvn clean package    # to generate a JAR executable
 - [ ] Structures
 - [ ] All important builtins
 - [ ] Good [standard library](stdlib/)
+- [ ] Nested libraries
 
 ## Not Todo
 - There will be no support for images.

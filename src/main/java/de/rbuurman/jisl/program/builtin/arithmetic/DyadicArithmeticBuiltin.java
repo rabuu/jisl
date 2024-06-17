@@ -3,14 +3,14 @@ package de.rbuurman.jisl.program.builtin.arithmetic;
 import de.rbuurman.jisl.program.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
-import de.rbuurman.jisl.program.evaluation.SimpleApplicable;
+import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.primitive.NumberPrimitive;
 import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * Add
  */
-public abstract class DyadicArithmeticBuiltin extends SimpleApplicable {
+public abstract class DyadicArithmeticBuiltin extends Applicable {
 
     protected abstract double operation(double x, double y);
 

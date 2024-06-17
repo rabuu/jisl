@@ -3,14 +3,14 @@ package de.rbuurman.jisl.program.builtin.conditional;
 import de.rbuurman.jisl.program.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
-import de.rbuurman.jisl.program.evaluation.SimpleApplicable;
+import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.primitive.BooleanPrimitive;
 import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * If
  */
-public final class If extends SimpleApplicable {
+public final class If extends Applicable {
 
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
