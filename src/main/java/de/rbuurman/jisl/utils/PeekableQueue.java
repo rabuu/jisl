@@ -34,6 +34,16 @@ public class PeekableQueue<T> implements Iterable<T> {
 		return second;
 	}
 
+	public T peekThird() {
+		final var temp1 = this.elements.pollFirst();
+		final var temp2 = this.elements.pollFirst();
+		T third = this.elements.peek();
+		this.elements.addFirst(temp2);
+		this.elements.addFirst(temp1);
+
+		return third;
+	}
+
 	public int size() {
 		return this.elements.size();
 	}
