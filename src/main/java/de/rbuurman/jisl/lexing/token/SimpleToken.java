@@ -5,6 +5,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		OPEN,
 		CLOSE,
 
+		REQUIRE,
+
 		PLUS,
 		MINUS,
 		ASTERISK,

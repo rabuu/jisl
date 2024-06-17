@@ -1,27 +1,25 @@
 package de.rbuurman.jisl.program;
 
+import java.io.IOException;
+import java.util.Optional;
+
+import de.rbuurman.jisl.lexing.LexingException;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.utils.PeekableQueue;
 import de.rbuurman.jisl.utils.Multiple;
 
 public final class Program extends PeekableQueue<ProgramElement> {
+    private Environment environment = new Environment();
 
-    public Multiple<Value> run() throws EvaluationException {
+    public Multiple<Value> run() throws EvaluationException, IOException, ParsingException, LexingException {
         Multiple<Value> results = new Multiple<>();
-        Environment environment = new Environment();
 
         for (ProgramElement element : this.elements) {
-            if (element instanceof Definition) {
-                var definition = (Definition) element;
-
-                Identifier identifier = definition.getIdentifier();
-                Value value = definition.getExpression().evaluate(environment);
-
-                environment.addDefinition(identifier, value);
-            } else if (element instanceof Expression) {
-                var expression = (Expression) element;
-                results.add(expression.evaluate(environment));
+            final Optional<Value> value = element.process(this.environment);
+            if (value.isPresent()) {
+                results.add(value.get());
             }
         }
 

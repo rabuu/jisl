@@ -47,6 +47,12 @@ public class Main {
 
         String code;
         switch (args[0]) {
+            case "repl":
+                if (args.length != 1) {
+                    throw new CLIException("REPL doesn't take any arguments");
+                }
+                new REPL().run();
+                return;
             case "inspect-lexing":
                 if (args.length != 2) {
                     throw new CLIException("Expected second argument SOURCE-FILE");
@@ -87,7 +93,8 @@ public class Main {
         }
     }
 
-    private static void runProgram(final String code) throws LexingException, ParsingException, EvaluationException {
+    private static void runProgram(final String code)
+            throws IOException, LexingException, ParsingException, EvaluationException {
         Program program = new ProgramParser().parse(code);
         Multiple<Value> values = program.run();
 

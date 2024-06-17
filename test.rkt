@@ -1,4 +1,3 @@
-(define A 2)
-(define foo (lambda (x y) (+ x (- A 1) y)))
+(require "lib.rkt")
 
-(foo A A)
+(foo 1 2)

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.rbuurman.jisl.program.Identifier;
+import de.rbuurman.jisl.program.Library;
 import de.rbuurman.jisl.program.Value;
 
 /**
@@ -48,4 +49,11 @@ public class Environment {
 		return env;
 	}
 
+	public void loadLibrary(Library library) throws EvaluationException {
+		for (var definition : library.definitions()) {
+			final var ident = definition.getIdentifier();
+			final var value = definition.getExpression().evaluate(this);
+			this.addDefinition(ident, value);
+		}
+	}
 }

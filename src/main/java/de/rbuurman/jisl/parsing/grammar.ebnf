@@ -1,5 +1,7 @@
 <program>     ::= <element>+
-<element>     ::= <definition> | <expression>
+<element>     ::= <definition> | <expression> | <require>
+
+<require>     ::= ( require <string> )
 
 <definition>  ::= ( define <identifier> <expression> )
 

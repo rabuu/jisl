@@ -167,6 +167,8 @@ public final class Lexer {
 		} else if (new IdentifierMatcher().matches(firstCharacter)) {
 			final String name = this.eat(new IdentifierMatcher());
 			switch (name) {
+				case "require":
+					return new SimpleToken(SimpleTokenType.REQUIRE).withPosition(firstPosition);
 				case "true":
 					return new BooleanPrimitive(true).toToken().withPosition(firstPosition);
 				case "false":
