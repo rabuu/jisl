@@ -15,7 +15,7 @@ import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.utils.Multiple;
 
 public class Main {
-    public static String USAGE = "USAGE: jisl [inspect-lexing|inspect-parsing] <SOURCE-FILE>";
+    public static String USAGE = "USAGE: jisl [repl|inspect-lexing|inspect-parsing] <SOURCE-FILE>";
 
     public static void main(final String[] args) {
         try {
