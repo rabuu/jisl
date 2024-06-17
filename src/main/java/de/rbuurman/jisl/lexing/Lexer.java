@@ -79,7 +79,6 @@ public final class Lexer {
 						}
 					} else if (delimiter == '"') {
 						string += s;
-						this.bump();
 						break;
 					} else {
 						throw new LexingException("Unterminated string literal", this.position);
