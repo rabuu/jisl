@@ -1,2 +1,4 @@
 (define A 2)
-A
+(define foo (lambda (x y) (+ x (- A 1) y)))
+
+(foo A A)

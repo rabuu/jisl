@@ -2,4 +2,5 @@
 
 set -xe
 
-mvn clean compile exec:java -Dexec.args=\'"$@"\'
+ARGS="$(echo "$@")"
+mvn clean compile exec:java -Dexec.args="$ARGS"

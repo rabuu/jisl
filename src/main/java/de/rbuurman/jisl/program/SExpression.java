@@ -41,4 +41,18 @@ public final class SExpression extends Expression {
         final SExpression other = (SExpression) obj;
         return this.function.equals(other.function) && this.arguments.equals(other.arguments);
     }
+
+    @Override
+    public String toString() {
+        var builder = new StringBuilder();
+        builder.append("(");
+        builder.append(this.function);
+        for (var arg : this.arguments) {
+            builder.append(" ");
+            builder.append(arg);
+        }
+        builder.append(")");
+
+        return builder.toString();
+    }
 }

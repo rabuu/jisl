@@ -2,11 +2,12 @@ package de.rbuurman.jisl.utils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Iterator;
 
 /**
  * PeekableQueue
  */
-public class PeekableQueue<T> {
+public class PeekableQueue<T> implements Iterable<T> {
 	protected Deque<T> elements = new ArrayDeque<T>();
 
 	public void queue(T element) {
@@ -44,5 +45,10 @@ public class PeekableQueue<T> {
 	@Override
 	public String toString() {
 		return this.elements.toString();
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return this.elements.iterator();
 	}
 }

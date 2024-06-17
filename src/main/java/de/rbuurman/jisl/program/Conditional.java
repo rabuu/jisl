@@ -53,4 +53,9 @@ public final class Conditional extends Expression {
 
         return this.conditionals.equals(other.conditionals) && this.elseClause.equals(other.elseClause);
     }
+
+    @Override
+    public String toString() {
+        return "(cond [...])";
+    }
 }

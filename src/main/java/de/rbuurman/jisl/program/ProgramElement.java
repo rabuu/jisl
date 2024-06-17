@@ -8,4 +8,7 @@ public abstract class ProgramElement {
     public SourcePosition getSourcePosition() {
         return this.sourcePosition;
     }
+
+    @Override
+    public abstract String toString();
 }

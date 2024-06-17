@@ -17,4 +17,9 @@ public final class Definition extends ProgramElement {
         return expression;
     }
 
+    @Override
+    public String toString() {
+        return "DEFINITION: " + identifier + " -> " + this.expression;
+    }
+
 }
