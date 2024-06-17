@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing;
 
-import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
@@ -33,7 +33,7 @@ public final class LibraryRequirementParser extends Parser<LibraryRequirement> {
 
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new LibraryRequirement(Path.of(pathString));
+        return new LibraryRequirement(Paths.get(pathString));
     }
 
 }

@@ -27,6 +27,7 @@ mvn clean package    # to generate a JAR executable
 
 ## Not Todo
 - There will be no support for images.
+- For now there are no plans to implement `let`, `let*` and `letrec`.
 - Also probably we will not implement signatures.
 
 ## More resources

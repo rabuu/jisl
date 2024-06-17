@@ -2,6 +2,7 @@ package de.rbuurman.jisl.program;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import de.rbuurman.jisl.lexing.LexingException;
@@ -18,11 +19,11 @@ public abstract class ProgramElement {
         return this.sourcePosition;
     }
 
-    public Optional<Value> process(Environment environment)
+    public Optional<Value> process(Environment environment, Path baseDir)
             throws IOException, LexingException, ParsingException, EvaluationException {
         if (this instanceof LibraryRequirement) {
             final var require = (LibraryRequirement) this;
-            final String libraryCode = Files.readString(require.getPath());
+            final String libraryCode = Files.readString(baseDir.resolve(require.getPath()));
             final Library library = new LibraryParser().parse(libraryCode);
             environment.loadLibrary(library);
         } else if (this instanceof Definition) {

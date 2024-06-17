@@ -3,6 +3,7 @@ package de.rbuurman.jisl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import de.rbuurman.jisl.lexing.Lexer;
 import de.rbuurman.jisl.lexing.LexingException;
@@ -46,6 +47,7 @@ public class Main {
         }
 
         String code;
+        Path path;
         switch (args[0]) {
             case "repl":
                 if (args.length != 1) {
@@ -57,7 +59,8 @@ public class Main {
                 if (args.length != 2) {
                     throw new CLIException("Expected second argument SOURCE-FILE");
                 }
-                code = readCodeFile(args[1]);
+                path = Paths.get(".", args[1]);
+                code = Files.readString(path);
                 inspectLexing(code);
                 return;
 
@@ -65,16 +68,18 @@ public class Main {
                 if (args.length != 2) {
                     throw new CLIException("Expected second argument SOURCE-FILE");
                 }
-                code = readCodeFile(args[1]);
-                inspectParsing(code);
+                path = Paths.get(".", args[1]);
+                code = Files.readString(path);
+                inspectParsing(code, path.getParent());
                 return;
 
             default:
                 if (args.length != 1) {
                     throw new CLIException("Too many arguments");
                 }
-                code = readCodeFile(args[0]);
-                runProgram(code);
+                path = Paths.get(".", args[0]);
+                code = Files.readString(path);
+                runProgram(code, path.getParent());
                 break;
         }
     }
@@ -86,24 +91,20 @@ public class Main {
         }
     }
 
-    private static void inspectParsing(final String code) throws LexingException, ParsingException {
-        Program program = new ProgramParser().parse(code);
+    private static void inspectParsing(final String code, Path baseDir) throws LexingException, ParsingException {
+        Program program = new ProgramParser(baseDir).parse(code);
         for (var element : program) {
             System.out.println(element);
         }
     }
 
-    private static void runProgram(final String code)
+    private static void runProgram(final String code, Path baseDir)
             throws IOException, LexingException, ParsingException, EvaluationException {
-        Program program = new ProgramParser().parse(code);
+        Program program = new ProgramParser(baseDir).parse(code);
         Multiple<Value> values = program.run();
 
         for (var value : values) {
             System.out.println(value);
         }
-    }
-
-    private static String readCodeFile(final String path) throws IOException {
-        return Files.readString(Path.of(path));
     }
 }

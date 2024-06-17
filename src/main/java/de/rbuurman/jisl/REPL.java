@@ -3,6 +3,7 @@ package de.rbuurman.jisl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import de.rbuurman.jisl.parsing.ProgramElementParser;
@@ -31,7 +32,7 @@ public final class REPL {
 
             try {
                 final var element = new ProgramElementParser().parse(input);
-                final Optional<Value> value = element.process(this.environment);
+                final Optional<Value> value = element.process(this.environment, Paths.get("."));
 
                 if (value.isPresent()) {
                     System.out.println(value.get());
