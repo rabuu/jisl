@@ -1,3 +1,3 @@
 (require "lib.rkt")
 
-(foo 1 2)
+(and true false true false)

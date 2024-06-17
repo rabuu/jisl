@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.program.builtin.conditional;
+package de.rbuurman.jisl.program.builtin.logic;
 
 import de.rbuurman.jisl.program.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;

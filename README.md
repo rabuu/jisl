@@ -15,11 +15,14 @@ mvn clean package    # to generate a JAR executable
 - [x] Basic Evaluation
 - [x] REPL
 - [x] Simple library support
+- [ ] Local definitions
+- [ ] Source position of ProgramElements
 - [ ] Symbols/Atoms
 - [ ] Structures
 - [ ] All important builtins
 - [ ] Good [standard library](stdlib/)
 - [ ] Nested libraries
+- [ ] Lists
 
 ## Not Todo
 - There will be no support for images.
