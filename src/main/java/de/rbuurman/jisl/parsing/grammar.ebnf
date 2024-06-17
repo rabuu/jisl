@@ -7,7 +7,8 @@
 				| ( define ( <identifier> <identifier>+ ) <expression> )
 
 <expression>  ::= ( <expression> <expression>+ )
-				| ( local ( <definition>+ ) )
+				| ( cond {( <expression> <expression> )}+ {( else <expression> )}? )
+				| ( local ( <definition>+ ) ( <expression> ) )
 			    | <identifier>
 			    | <value>
 

@@ -1,3 +1,5 @@
 (require "lib.rkt")
 
-(and true false true false)
+(define x 99)
+(local [(define x 1) (define y 2)] (+ x x))
+x

@@ -19,6 +19,8 @@ public final class ExpressionParser extends Parser<Expression> {
                 return new LambdaParser().parse(tokens);
             } else if (next.is(SimpleTokenType.COND)) {
                 return new ConditionalParser().parse(tokens);
+            } else if (next.is(SimpleTokenType.LOCAL)) {
+                return new LocalExpressionParser().parse(tokens);
             }
 
             return new SExpressionParser().parse(tokens);

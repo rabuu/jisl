@@ -177,6 +177,8 @@ public final class Lexer {
 					return new SimpleToken(SimpleTokenType.DEFINE).withPosition(firstPosition);
 				case "lambda":
 					return new SimpleToken(SimpleTokenType.LAMBDA).withPosition(firstPosition);
+				case "local":
+					return new SimpleToken(SimpleTokenType.LOCAL).withPosition(firstPosition);
 				case "cond":
 					return new SimpleToken(SimpleTokenType.COND).withPosition(firstPosition);
 				case "else":

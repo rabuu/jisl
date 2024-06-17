@@ -7,6 +7,10 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 
 		REQUIRE,
 
+		DEFINE,
+		LAMBDA,
+		LOCAL,
+
 		PLUS,
 		MINUS,
 		ASTERISK,
@@ -20,9 +24,6 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		NOT,
 
 		IDENTITY,
-
-		DEFINE,
-		LAMBDA,
 
 		EOF;
 	}
