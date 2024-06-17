@@ -3,7 +3,7 @@ package de.rbuurman.jisl.program.primitive;
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.program.Value;
 
-public abstract class Primitive<T> implements Value {
+public abstract class Primitive<T> extends Value {
     private T inner;
 
     public Primitive(T inner) {

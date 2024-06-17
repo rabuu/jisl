@@ -1,11 +1,9 @@
 package de.rbuurman.jisl.parsing;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.program.Expression;
 import de.rbuurman.jisl.program.SExpression;
+import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * SExpressionParser
@@ -18,7 +16,7 @@ public final class SExpressionParser extends Parser<SExpression> {
 
         var func = new ExpressionParser().parse(tokens);
 
-        Queue<Expression> args = new LinkedList<>();
+        Multiple<Expression> args = new Multiple<>();
         while (!tokens.endOfExpression()) {
             args.add(new ExpressionParser().parse(tokens));
         }

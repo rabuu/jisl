@@ -1,13 +1,21 @@
 package de.rbuurman.jisl.program.evaluation;
 
-import java.util.Queue;
-
 import de.rbuurman.jisl.program.Value;
+import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * Applicable
  */
-public interface Applicable {
+public abstract class Applicable extends Value {
 
-	public Value apply(Queue<Value> arguments, Environment environment) throws EvaluationException;
+	public abstract Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		return getClass() == obj.getClass();
+	}
 }

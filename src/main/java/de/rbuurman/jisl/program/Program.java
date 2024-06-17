@@ -1,24 +1,22 @@
 package de.rbuurman.jisl.program;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.utils.PeekableQueue;
+import de.rbuurman.jisl.utils.Multiple;
 
 public final class Program extends PeekableQueue<ProgramElement> {
 
-    public Queue<Value> run() throws EvaluationException {
-        Queue<Value> results = new LinkedList<>();
+    public Multiple<Value> run() throws EvaluationException {
+        Multiple<Value> results = new Multiple<>();
         Environment environment = new Environment();
 
         for (ProgramElement element : this.elements) {
             if (element instanceof Definition) {
                 var definition = (Definition) element;
 
-                Identifier identifier = definition.identifier();
-                Value value = definition.expression().evaluate(environment);
+                Identifier identifier = definition.getIdentifier();
+                Value value = definition.getExpression().evaluate(environment);
 
                 environment.addDefinition(identifier, value);
             } else if (element instanceof Expression) {

@@ -1,12 +1,11 @@
 package de.rbuurman.jisl.parsing;
 
-import java.util.LinkedList;
 import java.util.Optional;
-import java.util.Queue;
 
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.program.Conditional;
 import de.rbuurman.jisl.program.Expression;
+import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * ConditionalParser
@@ -18,7 +17,7 @@ public final class ConditionalParser extends Parser<Conditional> {
         var open = tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.COND);
 
-        Queue<Expression[]> conds = new LinkedList<>();
+        Multiple<Expression[]> conds = new Multiple<>();
         Optional<Expression> elseClause = Optional.empty();
         while (!tokens.endOfExpression()) {
             tokens.expect(SimpleTokenType.OPEN);

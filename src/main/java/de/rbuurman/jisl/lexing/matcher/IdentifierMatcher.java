@@ -4,7 +4,9 @@ public final class IdentifierMatcher implements Matcher {
 
 	@Override
 	public boolean matches(char c) {
-		final char[] forbidden = { ' ', '"', '\'', '`', '(', ')', '[', ']', '{', '}', '|', ';', '#' };
+		if (Character.isWhitespace(c))
+			return false;
+		final char[] forbidden = { '"', '\'', '`', '(', ')', '[', ']', '{', '}', '|', ';', '#' };
 		for (char f : forbidden) {
 			if (c == f)
 				return false;

@@ -1,11 +1,9 @@
 package de.rbuurman.jisl.parsing;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.program.Identifier;
 import de.rbuurman.jisl.program.Lambda;
+import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * LambdaParser
@@ -19,7 +17,7 @@ public final class LambdaParser extends Parser<Lambda> {
 
         var open = tokens.expect(SimpleTokenType.OPEN);
 
-        Queue<Identifier> idents = new LinkedList<>();
+        Multiple<Identifier> idents = new Multiple<>();
         while (!tokens.endOfExpression()) {
             idents.add(new IdentifierParser().parse(tokens));
         }

@@ -1,18 +1,16 @@
 package de.rbuurman.jisl.program.builtin.arithmetic;
 
-import java.util.Queue;
-
 import de.rbuurman.jisl.program.Value;
-import de.rbuurman.jisl.program.builtin.Builtin;
 import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.primitive.NumberPrimitive;
+import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * Add
  */
-public abstract class DyadicArithmeticBuiltin extends Builtin implements Applicable {
+public abstract class DyadicArithmeticBuiltin extends Applicable {
 
     protected abstract double operation(double x, double y);
 
@@ -21,7 +19,7 @@ public abstract class DyadicArithmeticBuiltin extends Builtin implements Applica
     }
 
     @Override
-    public Value apply(Queue<Value> arguments, Environment environment) throws EvaluationException {
+    public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
         if (arguments.size() < 1) {
             throw new EvaluationException(this + " expects at least one argument");
         }
