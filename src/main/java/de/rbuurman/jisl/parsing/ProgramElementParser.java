@@ -1,6 +1,9 @@
 package de.rbuurman.jisl.parsing;
 
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
+import de.rbuurman.jisl.parsing.definition.DefinitionParser;
+import de.rbuurman.jisl.parsing.expression.ExpressionParser;
+import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.ProgramElement;
 
 public final class ProgramElementParser extends Parser<ProgramElement> {

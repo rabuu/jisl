@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import de.rbuurman.jisl.program.primitive.NumberPrimitive;
+import de.rbuurman.jisl.program.value.primitive.NumberPrimitive;
 
 public class TokenQueueTest {
 

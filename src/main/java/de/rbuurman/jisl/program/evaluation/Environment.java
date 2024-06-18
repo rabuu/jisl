@@ -3,9 +3,9 @@ package de.rbuurman.jisl.program.evaluation;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.rbuurman.jisl.program.Identifier;
+import de.rbuurman.jisl.program.expression.Identifier;
 import de.rbuurman.jisl.program.Library;
-import de.rbuurman.jisl.program.Value;
+import de.rbuurman.jisl.program.value.Value;
 
 /**
  * Environment

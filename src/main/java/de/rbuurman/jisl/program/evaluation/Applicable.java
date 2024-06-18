@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.program.evaluation;
 
-import de.rbuurman.jisl.program.Value;
+import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.Multiple;
 
 /**

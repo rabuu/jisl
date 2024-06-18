@@ -1,5 +1,8 @@
 package de.rbuurman.jisl.program;
 
+import de.rbuurman.jisl.program.expression.Expression;
+import de.rbuurman.jisl.program.expression.Identifier;
+
 public final class Definition extends ProgramElement {
     private Identifier identifier;
     private Expression expression;

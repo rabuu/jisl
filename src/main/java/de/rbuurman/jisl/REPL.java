@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import de.rbuurman.jisl.parsing.ProgramElementParser;
-import de.rbuurman.jisl.program.Value;
+import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 
 /**

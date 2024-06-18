@@ -1,5 +1,7 @@
 package de.rbuurman.jisl.parsing;
 
+import de.rbuurman.jisl.parsing.definition.DefinitionParser;
+import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.Definition;
 import de.rbuurman.jisl.program.Library;
 import de.rbuurman.jisl.utils.Multiple;
