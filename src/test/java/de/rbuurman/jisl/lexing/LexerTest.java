@@ -19,7 +19,7 @@ public class LexerTest {
 				new SimpleToken(SimpleTokenType.OPEN),
 				new SimpleToken(SimpleTokenType.DEFINE),
 				new NumberPrimitive(1.0).toToken(),
-				new IdentifierToken("a"),
+				new VariableNameToken("a"),
 				new StringPrimitive("hello world").toToken(),
 				new SimpleToken(SimpleTokenType.CLOSE),
 				new CommentToken("comment"),

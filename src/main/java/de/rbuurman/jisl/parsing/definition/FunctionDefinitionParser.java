@@ -4,10 +4,10 @@ import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.parsing.expression.ExpressionParser;
-import de.rbuurman.jisl.parsing.expression.IdentifierParser;
+import de.rbuurman.jisl.parsing.expression.VariableNameParser;
 import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.Definition;
-import de.rbuurman.jisl.program.expression.Identifier;
+import de.rbuurman.jisl.program.expression.VariableName;
 import de.rbuurman.jisl.program.value.Lambda;
 import de.rbuurman.jisl.utils.Multiple;
 
@@ -22,11 +22,11 @@ public final class FunctionDefinitionParser extends Parser<Definition> {
         tokens.expect(SimpleTokenType.DEFINE);
         tokens.expect(SimpleTokenType.OPEN);
 
-        var name = new IdentifierParser().parse(tokens);
+        var name = new VariableNameParser().parse(tokens);
 
-        Multiple<Identifier> args = new Multiple<>();
+        Multiple<VariableName> args = new Multiple<>();
         while (!tokens.endOfExpression()) {
-            args.add(new IdentifierParser().parse(tokens));
+            args.add(new VariableNameParser().parse(tokens));
         }
         tokens.expect(SimpleTokenType.CLOSE);
 

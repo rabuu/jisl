@@ -6,11 +6,11 @@ import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.Value;
 
-public final class Identifier extends Expression {
-    private String identifier;
+public final class VariableName extends Expression {
+    private String name;
 
-    public Identifier(String identifier) {
-        this.identifier = identifier;
+    public VariableName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -20,7 +20,7 @@ public final class Identifier extends Expression {
 
     @Override
     public String toString() {
-        return "`" + this.identifier + "`";
+        return "`" + this.name + "`";
     }
 
     @Override
@@ -31,12 +31,12 @@ public final class Identifier extends Expression {
             return false;
         if (this.getClass() != obj.getClass())
             return false;
-        final Identifier other = (Identifier) obj;
-        return this.identifier.equals(other.identifier);
+        final VariableName other = (VariableName) obj;
+        return this.name.equals(other.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.identifier);
+        return Objects.hash(this.name);
     }
 }

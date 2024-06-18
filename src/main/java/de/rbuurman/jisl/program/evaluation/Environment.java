@@ -3,7 +3,7 @@ package de.rbuurman.jisl.program.evaluation;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.rbuurman.jisl.program.expression.Identifier;
+import de.rbuurman.jisl.program.expression.VariableName;
 import de.rbuurman.jisl.program.Library;
 import de.rbuurman.jisl.program.value.Value;
 
@@ -12,24 +12,24 @@ import de.rbuurman.jisl.program.value.Value;
  */
 public class Environment {
 
-	private Map<Identifier, Value> definitions = new HashMap<>();
+	private Map<VariableName, Value> definitions = new HashMap<>();
 
-	protected Map<Identifier, Value> getDefinitions() {
+	protected Map<VariableName, Value> getDefinitions() {
 		return this.definitions;
 	}
 
-	public void addDefinition(Identifier identifier, Value value) throws EvaluationException {
-		if (this.definitions.containsKey(identifier)) {
-			throw new EvaluationException("Definition for " + identifier + " already exists");
+	public void addDefinition(VariableName variable, Value value) throws EvaluationException {
+		if (this.definitions.containsKey(variable)) {
+			throw new EvaluationException("Definition for " + variable + " already exists");
 		}
-		this.definitions.put(identifier, value);
+		this.definitions.put(variable, value);
 	}
 
-	public Value getValue(Identifier identifier) throws EvaluationException {
-		final var value = this.definitions.get(identifier);
+	public Value getValue(VariableName variable) throws EvaluationException {
+		final var value = this.definitions.get(variable);
 
 		if (value == null) {
-			throw new EvaluationException("Definition for " + identifier + " does not exist");
+			throw new EvaluationException("Definition for " + variable + " does not exist");
 		}
 
 		return value;
@@ -38,11 +38,11 @@ public class Environment {
 	public static Environment merge(Environment base, Environment local) throws EvaluationException {
 		var env = new Environment();
 
-		for (Map.Entry<Identifier, Value> entry : base.getDefinitions().entrySet()) {
+		for (Map.Entry<VariableName, Value> entry : base.getDefinitions().entrySet()) {
 			env.getDefinitions().put(entry.getKey(), entry.getValue());
 		}
 
-		for (Map.Entry<Identifier, Value> entry : local.getDefinitions().entrySet()) {
+		for (Map.Entry<VariableName, Value> entry : local.getDefinitions().entrySet()) {
 			env.getDefinitions().put(entry.getKey(), entry.getValue());
 		}
 
@@ -51,9 +51,9 @@ public class Environment {
 
 	public void loadLibrary(Library library) throws EvaluationException {
 		for (var definition : library.definitions()) {
-			final var ident = definition.getIdentifier();
+			final var variable = definition.getVariable();
 			final var value = definition.getExpression().evaluate(this);
-			this.addDefinition(ident, value);
+			this.addDefinition(variable, value);
 		}
 	}
 }

@@ -4,7 +4,7 @@ import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.parsing.expression.ExpressionParser;
-import de.rbuurman.jisl.parsing.expression.IdentifierParser;
+import de.rbuurman.jisl.parsing.expression.VariableNameParser;
 import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.Definition;
 
@@ -18,11 +18,11 @@ public final class DefinitionParser extends Parser<Definition> {
 
         tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.DEFINE);
-        var identifier = new IdentifierParser().parse(tokens);
+        var variable = new VariableNameParser().parse(tokens);
         var expression = new ExpressionParser().parse(tokens);
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new Definition(identifier, expression);
+        return new Definition(variable, expression);
     }
 
 }

@@ -164,8 +164,8 @@ public final class Lexer {
 			} catch (NumberFormatException e) {
 				throw new LexingException("Couldn't parse " + numeric + " to number", firstPosition);
 			}
-		} else if (new IdentifierMatcher().matches(firstCharacter)) {
-			final String name = this.eat(new IdentifierMatcher());
+		} else if (new VariableNameMatcher().matches(firstCharacter)) {
+			final String name = this.eat(new VariableNameMatcher());
 			switch (name) {
 				case "require":
 					return new SimpleToken(SimpleTokenType.REQUIRE).withPosition(firstPosition);
@@ -194,7 +194,7 @@ public final class Lexer {
 				case "identity":
 					return new SimpleToken(SimpleTokenType.IDENTITY).withPosition(firstPosition);
 				default:
-					return new IdentifierToken(name).withPosition(firstPosition);
+					return new VariableNameToken(name).withPosition(firstPosition);
 			}
 		}
 

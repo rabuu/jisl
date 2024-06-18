@@ -11,7 +11,7 @@ import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.expression.Expression;
-import de.rbuurman.jisl.program.expression.Identifier;
+import de.rbuurman.jisl.program.expression.VariableName;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.SourcePosition;
 
@@ -32,10 +32,10 @@ public abstract class ProgramElement {
         } else if (this instanceof Definition) {
             var definition = (Definition) this;
 
-            Identifier identifier = definition.getIdentifier();
+            VariableName variable = definition.getVariable();
             Value value = definition.getExpression().evaluate(environment);
 
-            environment.addDefinition(identifier, value);
+            environment.addDefinition(variable, value);
         } else if (this instanceof Expression) {
             var expression = (Expression) this;
             return Optional.of(expression.evaluate(environment));

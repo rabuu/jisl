@@ -3,16 +3,16 @@
 
 <require>     ::= ( require <string> )
 
-<definition>  ::= ( define <identifier> <expression> )
-				| ( define ( <identifier> <identifier>+ ) <expression> )
+<definition>  ::= ( define <variable> <expression> )
+				| ( define ( <variable> <variable>+ ) <expression> )
 
 <expression>  ::= ( <expression> <expression>+ )
 				| ( cond {( <expression> <expression> )}+ {( else <expression> )}? )
 				| ( local ( <definition>+ ) ( <expression> ) )
-			    | <identifier>
+			    | <variable>
 			    | <value>
 
-<value>       ::= ( lambda ( <identifier>+ ) <expression> )
+<value>       ::= ( lambda ( <variable>+ ) <expression> )
                 | <integer>
 			    | <float>
 			    | <boolean>

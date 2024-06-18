@@ -23,10 +23,10 @@ public final class LocalExpression extends Expression {
         Environment mergedEnvironment = environment;
         Environment localEnvironment = new Environment();
         for (Definition def : this.definitions) {
-            final var ident = def.getIdentifier();
+            final var variable = def.getVariable();
             final var value = def.getExpression().evaluate(mergedEnvironment);
 
-            localEnvironment.addDefinition(ident, value);
+            localEnvironment.addDefinition(variable, value);
             mergedEnvironment = Environment.merge(environment, localEnvironment);
         }
 

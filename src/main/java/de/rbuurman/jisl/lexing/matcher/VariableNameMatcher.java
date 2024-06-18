@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.lexing.matcher;
 
-public final class IdentifierMatcher implements Matcher {
+public final class VariableNameMatcher implements Matcher {
 
 	@Override
 	public boolean matches(char c) {

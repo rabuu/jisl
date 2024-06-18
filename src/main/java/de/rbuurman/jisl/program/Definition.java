@@ -1,19 +1,19 @@
 package de.rbuurman.jisl.program;
 
 import de.rbuurman.jisl.program.expression.Expression;
-import de.rbuurman.jisl.program.expression.Identifier;
+import de.rbuurman.jisl.program.expression.VariableName;
 
 public final class Definition extends ProgramElement {
-    private Identifier identifier;
+    private VariableName variable;
     private Expression expression;
 
-    public Definition(Identifier identifier, Expression expression) {
-        this.identifier = identifier;
+    public Definition(VariableName variable, Expression expression) {
+        this.variable = variable;
         this.expression = expression;
     }
 
-    public Identifier getIdentifier() {
-        return identifier;
+    public VariableName getVariable() {
+        return variable;
     }
 
     public Expression getExpression() {
@@ -22,7 +22,7 @@ public final class Definition extends ProgramElement {
 
     @Override
     public String toString() {
-        return "DEFINITION: " + identifier + " -> " + this.expression;
+        return "DEFINITION: " + variable + " -> " + this.expression;
     }
 
 }

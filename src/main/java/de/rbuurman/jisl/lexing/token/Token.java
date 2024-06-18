@@ -14,7 +14,7 @@ public abstract class Token<S> {
 		this.state = state;
 	}
 
-	protected S getState() {
+	public S getState() {
 		return this.state;
 	}
 

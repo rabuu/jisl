@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.parsing.expression;
 
-import de.rbuurman.jisl.lexing.token.IdentifierToken;
+import de.rbuurman.jisl.lexing.token.VariableNameToken;
 import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.value.LambdaParser;
@@ -30,8 +30,8 @@ public final class ExpressionParser extends Parser<Expression> {
             return new SExpressionParser().parse(tokens);
         }
 
-        if (tokens.peek() instanceof IdentifierToken) {
-            return new IdentifierParser().parse(tokens);
+        if (tokens.peek() instanceof VariableNameToken) {
+            return new VariableNameParser().parse(tokens);
         }
 
         return new ValueParser().parse(tokens);
