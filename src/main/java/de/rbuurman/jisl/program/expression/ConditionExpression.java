@@ -7,6 +7,7 @@ import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.primitive.BooleanPrimitive;
 import de.rbuurman.jisl.utils.Multiple;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
  * Conditional
@@ -15,7 +16,11 @@ public final class ConditionExpression extends Expression {
     private Multiple<Expression[]> conditionals;
     private Optional<Expression> elseClause;
 
-    public ConditionExpression(Multiple<Expression[]> conditionals, Optional<Expression> elseClause) {
+    public ConditionExpression(
+            Multiple<Expression[]> conditionals,
+            Optional<Expression> elseClause,
+            SourcePosition sourcePosition) {
+        super(sourcePosition);
         this.conditionals = conditionals;
         this.elseClause = elseClause;
     }
@@ -25,7 +30,8 @@ public final class ConditionExpression extends Expression {
         for (Expression[] cond : this.conditionals) {
             final Value predValue = cond[0].evaluate(environment);
             if (!(predValue instanceof BooleanPrimitive pred)) {
-                throw new EvaluationException("Conditional predicate " + cond[0] + " is no Boolean");
+                throw new EvaluationException("Conditional predicate " + cond[0] + " is no boolean",
+                        cond[0].getSourcePosition());
             }
             final Expression expr = cond[1];
 
@@ -38,7 +44,7 @@ public final class ConditionExpression extends Expression {
             return this.elseClause.get().evaluate(environment);
         }
 
-        throw new EvaluationException("No conditional clauses evaluated to #true");
+        throw new EvaluationException("No conditional clauses were true", this.getSourcePosition());
     }
 
     @Override

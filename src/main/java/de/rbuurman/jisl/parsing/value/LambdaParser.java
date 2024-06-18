@@ -17,10 +17,10 @@ public final class LambdaParser extends Parser<Lambda> {
 
     @Override
     public Lambda parse(TokenQueue tokens) throws ParsingException {
-        tokens.expect(SimpleTokenType.OPEN);
+        var open = tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.LAMBDA);
 
-        var open = tokens.expect(SimpleTokenType.OPEN);
+        var openVars = tokens.expect(SimpleTokenType.OPEN);
 
         Multiple<VariableName> vars = new Multiple<>();
         while (!tokens.endOfExpression()) {
@@ -28,7 +28,7 @@ public final class LambdaParser extends Parser<Lambda> {
         }
 
         if (vars.size() < 1) {
-            throw new ParsingException("Lambda must have at least one value", open.getSourcePosition());
+            throw new ParsingException("Lambda must have at least one value", openVars.getSourcePosition());
         }
 
         tokens.expect(SimpleTokenType.CLOSE);
@@ -36,7 +36,7 @@ public final class LambdaParser extends Parser<Lambda> {
         var expr = new ExpressionParser().parse(tokens);
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new Lambda(vars, expr);
+        return new Lambda(vars, expr, open.getSourcePosition());
     }
 
 }

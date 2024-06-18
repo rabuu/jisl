@@ -10,11 +10,12 @@ public abstract class Token<S> {
 	private SourcePosition sourcePosition;
 	private S state;
 
-	protected Token(S state) {
+	protected Token(S state, SourcePosition sourcePosition) {
 		this.state = state;
+		this.sourcePosition = sourcePosition;
 	}
 
-	public S getState() {
+	protected S getState() {
 		return this.state;
 	}
 
@@ -24,11 +25,6 @@ public abstract class Token<S> {
 
 	public boolean exit() {
 		return false;
-	}
-
-	public Token<?> withPosition(SourcePosition sourcePosition) {
-		this.sourcePosition = sourcePosition;
-		return this;
 	}
 
 	public SourcePosition getSourcePosition() {

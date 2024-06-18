@@ -29,7 +29,7 @@ public final class SExpressionParser extends Parser<SExpression> {
 
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new SExpression(func, args);
+        return new SExpression(func, args, open.getSourcePosition());
     }
 
 }

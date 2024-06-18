@@ -20,7 +20,7 @@ public class Environment {
 
 	public void addDefinition(VariableName variable, Value value) throws EvaluationException {
 		if (this.definitions.containsKey(variable)) {
-			throw new EvaluationException("Definition for " + variable + " already exists");
+			throw new EvaluationException("Duplicate definition for " + variable, variable.getSourcePosition());
 		}
 		this.definitions.put(variable, value);
 	}
@@ -29,7 +29,7 @@ public class Environment {
 		final var value = this.definitions.get(variable);
 
 		if (value == null) {
-			throw new EvaluationException("Definition for " + variable + " does not exist");
+			throw new EvaluationException("No definition for " + variable, variable.getSourcePosition());
 		}
 
 		return value;

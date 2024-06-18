@@ -6,12 +6,14 @@ import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.utils.Multiple;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 public final class Lambda extends Applicable {
     private Multiple<VariableName> variables;
     private Expression expression;
 
-    public Lambda(Multiple<VariableName> variables, Expression expression) {
+    public Lambda(Multiple<VariableName> variables, Expression expression, SourcePosition sourcePosition) {
+        super(sourcePosition);
         this.variables = variables;
         this.expression = expression;
     }
@@ -19,7 +21,7 @@ public final class Lambda extends Applicable {
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
         if (this.variables.size() != arguments.size()) {
-            throw new EvaluationException("Lambda definition doesn't match given arguments");
+            throw new EvaluationException("Lambda definition doesn't match given arguments", this.getSourcePosition());
         }
 
         var localEnvironment = new Environment();

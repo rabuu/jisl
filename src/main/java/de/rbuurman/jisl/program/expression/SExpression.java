@@ -1,16 +1,19 @@
 package de.rbuurman.jisl.program.expression;
 
 import de.rbuurman.jisl.program.value.Value;
+
 import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.utils.Multiple;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 public final class SExpression extends Expression {
     private Expression function;
     private Multiple<Expression> arguments;
 
-    public SExpression(Expression function, Multiple<Expression> arguments) {
+    public SExpression(Expression function, Multiple<Expression> arguments, SourcePosition sourcePosition) {
+        super(sourcePosition);
         this.function = function;
         this.arguments = arguments;
     }
@@ -19,7 +22,7 @@ public final class SExpression extends Expression {
     public Value evaluate(Environment environment) throws EvaluationException {
         Value function = this.function.evaluate(environment);
         if (!(function instanceof Applicable applicable)) {
-            throw new EvaluationException(function + " is not applicable");
+            throw new EvaluationException(function + " is not applicable", function.getSourcePosition());
         }
 
         Multiple<Value> arguments = new Multiple<>();

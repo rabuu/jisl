@@ -16,18 +16,18 @@ public class LexerTest {
 		final TokenQueue tokens = lexer.tokenize();
 
 		final Token<?>[] expected = {
-				new SimpleToken(SimpleTokenType.OPEN),
-				new SimpleToken(SimpleTokenType.DEFINE),
-				new NumberPrimitive(1.0).toToken(),
-				new VariableNameToken("a"),
-				new StringPrimitive("hello world").toToken(),
-				new SimpleToken(SimpleTokenType.CLOSE),
-				new CommentToken("comment"),
-				new SimpleToken(SimpleTokenType.OPEN),
-				new NumberPrimitive(0.567).toToken(),
-				new BooleanPrimitive(true).toToken(),
-				new SimpleToken(SimpleTokenType.CLOSE),
-				new SimpleToken(SimpleTokenType.EOF),
+				new SimpleToken(SimpleTokenType.OPEN, null),
+				new SimpleToken(SimpleTokenType.DEFINE, null),
+				new NumberPrimitive(1.0).toToken(null),
+				new VariableNameToken("a", null),
+				new StringPrimitive("hello world").toToken(null),
+				new SimpleToken(SimpleTokenType.CLOSE, null),
+				new CommentToken("comment", null),
+				new SimpleToken(SimpleTokenType.OPEN, null),
+				new NumberPrimitive(0.567).toToken(null),
+				new BooleanPrimitive(true).toToken(null),
+				new SimpleToken(SimpleTokenType.CLOSE, null),
+				new SimpleToken(SimpleTokenType.EOF, null),
 		};
 
 		assertArrayEquals(expected, tokens.toArray());

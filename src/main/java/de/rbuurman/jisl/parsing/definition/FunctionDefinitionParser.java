@@ -18,7 +18,7 @@ public final class FunctionDefinitionParser extends Parser<Definition> {
 
     @Override
     public Definition parse(TokenQueue tokens) throws ParsingException {
-        tokens.expect(SimpleTokenType.OPEN);
+        var open = tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.DEFINE);
         tokens.expect(SimpleTokenType.OPEN);
 
@@ -34,8 +34,8 @@ public final class FunctionDefinitionParser extends Parser<Definition> {
 
         tokens.expect(SimpleTokenType.CLOSE);
 
-        final var lambda = new Lambda(args, expression);
-        return new Definition(name, lambda);
+        final var lambda = new Lambda(args, expression, name.getSourcePosition());
+        return new Definition(name, lambda, open.getSourcePosition());
     }
 
 }

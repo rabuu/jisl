@@ -44,7 +44,7 @@ public final class Lexer {
 		this.eat(new WhitespaceMatcher());
 
 		if (this.isEOF()) {
-			return new SimpleToken(SimpleTokenType.EOF).withPosition(this.position);
+			return new SimpleToken(SimpleTokenType.EOF, this.position);
 		}
 
 		final char firstCharacter = this.peek();
@@ -54,7 +54,7 @@ public final class Lexer {
 				this.eat(new CharMatcher(';'));
 				this.eat(new WhitespaceMatcher());
 				final String comment = this.eat(new LineMatcher());
-				return new CommentToken(comment).withPosition(firstPosition);
+				return new CommentToken(comment, firstPosition);
 
 			case '"':
 				this.bump();
@@ -84,7 +84,7 @@ public final class Lexer {
 						throw new LexingException("Unterminated string literal", this.position);
 					}
 				}
-				return new StringPrimitive(string).toToken().withPosition(firstPosition);
+				return new StringPrimitive(string).toToken(firstPosition);
 
 			case '#':
 				this.bump();
@@ -95,12 +95,12 @@ public final class Lexer {
 					final String charString = this.eat(new WordMatcher());
 
 					if (charString.length() == 1) {
-						return new CharacterPrimitive(charString.charAt(0)).toToken().withPosition(firstPosition);
+						return new CharacterPrimitive(charString.charAt(0)).toToken(firstPosition);
 					}
 
 					switch (charString) {
 						case "space":
-							return new CharacterPrimitive(' ').toToken().withPosition(firstPosition);
+							return new CharacterPrimitive(' ').toToken(firstPosition);
 						default:
 							throw new LexingException("Unknown character: " + charString, firstPosition);
 					}
@@ -112,11 +112,11 @@ public final class Lexer {
 					case "true":
 					case "t":
 					case "T":
-						return new BooleanPrimitive(true).toToken().withPosition(firstPosition);
+						return new BooleanPrimitive(true).toToken(firstPosition);
 					case "false":
 					case "f":
 					case "F":
-						return new BooleanPrimitive(false).toToken().withPosition(firstPosition);
+						return new BooleanPrimitive(false).toToken(firstPosition);
 					case "reader":
 						// ignore
 						this.eat(new LineMatcher());
@@ -128,23 +128,23 @@ public final class Lexer {
 			case '(':
 			case '[':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.OPEN).withPosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.OPEN, firstPosition);
 			case ')':
 			case ']':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.CLOSE).withPosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.CLOSE, firstPosition);
 			case '+':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.PLUS).withPosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
 			case '-':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.MINUS).withPosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.MINUS, firstPosition);
 			case '*':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.ASTERISK).withPosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
 			case '/':
 				this.bump();
-				return new SimpleToken(SimpleTokenType.SLASH).withPosition(firstPosition);
+				return new SimpleToken(SimpleTokenType.SLASH, firstPosition);
 		}
 
 		if (Character.isDigit(firstCharacter)) {
@@ -157,10 +157,10 @@ public final class Lexer {
 					}
 					final var dividend = Double.parseDouble(fraction[0]);
 					final var divisor = Double.parseDouble(fraction[1]);
-					return new NumberPrimitive(dividend / divisor).toToken().withPosition(firstPosition);
+					return new NumberPrimitive(dividend / divisor).toToken(firstPosition);
 				}
 				var num = Double.parseDouble(numeric);
-				return new NumberPrimitive(num).toToken().withPosition(firstPosition);
+				return new NumberPrimitive(num).toToken(firstPosition);
 			} catch (NumberFormatException e) {
 				throw new LexingException("Couldn't parse " + numeric + " to number", firstPosition);
 			}
@@ -168,33 +168,33 @@ public final class Lexer {
 			final String name = this.eat(new VariableNameMatcher());
 			switch (name) {
 				case "require":
-					return new SimpleToken(SimpleTokenType.REQUIRE).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.REQUIRE, firstPosition);
 				case "true":
-					return new BooleanPrimitive(true).toToken().withPosition(firstPosition);
+					return new BooleanPrimitive(true).toToken(firstPosition);
 				case "false":
-					return new BooleanPrimitive(false).toToken().withPosition(firstPosition);
+					return new BooleanPrimitive(false).toToken(firstPosition);
 				case "define":
-					return new SimpleToken(SimpleTokenType.DEFINE).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
 				case "lambda":
-					return new SimpleToken(SimpleTokenType.LAMBDA).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
 				case "local":
-					return new SimpleToken(SimpleTokenType.LOCAL).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.LOCAL, firstPosition);
 				case "cond":
-					return new SimpleToken(SimpleTokenType.COND).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.COND, firstPosition);
 				case "else":
-					return new SimpleToken(SimpleTokenType.ELSE).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.ELSE, firstPosition);
 				case "if":
-					return new SimpleToken(SimpleTokenType.IF).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.IF, firstPosition);
 				case "and":
-					return new SimpleToken(SimpleTokenType.AND).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.AND, firstPosition);
 				case "or":
-					return new SimpleToken(SimpleTokenType.OR).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.OR, firstPosition);
 				case "not":
-					return new SimpleToken(SimpleTokenType.NOT).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.NOT, firstPosition);
 				case "identity":
-					return new SimpleToken(SimpleTokenType.IDENTITY).withPosition(firstPosition);
+					return new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
 				default:
-					return new VariableNameToken(name).withPosition(firstPosition);
+					return new VariableNameToken(name, firstPosition);
 			}
 		}
 

@@ -16,13 +16,13 @@ public final class DefinitionParser extends Parser<Definition> {
             return new FunctionDefinitionParser().parse(tokens);
         }
 
-        tokens.expect(SimpleTokenType.OPEN);
+        var open = tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.DEFINE);
         var variable = new VariableNameParser().parse(tokens);
         var expression = new ExpressionParser().parse(tokens);
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new Definition(variable, expression);
+        return new Definition(variable, expression, open.getSourcePosition());
     }
 
 }

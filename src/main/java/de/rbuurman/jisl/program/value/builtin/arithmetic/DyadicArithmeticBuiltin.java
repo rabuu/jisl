@@ -6,11 +6,16 @@ import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.value.primitive.NumberPrimitive;
 import de.rbuurman.jisl.utils.Multiple;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
  * Add
  */
 public abstract class DyadicArithmeticBuiltin extends Applicable {
+
+    public DyadicArithmeticBuiltin(SourcePosition sourcePosition) {
+        super(sourcePosition);
+    }
 
     protected abstract double operation(double x, double y);
 
@@ -21,12 +26,12 @@ public abstract class DyadicArithmeticBuiltin extends Applicable {
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
         if (arguments.size() < 1) {
-            throw new EvaluationException(this + " expects at least one argument");
+            throw new EvaluationException(this + " expects at least one argument", this.getSourcePosition());
         }
 
         final var firstArgument = arguments.poll();
         if (!(firstArgument instanceof NumberPrimitive firstValue)) {
-            throw new EvaluationException("Arguments of " + this + " must be numerical");
+            throw new EvaluationException("Arguments of " + this + " must be numerical", this.getSourcePosition());
         }
 
         if (arguments.isEmpty()) {
@@ -39,7 +44,7 @@ public abstract class DyadicArithmeticBuiltin extends Applicable {
             if (arg instanceof NumberPrimitive argNum) {
                 num = operation(num, argNum.getInner());
             } else {
-                throw new EvaluationException("Arguments of " + this + " must be numerical");
+                throw new EvaluationException("Arguments of " + this + " must be numerical", getSourcePosition());
             }
         }
 

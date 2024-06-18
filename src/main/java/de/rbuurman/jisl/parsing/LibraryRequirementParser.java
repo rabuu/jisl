@@ -15,7 +15,7 @@ public final class LibraryRequirementParser extends Parser<LibraryRequirement> {
 
     @Override
     public LibraryRequirement parse(TokenQueue tokens) throws ParsingException {
-        tokens.expect(SimpleTokenType.OPEN);
+        var open = tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.REQUIRE);
 
         final var pathToken = tokens.poll();
@@ -24,13 +24,13 @@ public final class LibraryRequirementParser extends Parser<LibraryRequirement> {
             throw new ParsingException("Expected string token but got " + pathToken, pathToken.getSourcePosition());
         }
 
-        if (!(pathPrimitive.getState() instanceof StringPrimitive pathString)) {
+        if (!(pathPrimitive.toPrimitive() instanceof StringPrimitive pathString)) {
             throw new ParsingException("Expected string token but got " + pathToken, pathToken.getSourcePosition());
         }
 
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new LibraryRequirement(Paths.get(pathString.getInner()));
+        return new LibraryRequirement(Paths.get(pathString.getInner()), open.getSourcePosition());
     }
 
 }

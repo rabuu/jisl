@@ -1,5 +1,7 @@
 package de.rbuurman.jisl.lexing.token;
 
+import de.rbuurman.jisl.utils.SourcePosition;
+
 public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 	public enum SimpleTokenType {
 		OPEN,
@@ -28,8 +30,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		EOF;
 	}
 
-	public SimpleToken(SimpleTokenType type) {
-		super(type);
+	public SimpleToken(SimpleTokenType type, SourcePosition sourcePosition) {
+		super(type, sourcePosition);
 	}
 
 	@Override

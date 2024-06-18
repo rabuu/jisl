@@ -15,9 +15,9 @@ public final class LocalExpressionParser extends Parser<LocalExpression> {
 
     @Override
     public LocalExpression parse(TokenQueue tokens) throws ParsingException {
-        tokens.expect(SimpleTokenType.OPEN);
-        tokens.expect(SimpleTokenType.LOCAL);
         var open = tokens.expect(SimpleTokenType.OPEN);
+        tokens.expect(SimpleTokenType.LOCAL);
+        var openDefinitions = tokens.expect(SimpleTokenType.OPEN);
 
         Multiple<Definition> definitions = new Multiple<>();
         while (!tokens.endOfExpression()) {
@@ -25,14 +25,15 @@ public final class LocalExpressionParser extends Parser<LocalExpression> {
         }
 
         if (definitions.size() < 1) {
-            throw new ParsingException("At least one local definition must be specified", open.getSourcePosition());
+            throw new ParsingException("At least one local definition must be specified",
+                    openDefinitions.getSourcePosition());
         }
         tokens.expect(SimpleTokenType.CLOSE);
 
         var expression = new ExpressionParser().parse(tokens);
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new LocalExpression(definitions, expression);
+        return new LocalExpression(definitions, expression, open.getSourcePosition());
     }
 
 }

@@ -2,11 +2,13 @@ package de.rbuurman.jisl.program.value.primitive;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.program.value.Value;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 public abstract class Primitive<T> extends Value {
     private T inner;
 
     public Primitive(T inner) {
+        super(null);
         this.inner = inner;
     }
 
@@ -14,8 +16,8 @@ public abstract class Primitive<T> extends Value {
         return this.inner;
     }
 
-    public PrimitiveToken<Primitive<T>> toToken() {
-        return new PrimitiveToken<Primitive<T>>(this);
+    public PrimitiveToken<Primitive<T>> toToken(SourcePosition sourcePosition) {
+        return new PrimitiveToken<Primitive<T>>(this, sourcePosition);
     }
 
     @Override

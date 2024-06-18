@@ -18,6 +18,15 @@ import de.rbuurman.jisl.utils.SourcePosition;
 public abstract class ProgramElement {
     private SourcePosition sourcePosition;
 
+    public ProgramElement(SourcePosition sourcePosition) {
+        this.sourcePosition = sourcePosition;
+    }
+
+    public ProgramElement withSourcePosition(SourcePosition sourcePosition) {
+        this.sourcePosition = sourcePosition;
+        return this;
+    }
+
     public SourcePosition getSourcePosition() {
         return this.sourcePosition;
     }

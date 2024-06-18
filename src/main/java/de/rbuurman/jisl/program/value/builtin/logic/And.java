@@ -6,11 +6,16 @@ import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.primitive.BooleanPrimitive;
 import de.rbuurman.jisl.utils.Multiple;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
  * And
  */
 public final class And extends Applicable {
+
+    public And(SourcePosition sourcePosition) {
+        super(sourcePosition);
+    }
 
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {

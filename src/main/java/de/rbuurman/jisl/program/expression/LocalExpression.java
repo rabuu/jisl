@@ -5,6 +5,7 @@ import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.utils.Multiple;
+import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
  * LocalExpression
@@ -13,7 +14,8 @@ public final class LocalExpression extends Expression {
     private Multiple<Definition> definitions;
     private Expression expression;
 
-    public LocalExpression(Multiple<Definition> definitions, Expression expression) {
+    public LocalExpression(Multiple<Definition> definitions, Expression expression, SourcePosition sourcePosition) {
+        super(sourcePosition);
         this.definitions = definitions;
         this.expression = expression;
     }

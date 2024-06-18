@@ -15,7 +15,7 @@ public final class VariableNameParser extends Parser<VariableName> {
         final var token = tokens.poll();
 
         if (token instanceof VariableNameToken name) {
-            return new VariableName(name.getState());
+            return new VariableName(name.toInner(), token.getSourcePosition());
         } else {
             throw new ParsingException("No variable: " + token, token.getSourcePosition());
         }

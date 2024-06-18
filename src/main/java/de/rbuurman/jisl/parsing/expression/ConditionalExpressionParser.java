@@ -45,7 +45,7 @@ public final class ConditionalExpressionParser extends Parser<ConditionExpressio
             throw new ParsingException("Empty conditionals are not allowed", open.getSourcePosition());
         }
 
-        return new ConditionExpression(conds, elseClause);
+        return new ConditionExpression(conds, elseClause, open.getSourcePosition());
     }
 
 }

@@ -24,21 +24,21 @@ public final class ValueParser extends Parser<Value> {
         final var token = tokens.poll();
 
         if (token.is(SimpleTokenType.IDENTITY)) {
-            return new Identity();
+            return new Identity(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.PLUS)) {
-            return new Addition();
+            return new Addition(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.MINUS)) {
-            return new Subtraction();
+            return new Subtraction(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.ASTERISK)) {
-            return new Multiplication();
+            return new Multiplication(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.SLASH)) {
-            return new Division();
+            return new Division(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.IF)) {
-            return new If();
+            return new If(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.AND)) {
-            return new And();
+            return new And(token.getSourcePosition());
         } else if (token instanceof PrimitiveToken<?> primitive) {
-            return primitive.getState();
+            return primitive.toPrimitive();
         }
 
         throw new ParsingException("Couldn't parse " + token + " to value", token.getSourcePosition());
