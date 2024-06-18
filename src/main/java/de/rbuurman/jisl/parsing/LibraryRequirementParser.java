@@ -20,21 +20,17 @@ public final class LibraryRequirementParser extends Parser<LibraryRequirement> {
 
         final var pathToken = tokens.poll();
 
-        if (!(pathToken instanceof PrimitiveToken)) {
+        if (!(pathToken instanceof PrimitiveToken pathPrimitive)) {
             throw new ParsingException("Expected string token but got " + pathToken, pathToken.getSourcePosition());
         }
 
-        final var pathPrimitive = ((PrimitiveToken<?>) pathToken).getPrimitive();
-
-        if (!(pathPrimitive instanceof StringPrimitive)) {
+        if (!(pathPrimitive.getState() instanceof StringPrimitive pathString)) {
             throw new ParsingException("Expected string token but got " + pathToken, pathToken.getSourcePosition());
         }
-
-        final var pathString = ((StringPrimitive) pathPrimitive).getInner();
 
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new LibraryRequirement(Paths.get(pathString));
+        return new LibraryRequirement(Paths.get(pathString.getInner()));
     }
 
 }

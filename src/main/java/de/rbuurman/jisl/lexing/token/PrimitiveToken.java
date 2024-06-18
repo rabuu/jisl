@@ -6,8 +6,4 @@ public final class PrimitiveToken<P extends Primitive<?>> extends Token<P> {
 	public PrimitiveToken(P primitive) {
 		super(primitive);
 	}
-
-	public P getPrimitive() {
-		return this.getState();
-	}
 }

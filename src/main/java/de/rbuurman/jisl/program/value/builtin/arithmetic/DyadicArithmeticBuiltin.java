@@ -25,20 +25,19 @@ public abstract class DyadicArithmeticBuiltin extends Applicable {
         }
 
         final var firstArgument = arguments.poll();
-        if (!(firstArgument instanceof NumberPrimitive)) {
+        if (!(firstArgument instanceof NumberPrimitive firstValue)) {
             throw new EvaluationException("Arguments of " + this + " must be numerical");
         }
-        final double firstValue = ((NumberPrimitive) firstArgument).getInner();
 
         if (arguments.isEmpty()) {
-            return new NumberPrimitive(singleValue(firstValue));
+            return new NumberPrimitive(singleValue(firstValue.getInner()));
         }
 
-        double num = firstValue;
+        double num = firstValue.getInner();
 
         for (Value arg : arguments) {
-            if (arg instanceof NumberPrimitive) {
-                num = operation(num, ((NumberPrimitive) arg).getInner());
+            if (arg instanceof NumberPrimitive argNum) {
+                num = operation(num, argNum.getInner());
             } else {
                 throw new EvaluationException("Arguments of " + this + " must be numerical");
             }

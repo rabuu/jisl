@@ -20,11 +20,9 @@ public final class And extends Applicable {
         }
 
         for (var arg : arguments) {
-            if (!(arg instanceof BooleanPrimitive)) {
+            if (!(arg instanceof BooleanPrimitive b)) {
                 throw new EvaluationException("Argument must be boolean", arg.getSourcePosition());
             }
-
-            final BooleanPrimitive b = (BooleanPrimitive) arg;
 
             if (!b.getInner()) {
                 return new BooleanPrimitive(false);

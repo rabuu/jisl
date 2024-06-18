@@ -18,10 +18,9 @@ public final class SExpression extends Expression {
     @Override
     public Value evaluate(Environment environment) throws EvaluationException {
         Value function = this.function.evaluate(environment);
-        if (!(function instanceof Applicable)) {
+        if (!(function instanceof Applicable applicable)) {
             throw new EvaluationException(function + " is not applicable");
         }
-        Applicable applicable = (Applicable) function;
 
         Multiple<Value> arguments = new Multiple<>();
         for (Expression arg : this.arguments) {

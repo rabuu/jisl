@@ -19,10 +19,9 @@ public final class If extends Applicable {
         }
 
         final Value predValue = arguments.poll();
-        if (!(predValue instanceof BooleanPrimitive)) {
+        if (!(predValue instanceof BooleanPrimitive pred)) {
             throw new EvaluationException("The predicate " + predValue + " is no Boolean");
         }
-        final BooleanPrimitive pred = (BooleanPrimitive) predValue;
 
         final Value thenClause = arguments.poll();
         final Value elseClause = arguments.poll();

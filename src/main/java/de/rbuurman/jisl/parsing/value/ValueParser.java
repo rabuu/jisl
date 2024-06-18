@@ -37,8 +37,8 @@ public final class ValueParser extends Parser<Value> {
             return new If();
         } else if (token.is(SimpleTokenType.AND)) {
             return new And();
-        } else if (token instanceof PrimitiveToken) {
-            return ((PrimitiveToken<?>) token).getPrimitive();
+        } else if (token instanceof PrimitiveToken<?> primitive) {
+            return primitive.getState();
         }
 
         throw new ParsingException("Couldn't parse " + token + " to value", token.getSourcePosition());

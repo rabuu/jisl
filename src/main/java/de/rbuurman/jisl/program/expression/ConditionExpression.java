@@ -24,10 +24,9 @@ public final class ConditionExpression extends Expression {
     public Value evaluate(Environment environment) throws EvaluationException {
         for (Expression[] cond : this.conditionals) {
             final Value predValue = cond[0].evaluate(environment);
-            if (!(predValue instanceof BooleanPrimitive)) {
+            if (!(predValue instanceof BooleanPrimitive pred)) {
                 throw new EvaluationException("Conditional predicate " + cond[0] + " is no Boolean");
             }
-            final BooleanPrimitive pred = (BooleanPrimitive) predValue;
             final Expression expr = cond[1];
 
             if (pred.getInner()) {
