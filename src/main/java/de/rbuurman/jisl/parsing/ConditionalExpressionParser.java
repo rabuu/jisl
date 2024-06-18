@@ -3,17 +3,17 @@ package de.rbuurman.jisl.parsing;
 import java.util.Optional;
 
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
-import de.rbuurman.jisl.program.Conditional;
+import de.rbuurman.jisl.program.ConditionExpression;
 import de.rbuurman.jisl.program.Expression;
 import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * ConditionalParser
  */
-public final class ConditionalParser extends Parser<Conditional> {
+public final class ConditionalExpressionParser extends Parser<ConditionExpression> {
 
     @Override
-    public Conditional parse(TokenQueue tokens) throws ParsingException {
+    public ConditionExpression parse(TokenQueue tokens) throws ParsingException {
         var open = tokens.expect(SimpleTokenType.OPEN);
         tokens.expect(SimpleTokenType.COND);
 
@@ -43,7 +43,7 @@ public final class ConditionalParser extends Parser<Conditional> {
             throw new ParsingException("Empty conditionals are not allowed", open.getSourcePosition());
         }
 
-        return new Conditional(conds, elseClause);
+        return new ConditionExpression(conds, elseClause);
     }
 
 }

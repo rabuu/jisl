@@ -10,11 +10,11 @@ import de.rbuurman.jisl.utils.Multiple;
 /**
  * Conditional
  */
-public final class Conditional extends Expression {
+public final class ConditionExpression extends Expression {
     private Multiple<Expression[]> conditionals;
     private Optional<Expression> elseClause;
 
-    public Conditional(Multiple<Expression[]> conditionals, Optional<Expression> elseClause) {
+    public ConditionExpression(Multiple<Expression[]> conditionals, Optional<Expression> elseClause) {
         this.conditionals = conditionals;
         this.elseClause = elseClause;
     }
@@ -49,7 +49,7 @@ public final class Conditional extends Expression {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final Conditional other = (Conditional) obj;
+        final ConditionExpression other = (ConditionExpression) obj;
 
         return this.conditionals.equals(other.conditionals) && this.elseClause.equals(other.elseClause);
     }
