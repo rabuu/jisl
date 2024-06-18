@@ -102,7 +102,7 @@ public final class Lexer {
 						case "space":
 							return new CharacterPrimitive(' ').toToken(firstPosition);
 						default:
-							throw new LexingException("Unknown character: " + charString, firstPosition);
+							throw new LexingException("Invalid character literal " + charString, firstPosition);
 					}
 				}
 
@@ -122,7 +122,7 @@ public final class Lexer {
 						this.eat(new LineMatcher());
 						return this.advance();
 					default:
-						throw new LexingException("Invalid Boolean: #" + boolStr, firstPosition);
+						throw new LexingException("Invalid boolean #" + boolStr, firstPosition);
 				}
 
 			case '(':
@@ -147,58 +147,54 @@ public final class Lexer {
 				return new SimpleToken(SimpleTokenType.SLASH, firstPosition);
 		}
 
-		if (Character.isDigit(firstCharacter)) {
-			final String numeric = this.eat(new NumericMatcher());
+		final String word = this.eat(new WordMatcher());
+		if (new NumericMatcher().matches(word)) {
 			try {
-				if (numeric.contains("/")) {
-					String[] fraction = numeric.split("/");
+				if (word.contains("/")) {
+					String[] fraction = word.split("/");
 					if (fraction.length != 2) {
-						throw new LexingException("Invalid fraction literal: " + numeric, firstPosition);
+						throw new LexingException("Invalid fraction literal: " + word, firstPosition);
 					}
 					final var dividend = Double.parseDouble(fraction[0]);
 					final var divisor = Double.parseDouble(fraction[1]);
 					return new NumberPrimitive(dividend / divisor).toToken(firstPosition);
 				}
-				var num = Double.parseDouble(numeric);
+				var num = Double.parseDouble(word);
 				return new NumberPrimitive(num).toToken(firstPosition);
 			} catch (NumberFormatException e) {
-				throw new LexingException("Couldn't parse " + numeric + " to number", firstPosition);
-			}
-		} else if (new VariableNameMatcher().matches(firstCharacter)) {
-			final String name = this.eat(new VariableNameMatcher());
-			switch (name) {
-				case "require":
-					return new SimpleToken(SimpleTokenType.REQUIRE, firstPosition);
-				case "true":
-					return new BooleanPrimitive(true).toToken(firstPosition);
-				case "false":
-					return new BooleanPrimitive(false).toToken(firstPosition);
-				case "define":
-					return new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
-				case "lambda":
-					return new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
-				case "local":
-					return new SimpleToken(SimpleTokenType.LOCAL, firstPosition);
-				case "cond":
-					return new SimpleToken(SimpleTokenType.COND, firstPosition);
-				case "else":
-					return new SimpleToken(SimpleTokenType.ELSE, firstPosition);
-				case "if":
-					return new SimpleToken(SimpleTokenType.IF, firstPosition);
-				case "and":
-					return new SimpleToken(SimpleTokenType.AND, firstPosition);
-				case "or":
-					return new SimpleToken(SimpleTokenType.OR, firstPosition);
-				case "not":
-					return new SimpleToken(SimpleTokenType.NOT, firstPosition);
-				case "identity":
-					return new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
-				default:
-					return new VariableNameToken(name, firstPosition);
 			}
 		}
 
-		throw new LexingException("Illegal character: " + firstCharacter, firstPosition);
+		switch (word) {
+			case "require":
+				return new SimpleToken(SimpleTokenType.REQUIRE, firstPosition);
+			case "true":
+				return new BooleanPrimitive(true).toToken(firstPosition);
+			case "false":
+				return new BooleanPrimitive(false).toToken(firstPosition);
+			case "define":
+				return new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
+			case "lambda":
+				return new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
+			case "local":
+				return new SimpleToken(SimpleTokenType.LOCAL, firstPosition);
+			case "cond":
+				return new SimpleToken(SimpleTokenType.COND, firstPosition);
+			case "else":
+				return new SimpleToken(SimpleTokenType.ELSE, firstPosition);
+			case "if":
+				return new SimpleToken(SimpleTokenType.IF, firstPosition);
+			case "and":
+				return new SimpleToken(SimpleTokenType.AND, firstPosition);
+			case "or":
+				return new SimpleToken(SimpleTokenType.OR, firstPosition);
+			case "not":
+				return new SimpleToken(SimpleTokenType.NOT, firstPosition);
+			case "identity":
+				return new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
+			default:
+				return new VariableNameToken(word, firstPosition);
+		}
 	}
 
 	private char peek() {
