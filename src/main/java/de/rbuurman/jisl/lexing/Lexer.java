@@ -27,6 +27,17 @@ public final class Lexer {
 		this.position = new SourcePosition(1, 1);
 	}
 
+	/**
+	 * This is the main entry point to the Lexer.
+	 * <p>
+	 * The tokenize() method goes through the literal characters of the
+	 * given source text and splits them up into meaningful pieces (Tokens).
+	 * <p>
+	 * Internally this is done by iteratively calling the advance() method,
+	 * which returns the next Token, and collecting them into a TokenQueue.
+	 *
+	 * @return the code neatly split up into Tokens, ready to be parsed
+	 */
 	public TokenQueue tokenize() throws LexingException {
 		var tokens = new TokenQueue();
 
@@ -40,6 +51,14 @@ public final class Lexer {
 		return tokens;
 	}
 
+	/**
+	 * Here is where the hard work is done.
+	 * This method looks at the upcoming character and decides what Token fits.
+	 * The logic is split up into several helper methods called advanceXY(),
+	 * each of them analyzing one specific type of Token.
+	 *
+	 * @return next Token of the source text
+	 */
 	private Token<?> advance() throws LexingException {
 		this.eat(new WhitespaceMatcher());
 
@@ -131,6 +150,9 @@ public final class Lexer {
 		}
 	}
 
+	/**
+	 * Tokenize a comment
+	 */
 	private Token<?> advanceComment(SourcePosition firstPosition) throws LexingException {
 		this.eat(new CharMatcher(';'));
 		this.eat(new WhitespaceMatcher());
@@ -138,6 +160,9 @@ public final class Lexer {
 		return new CommentToken(comment, firstPosition);
 	}
 
+	/**
+	 * Tokenize a string
+	 */
 	private Token<?> advanceString(SourcePosition firstPosition) throws LexingException {
 		this.bump();
 		var string = new String();
@@ -169,6 +194,9 @@ public final class Lexer {
 		return new StringPrimitive(string).toToken(firstPosition);
 	}
 
+	/**
+	 * Tokenize a character
+	 */
 	private Token<?> advanceCharacter(SourcePosition firstPosition) throws LexingException {
 		this.bump();
 		final String charString = this.eat(new WordMatcher());
@@ -185,6 +213,12 @@ public final class Lexer {
 		}
 	}
 
+	/**
+	 * Tokenize a boolean
+	 * <p>
+	 * There is a special syntax #reader that looks like a boolean,
+	 * we simply ignore the line that follows a #reader.
+	 */
 	private Token<?> advanceBoolean(SourcePosition firstPosition) throws LexingException {
 		final String boolStr = this.eat(new WordMatcher());
 		switch (boolStr) {
@@ -205,6 +239,12 @@ public final class Lexer {
 		}
 	}
 
+	/**
+	 * Tokenize a number
+	 * 
+	 * @param word that possibly is a number
+	 * @throws NumberFormatException when the number can't be parsed
+	 */
 	private Token<?> advanceNumber(String word, SourcePosition firstPosition)
 			throws LexingException, NumberFormatException {
 		if (word.contains("/")) {
