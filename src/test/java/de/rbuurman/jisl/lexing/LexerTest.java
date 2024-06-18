@@ -25,7 +25,6 @@ public class LexerTest {
 				new NumberPrimitive(0.5).toToken(null),
 				new StringPrimitive("hello world").toToken(null),
 				new SimpleToken(SimpleTokenType.CLOSE, null),
-				new CommentToken("comment", null),
 				new SimpleToken(SimpleTokenType.OPEN, null),
 				new NumberPrimitive(0.567).toToken(null),
 				new BooleanPrimitive(true).toToken(null),

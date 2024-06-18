@@ -13,7 +13,7 @@ import de.rbuurman.jisl.parsing.TokenQueue;
 public final class Lexer {
 	final static char EOF = '\0';
 
-	private Queue<Character> chars;
+	private final Queue<Character> chars;
 	private SourcePosition position;
 
 	public Lexer(final String text) {
@@ -70,11 +70,8 @@ public final class Lexer {
 		final SourcePosition firstPosition = this.position;
 		switch (firstCharacter) {
 			case ';':
-				return advanceComment(firstPosition);
-
-			case '"':
-				return advanceString(firstPosition);
-
+				advanceComment(firstPosition);
+				return this.advance();
 			case '#':
 				this.bump();
 				if (this.peek() == '\\') {
@@ -82,29 +79,23 @@ public final class Lexer {
 				} else {
 					return advanceBoolean(firstPosition);
 				}
-
-			case '(':
-			case '[':
+			case '"':
+				return advanceString(firstPosition);
+			case '(', '[':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.OPEN, firstPosition);
-
-			case ')':
-			case ']':
+			case ')', ']':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.CLOSE, firstPosition);
-
 			case '+':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
-
 			case '-':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.MINUS, firstPosition);
-
 			case '*':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
-
 			case '/':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.SLASH, firstPosition);
@@ -114,46 +105,32 @@ public final class Lexer {
 		if (new NumericMatcher().matches(word)) {
 			try {
 				return advanceNumber(word, firstPosition);
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException ignored) {
 			}
 		}
 
-		switch (word) {
-			case "require":
-				return new SimpleToken(SimpleTokenType.REQUIRE, firstPosition);
-			case "true":
-				return new BooleanPrimitive(true).toToken(firstPosition);
-			case "false":
-				return new BooleanPrimitive(false).toToken(firstPosition);
-			case "define":
-				return new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
-			case "lambda":
-				return new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
-			case "local":
-				return new SimpleToken(SimpleTokenType.LOCAL, firstPosition);
-			case "cond":
-				return new SimpleToken(SimpleTokenType.COND, firstPosition);
-			case "else":
-				return new SimpleToken(SimpleTokenType.ELSE, firstPosition);
-			case "if":
-				return new SimpleToken(SimpleTokenType.IF, firstPosition);
-			case "and":
-				return new SimpleToken(SimpleTokenType.AND, firstPosition);
-			case "or":
-				return new SimpleToken(SimpleTokenType.OR, firstPosition);
-			case "not":
-				return new SimpleToken(SimpleTokenType.NOT, firstPosition);
-			case "identity":
-				return new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
-			default:
-				return new VariableNameToken(word, firstPosition);
-		}
+		return switch (word) {
+			case "require" -> new SimpleToken(SimpleTokenType.REQUIRE, firstPosition);
+			case "true" -> new BooleanPrimitive(true).toToken(firstPosition);
+			case "false" -> new BooleanPrimitive(false).toToken(firstPosition);
+			case "define" -> new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
+			case "lambda" -> new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
+			case "local" -> new SimpleToken(SimpleTokenType.LOCAL, firstPosition);
+			case "cond" -> new SimpleToken(SimpleTokenType.COND, firstPosition);
+			case "else" -> new SimpleToken(SimpleTokenType.ELSE, firstPosition);
+			case "if" -> new SimpleToken(SimpleTokenType.IF, firstPosition);
+			case "and" -> new SimpleToken(SimpleTokenType.AND, firstPosition);
+			case "or" -> new SimpleToken(SimpleTokenType.OR, firstPosition);
+			case "not" -> new SimpleToken(SimpleTokenType.NOT, firstPosition);
+			case "identity" -> new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
+			default -> new VariableNameToken(word, firstPosition);
+		};
 	}
 
 	/**
 	 * Tokenize a comment
 	 */
-	private Token<?> advanceComment(SourcePosition firstPosition) throws LexingException {
+	private Token<?> advanceComment(SourcePosition firstPosition) {
 		this.eat(new CharMatcher(';'));
 		this.eat(new WhitespaceMatcher());
 		final String comment = this.eat(new LineMatcher());
@@ -165,10 +142,11 @@ public final class Lexer {
 	 */
 	private Token<?> advanceString(SourcePosition firstPosition) throws LexingException {
 		this.bump();
-		var string = new String();
+		StringBuilder string = new StringBuilder();
 		for (;;) {
 			final String s = this
-					.eat(new InverseMatcher(new OrMatcher(new CharMatcher('\\'), new CharMatcher('"'))));
+					.eat(new InverseMatcher(
+							new OrMatcher(new CharMatcher('\\'), new CharMatcher('"'))));
 
 			final char delimiter = this.bump();
 
@@ -176,22 +154,19 @@ public final class Lexer {
 			if (delimiter == '\\') {
 				final var escapeCodePosition = this.position;
 				final var escapeCode = this.bump();
-				switch (escapeCode) {
-					case '"':
-						string += s + '"';
-						continue;
-
-					default:
-						throw new LexingException("Invalid escape code " + escapeCode, escapeCodePosition);
+				if (escapeCode == '"') {
+					string.append(s).append('"');
+					continue;
 				}
+				throw new LexingException("Invalid escape code " + escapeCode, escapeCodePosition);
 			} else if (delimiter == '"') {
-				string += s;
+				string.append(s);
 				break;
 			} else {
 				throw new LexingException("Unterminated string literal", this.position);
 			}
 		}
-		return new StringPrimitive(string).toToken(firstPosition);
+		return new StringPrimitive(string.toString()).toToken(firstPosition);
 	}
 
 	/**
@@ -205,12 +180,10 @@ public final class Lexer {
 			return new CharacterPrimitive(charString.charAt(0)).toToken(firstPosition);
 		}
 
-		switch (charString) {
-			case "space":
-				return new CharacterPrimitive(' ').toToken(firstPosition);
-			default:
-				throw new LexingException("Invalid character literal " + charString, firstPosition);
+		if (charString.equals("space")) {
+			return new CharacterPrimitive(' ').toToken(firstPosition);
 		}
+		throw new LexingException("Invalid character literal " + charString, firstPosition);
 	}
 
 	/**
@@ -221,22 +194,15 @@ public final class Lexer {
 	 */
 	private Token<?> advanceBoolean(SourcePosition firstPosition) throws LexingException {
 		final String boolStr = this.eat(new WordMatcher());
-		switch (boolStr) {
-			case "true":
-			case "t":
-			case "T":
-				return new BooleanPrimitive(true).toToken(firstPosition);
-			case "false":
-			case "f":
-			case "F":
-				return new BooleanPrimitive(false).toToken(firstPosition);
-			case "reader":
-				// ignore
+		return switch (boolStr) {
+			case "true", "t", "T" -> new BooleanPrimitive(true).toToken(firstPosition);
+			case "false", "f", "F" -> new BooleanPrimitive(false).toToken(firstPosition);
+			case "reader" -> {
 				this.eat(new LineMatcher());
-				return this.advance();
-			default:
-				throw new LexingException("Invalid boolean #" + boolStr, firstPosition);
-		}
+				yield this.advance();
+			}
+			default -> throw new LexingException("Invalid boolean #" + boolStr, firstPosition);
+		};
 	}
 
 	/**
