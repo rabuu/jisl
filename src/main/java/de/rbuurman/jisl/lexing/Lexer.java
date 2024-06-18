@@ -70,7 +70,7 @@ public final class Lexer {
 		final SourcePosition firstPosition = this.position;
 		switch (firstCharacter) {
 			case ';':
-				advanceComment(firstPosition);
+				this.eat(new LineMatcher());
 				return this.advance();
 			case '#':
 				this.bump();
@@ -125,16 +125,6 @@ public final class Lexer {
 			case "identity" -> new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
 			default -> new VariableNameToken(word, firstPosition);
 		};
-	}
-
-	/**
-	 * Tokenize a comment
-	 */
-	private Token<?> advanceComment(SourcePosition firstPosition) {
-		this.eat(new CharMatcher(';'));
-		this.eat(new WhitespaceMatcher());
-		final String comment = this.eat(new LineMatcher());
-		return new CommentToken(comment, firstPosition);
 	}
 
 	/**
