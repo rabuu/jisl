@@ -26,8 +26,8 @@ public final class If extends Applicable {
 
         final Value predValue = arguments.poll();
         if (!(predValue instanceof BooleanPrimitive pred)) {
-            throw new EvaluationException("The predicate " + predValue + " is no boolean",
-                    predValue.getSourcePosition());
+            throw new EvaluationException("Predicate " + predValue + " of if-statement is no boolean",
+                    this.getSourcePosition());
         }
 
         final Value thenClause = arguments.poll();

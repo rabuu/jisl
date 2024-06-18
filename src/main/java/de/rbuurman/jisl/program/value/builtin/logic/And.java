@@ -26,7 +26,7 @@ public final class And extends Applicable {
 
         for (var arg : arguments) {
             if (!(arg instanceof BooleanPrimitive b)) {
-                throw new EvaluationException("Argument must be boolean", arg.getSourcePosition());
+                throw new EvaluationException("Argument of " + this + " must be boolean", this.getSourcePosition());
             }
 
             if (!b.getInner()) {
