@@ -18,6 +18,9 @@ import de.rbuurman.jisl.utils.Multiple;
 public class Main {
     public static String USAGE = "USAGE: jisl [repl|inspect-lexing|inspect-parsing] <SOURCE-FILE>";
 
+    /**
+     * The main method just calls the run() method and handles the Exceptions
+     */
     public static void main(final String[] args) {
         try {
             run(args);
@@ -40,7 +43,15 @@ public class Main {
         }
     }
 
-    public static void run(final String[] args)
+    /**
+     * The run method checks the CLI arguments executes the corresponding functions
+     * At the moment, there are four modes:
+     * - read a source file and evaluate it (default)
+     * - dump the lexical tokens of a given source file
+     * - dump the parsed program elements of a given source file
+     * - start an interactive REPL
+     */
+    private static void run(final String[] args)
             throws CLIException, IOException, LexingException, ParsingException, EvaluationException {
         if (args.length < 1) {
             throw new CLIException("Expected at least one argument");

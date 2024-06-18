@@ -11,12 +11,18 @@ import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 
 /**
- * REPL
+ * REPL (Run-Eval-Print-Loop)
+ * An interactive "on-the-fly" interpreter
  */
 public final class REPL {
     private Environment environment = new Environment();
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+    /**
+     * Run the REPL:
+     * it will periodically ask for an input and then interpret it
+     * according to the language rules
+     */
     public void run() throws IOException {
         loop: for (;;) {
 
