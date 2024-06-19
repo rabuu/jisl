@@ -25,6 +25,8 @@ public final class ValueParser extends Parser<Value> {
 
         if (token.is(SimpleTokenType.IDENTITY)) {
             return new Identity(token.getSourcePosition());
+        } else if (token.is(SimpleTokenType.EQUALITY)) {
+            return new Equality(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.PLUS)) {
             return new Addition(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.MINUS)) {

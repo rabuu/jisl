@@ -16,8 +16,8 @@ mvn clean package    # to generate a JAR executable
 - [x] REPL
 - [x] Simple library support
 - [x] Local definitions
+- [x] Source position of ProgramElements
 - [ ] Write tests
-- [ ] Source position of ProgramElements
 - [ ] Symbols/Atoms
 - [ ] Structures
 - [ ] All important builtins
@@ -29,6 +29,26 @@ mvn clean package    # to generate a JAR executable
 - There will be no support for images.
 - For now there are no plans to implement `let`, `let*` and `letrec`.
 - Also probably we will not implement signatures.
+
+## Things to note
+
+### Lambdas
+Two lambdas are equals if they have the same definition.
+So the must share the same argument names and also the same expression in the exakt same form to be equal.
+
+#### Functions are Lambdas
+We handle functions a little different than the default interpreter.
+A function is just a name for a lambda.
+
+Therefore, equality between functions may act a little weird.
+```racket
+(define (foo x y) (+ x y))
+(define (bar x y) (+ x y))
+(define (baz a b) (+ a b))
+
+(eq? foo bar) ; evaluates to #true
+(eq? foo baz) ; evaluates to #false
+```
 
 ## More resources
 - [K. Ostermann, Lehrskript Praktische Informatik 1](https://ps-tuebingen.github.io/informatik-1-skript/)

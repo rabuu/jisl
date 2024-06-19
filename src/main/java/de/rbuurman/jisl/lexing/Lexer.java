@@ -19,7 +19,7 @@ import de.rbuurman.jisl.parsing.TokenQueue;
 public final class Lexer {
 	final static char EOF = '\0';
 
-	private PeekableQueue<Character> chars;
+	private PeekableQueue<Character> chars = new PeekableQueue<>();
 	private SourcePosition position;
 
 	/**
@@ -135,6 +135,7 @@ public final class Lexer {
 			case "or" -> new SimpleToken(SimpleTokenType.OR, firstPosition);
 			case "not" -> new SimpleToken(SimpleTokenType.NOT, firstPosition);
 			case "identity" -> new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
+			case "eq?" -> new SimpleToken(SimpleTokenType.EQUALITY, firstPosition);
 			default -> new VariableNameToken(word, firstPosition);
 		};
 	}

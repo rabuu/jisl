@@ -36,6 +36,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 
 		// other builtins
 		IDENTITY,
+		EQUALITY,
 
 		// end of file
 		EOF;
