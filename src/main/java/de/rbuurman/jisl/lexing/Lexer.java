@@ -8,14 +8,28 @@ import de.rbuurman.jisl.lexing.token.*;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.TokenQueue;
 
-public final class Lexer extends PeekableQueue<Character> {
+/**
+ * The Lexer class is responsible for turning the source code into
+ * a number of Tokens, so that the rest of the code doesn't have to work
+ * with strings or characters but with meaningful abstracted data.
+ * <p>
+ * To use this class, first construct a Lexer with the source text as string.
+ * Then, call the tokenize() method on it.
+ */
+public final class Lexer {
 	final static char EOF = '\0';
 
+	private PeekableQueue<Character> chars;
 	private SourcePosition position;
 
+	/**
+	 * Construct a Lexer
+	 *
+	 * @param text the literal text that should get tokenized
+	 */
 	public Lexer(final String text) {
 		for (char c : text.toCharArray()) {
-			this.elements.add(c);
+			this.chars.queue(c);
 		}
 
 		this.position = new SourcePosition(1, 1);
@@ -56,7 +70,7 @@ public final class Lexer extends PeekableQueue<Character> {
 	private Token<?> advance() throws LexingException {
 		this.eat(new WhitespaceMatcher());
 
-		if (this.isEOF()) {
+		if (this.chars.isEmpty()) {
 			return new SimpleToken(SimpleTokenType.EOF, this.position);
 		}
 
@@ -85,7 +99,7 @@ public final class Lexer extends PeekableQueue<Character> {
 				this.bump();
 				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
 			case '-':
-				final char following = this.peekSecond();
+				final char following = this.chars.peekSecond();
 				if (Character.isDigit(following)) {
 					break;
 				}
@@ -127,6 +141,8 @@ public final class Lexer extends PeekableQueue<Character> {
 
 	/**
 	 * Tokenize a string
+	 *
+	 * @return a StringPrimitive
 	 */
 	private Token<?> advanceString(SourcePosition firstPosition) throws LexingException {
 		this.bump();
@@ -159,6 +175,8 @@ public final class Lexer extends PeekableQueue<Character> {
 
 	/**
 	 * Tokenize a character
+	 * 
+	 * @return a CharacterPrimitive
 	 */
 	private Token<?> advanceCharacter(SourcePosition firstPosition) throws LexingException {
 		this.bump();
@@ -179,6 +197,8 @@ public final class Lexer extends PeekableQueue<Character> {
 	 * <p>
 	 * There is a special syntax #reader that looks like a boolean,
 	 * we simply ignore the line that follows a #reader.
+	 * 
+	 * @return a BooleanPrimitive
 	 */
 	private Token<?> advanceBoolean(SourcePosition firstPosition) throws LexingException {
 		final String boolStr = this.eat(new WordMatcher());
@@ -198,6 +218,7 @@ public final class Lexer extends PeekableQueue<Character> {
 	 * 
 	 * @param word that possibly is a number
 	 * @throws NumberFormatException when the number can't be parsed
+	 * @return a NumberPrimitive
 	 */
 	private Token<?> advanceNumber(String word, SourcePosition firstPosition)
 			throws LexingException, NumberFormatException {
@@ -214,9 +235,11 @@ public final class Lexer extends PeekableQueue<Character> {
 		return new NumberPrimitive(num).toToken(firstPosition);
 	}
 
-	@Override
-	public Character peek() {
-		final Character c = super.peek();
+	/**
+	 * Return the current character but don't remove it from the queue
+	 */
+	private char peek() {
+		final Character c = this.chars.peek();
 
 		if (c == null)
 			return EOF;
@@ -224,8 +247,11 @@ public final class Lexer extends PeekableQueue<Character> {
 			return c;
 	}
 
+	/**
+	 * Return the current character and remove it from the queue
+	 */
 	private char bump() {
-		final Character c = this.elements.poll();
+		final Character c = this.chars.poll();
 		if (c == null)
 			return EOF;
 
@@ -238,16 +264,18 @@ public final class Lexer extends PeekableQueue<Character> {
 		return c;
 	}
 
+	/**
+	 * Remove the upcoming characters from the queue as long as they match.
+	 * Then, return all of them as a string.
+	 *
+	 * @param matcher what characters match and when to stop eating
+	 */
 	private String eat(Matcher matcher) {
 		var builder = new StringBuilder();
-		while (!this.isEOF() && matcher.matches(this.peek())) {
+		while (!this.chars.isEmpty() && matcher.matches(this.peek())) {
 			builder.append(this.bump());
 		}
 
 		return builder.toString();
-	}
-
-	private boolean isEOF() {
-		return this.elements.isEmpty();
 	}
 }

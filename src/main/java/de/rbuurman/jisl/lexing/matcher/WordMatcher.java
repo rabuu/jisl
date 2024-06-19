@@ -1,5 +1,9 @@
 package de.rbuurman.jisl.lexing.matcher;
 
+/**
+ * A Matcher that matches everything that is allowed in word
+ * such as a variable name
+ */
 public final class WordMatcher implements Matcher {
 
 	@Override

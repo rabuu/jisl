@@ -48,6 +48,10 @@ public class PeekableQueue<T> implements Iterable<T> {
 		return this.elements.size();
 	}
 
+	public boolean isEmpty() {
+		return this.size() == 0;
+	}
+
 	public Object[] toArray() {
 		return this.elements.toArray();
 	}
