@@ -1,8 +1,6 @@
 package de.rbuurman.jisl.lexing;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
+import de.rbuurman.jisl.utils.PeekableQueue;
 import de.rbuurman.jisl.utils.SourcePosition;
 import de.rbuurman.jisl.program.value.primitive.*;
 import de.rbuurman.jisl.lexing.matcher.*;
@@ -10,20 +8,16 @@ import de.rbuurman.jisl.lexing.token.*;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.TokenQueue;
 
-public final class Lexer {
+public final class Lexer extends PeekableQueue<Character> {
 	final static char EOF = '\0';
 
-	private final Queue<Character> chars;
 	private SourcePosition position;
 
 	public Lexer(final String text) {
-		final var chars = new LinkedList<Character>();
-
 		for (char c : text.toCharArray()) {
-			chars.add(c);
+			this.elements.add(c);
 		}
 
-		this.chars = chars;
 		this.position = new SourcePosition(1, 1);
 	}
 
@@ -91,6 +85,10 @@ public final class Lexer {
 				this.bump();
 				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
 			case '-':
+				final char following = this.peekSecond();
+				if (Character.isDigit(following)) {
+					break;
+				}
 				this.bump();
 				return new SimpleToken(SimpleTokenType.MINUS, firstPosition);
 			case '*':
@@ -216,8 +214,9 @@ public final class Lexer {
 		return new NumberPrimitive(num).toToken(firstPosition);
 	}
 
-	private char peek() {
-		final Character c = this.chars.peek();
+	@Override
+	public Character peek() {
+		final Character c = super.peek();
 
 		if (c == null)
 			return EOF;
@@ -226,7 +225,7 @@ public final class Lexer {
 	}
 
 	private char bump() {
-		final Character c = this.chars.poll();
+		final Character c = this.elements.poll();
 		if (c == null)
 			return EOF;
 
@@ -249,6 +248,6 @@ public final class Lexer {
 	}
 
 	private boolean isEOF() {
-		return this.chars.isEmpty();
+		return this.elements.isEmpty();
 	}
 }

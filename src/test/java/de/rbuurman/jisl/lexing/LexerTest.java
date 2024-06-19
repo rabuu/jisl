@@ -14,7 +14,7 @@ public class LexerTest {
 
 	@Test
 	void tokenizeCorrectInput() throws LexingException {
-		var lexer = new Lexer("(define 1 a 1/2 \"hello world\") ; comment\n [ 0.567 #true] #\\space #\\z");
+		var lexer = new Lexer("(define 1 a -1/2 \"hello world\") ; comment\n [ 0.567 #true] #\\space #\\z");
 		final TokenQueue tokens = lexer.tokenize();
 
 		final Token<?>[] expected = {
@@ -22,7 +22,7 @@ public class LexerTest {
 				new SimpleToken(SimpleTokenType.DEFINE, null),
 				new NumberPrimitive(1.0).toToken(null),
 				new VariableNameToken("a", null),
-				new NumberPrimitive(0.5).toToken(null),
+				new NumberPrimitive(-0.5).toToken(null),
 				new StringPrimitive("hello world").toToken(null),
 				new SimpleToken(SimpleTokenType.CLOSE, null),
 				new SimpleToken(SimpleTokenType.OPEN, null),
