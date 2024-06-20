@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.program.value.builtin;
+package de.rbuurman.jisl.program.builtin;
 
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.value.primitive.BooleanPrimitive;

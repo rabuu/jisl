@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.program.value.builtin.logic;
+package de.rbuurman.jisl.program.builtin.logic;
 
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Applicable;

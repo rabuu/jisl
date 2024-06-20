@@ -89,6 +89,8 @@ public final class Lexer {
 				}
 			case '"':
 				return advanceString(firstPosition);
+			case '\'':
+				return advanceSymbol(firstPosition);
 			case '(', '[':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.OPEN, firstPosition);
@@ -114,6 +116,11 @@ public final class Lexer {
 		}
 
 		final String word = this.eat(new WordMatcher());
+
+		if (word.length() == 0) {
+			throw new LexingException("Failed to tokenize " + this.peek(), firstPosition);
+		}
+
 		if (new NumericMatcher().matches(word)) {
 			try {
 				return advanceNumber(word, firstPosition);
@@ -134,6 +141,8 @@ public final class Lexer {
 			case "and" -> new SimpleToken(SimpleTokenType.AND, firstPosition);
 			case "or" -> new SimpleToken(SimpleTokenType.OR, firstPosition);
 			case "not" -> new SimpleToken(SimpleTokenType.NOT, firstPosition);
+			case "empty" -> new SimpleToken(SimpleTokenType.EMPTY, firstPosition);
+			case "cons" -> new SimpleToken(SimpleTokenType.CONS, firstPosition);
 			case "identity" -> new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
 			case "eq?" -> new SimpleToken(SimpleTokenType.EQUALITY, firstPosition);
 			default -> new VariableNameToken(word, firstPosition);
@@ -172,6 +181,27 @@ public final class Lexer {
 			}
 		}
 		return new StringPrimitive(string.toString()).toToken(firstPosition);
+	}
+
+	/**
+	 * Tokenize a symbol
+	 *
+	 * @return a SymbolPrimitive
+	 */
+	private Token<?> advanceSymbol(SourcePosition firstPosition) throws LexingException {
+		this.bump();
+		if (this.peek() == '(' && this.chars.peekSecond() == ')') {
+			this.bump();
+			this.bump();
+			return new SimpleToken(SimpleTokenType.EMPTY, firstPosition);
+		}
+
+		final String word = this.eat(new WordMatcher());
+		if (word.length() == 0) {
+			throw new LexingException("Empty symbol is not allowed", firstPosition);
+		}
+
+		return new SymbolPrimitive(word).toToken(firstPosition);
 	}
 
 	/**

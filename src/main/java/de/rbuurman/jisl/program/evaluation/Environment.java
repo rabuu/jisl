@@ -3,7 +3,7 @@ package de.rbuurman.jisl.program.evaluation;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.rbuurman.jisl.program.expression.VariableName;
+import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.Library;
 import de.rbuurman.jisl.program.value.Value;
 

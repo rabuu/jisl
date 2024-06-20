@@ -20,6 +20,10 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		LAMBDA,
 		LOCAL,
 
+		// list builtins
+		EMPTY,
+		CONS,
+
 		// arithmetic builtins
 		PLUS,
 		MINUS,

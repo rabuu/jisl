@@ -5,10 +5,12 @@ import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.parsing.expression.ParsingException;
+import de.rbuurman.jisl.program.builtin.*;
+import de.rbuurman.jisl.program.builtin.arithmetic.*;
+import de.rbuurman.jisl.program.builtin.logic.*;
+import de.rbuurman.jisl.program.builtin.list.*;
 import de.rbuurman.jisl.program.value.Value;
-import de.rbuurman.jisl.program.value.builtin.arithmetic.*;
-import de.rbuurman.jisl.program.value.builtin.logic.*;
-import de.rbuurman.jisl.program.value.builtin.*;
+import de.rbuurman.jisl.program.value.list.EmptyList;
 
 /**
  * ValueParser
@@ -39,6 +41,10 @@ public final class ValueParser extends Parser<Value> {
             return new If(token.getSourcePosition());
         } else if (token.is(SimpleTokenType.AND)) {
             return new And(token.getSourcePosition());
+        } else if (token.is(SimpleTokenType.EMPTY)) {
+            return new EmptyList(token.getSourcePosition());
+        } else if (token.is(SimpleTokenType.CONS)) {
+            return new ListConstructor(token.getSourcePosition());
         } else if (token instanceof PrimitiveToken<?> primitive) {
             return primitive.toPrimitive();
         }

@@ -1,9 +1,10 @@
-package de.rbuurman.jisl.program.expression;
+package de.rbuurman.jisl.program;
 
 import java.util.Objects;
 
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
+import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.SourcePosition;
 

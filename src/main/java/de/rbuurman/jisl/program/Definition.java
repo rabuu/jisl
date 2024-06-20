@@ -1,7 +1,6 @@
 package de.rbuurman.jisl.program;
 
 import de.rbuurman.jisl.program.expression.Expression;
-import de.rbuurman.jisl.program.expression.VariableName;
 import de.rbuurman.jisl.utils.SourcePosition;
 
 public final class Definition extends ProgramElement {

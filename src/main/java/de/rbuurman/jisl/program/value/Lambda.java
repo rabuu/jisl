@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.program.value;
 
-import de.rbuurman.jisl.program.expression.VariableName;
+import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;

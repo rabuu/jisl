@@ -1,9 +1,8 @@
-package de.rbuurman.jisl.parsing.expression;
+package de.rbuurman.jisl.parsing;
 
 import de.rbuurman.jisl.lexing.token.VariableNameToken;
-import de.rbuurman.jisl.parsing.Parser;
-import de.rbuurman.jisl.parsing.TokenQueue;
-import de.rbuurman.jisl.program.expression.VariableName;
+import de.rbuurman.jisl.parsing.expression.ParsingException;
+import de.rbuurman.jisl.program.VariableName;
 
 /**
  * VariableNameParser
