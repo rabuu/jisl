@@ -95,12 +95,19 @@ public final class Lexer {
 			case ')', ']':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.CLOSE, firstPosition);
+			case ':':
+				this.bump();
+				return new SimpleToken(SimpleTokenType.COLON, firstPosition);
 			case '+':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
 			case '-':
 				final char following = this.chars.peekSecond();
-				if (Character.isDigit(following)) {
+				if (following == '>') {
+					this.bump();
+					this.bump();
+					return new SimpleToken(SimpleTokenType.ARROW, firstPosition);
+				} else if (Character.isDigit(following)) {
 					break;
 				}
 				this.bump();
