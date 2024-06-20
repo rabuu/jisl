@@ -24,11 +24,11 @@ mvn clean package    # to generate a JAR executable
 - [ ] Good [standard library](stdlib/)
 - [ ] Nested libraries
 - [ ] Lists
-- [ ] Signatures
 
 ## Not Todo
 - There will be no support for images.
 - For now there are no plans to implement `let`, `let*` and `letrec`.
+- Also probably we will not implement signatures.
 
 ## Things to note
 

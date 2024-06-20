@@ -13,8 +13,6 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		// basic syntax
 		OPEN,
 		CLOSE,
-		COLON,
-		ARROW,
 
 		// keywords
 		REQUIRE,
