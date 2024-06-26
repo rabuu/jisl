@@ -1,10 +1,11 @@
-<program>     ::= <element>+
+<program>     ::= <element>*
 <element>     ::= <definition> | <expression> | <require>
 
 <require>     ::= ( require <string> )
 
 <definition>  ::= ( define <variable> <expression> )
 				| ( define ( <variable> <variable>+ ) <expression> )
+				| ( define-struct <variable> ( <variable>* ) )
 
 <expression>  ::= ( <expression> <expression>+ )
 				| ( cond {( <expression> <expression> )}+ {( else <expression> )}? )

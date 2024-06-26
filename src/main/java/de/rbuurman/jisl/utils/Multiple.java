@@ -56,4 +56,9 @@ public class Multiple<T> implements Iterable<T> {
 	public Iterator<T> iterator() {
 		return this.elements.iterator();
 	}
+
+	@Override
+	public String toString() {
+		return this.elements.toString();
+	}
 }

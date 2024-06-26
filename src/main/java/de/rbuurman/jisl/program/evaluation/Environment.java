@@ -6,6 +6,7 @@ import java.util.Map;
 import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.Library;
 import de.rbuurman.jisl.program.value.Value;
+import de.rbuurman.jisl.utils.Multiple;
 
 /**
  * Environment
@@ -13,13 +14,18 @@ import de.rbuurman.jisl.program.value.Value;
 public class Environment {
 
 	private Map<VariableName, Value> definitions = new HashMap<>();
+	private Map<VariableName, Multiple<VariableName>> structs = new HashMap<>();
 
 	protected Map<VariableName, Value> getDefinitions() {
 		return this.definitions;
 	}
 
+	protected Map<VariableName, Multiple<VariableName>> getStructs() {
+		return this.structs;
+	}
+
 	public void addDefinition(VariableName variable, Value value) throws EvaluationException {
-		if (this.definitions.containsKey(variable)) {
+		if (this.definitions.containsKey(variable) || this.structs.containsKey(variable)) {
 			throw new EvaluationException("Duplicate definition for " + variable, variable.getSourcePosition());
 		}
 		this.definitions.put(variable, value);
@@ -35,6 +41,13 @@ public class Environment {
 		return value;
 	}
 
+	public void addStruct(VariableName name, Multiple<VariableName> fields) throws EvaluationException {
+		if (this.definitions.containsKey(name) || this.structs.containsKey(name)) {
+			throw new EvaluationException("Duplicate definition for struct " + name, name.getSourcePosition());
+		}
+		this.structs.put(name, fields);
+	}
+
 	public static Environment merge(Environment base, Environment local) throws EvaluationException {
 		var env = new Environment();
 
@@ -42,8 +55,16 @@ public class Environment {
 			env.getDefinitions().put(entry.getKey(), entry.getValue());
 		}
 
+		for (Map.Entry<VariableName, Multiple<VariableName>> entry : base.getStructs().entrySet()) {
+			env.getStructs().put(entry.getKey(), entry.getValue());
+		}
+
 		for (Map.Entry<VariableName, Value> entry : local.getDefinitions().entrySet()) {
 			env.getDefinitions().put(entry.getKey(), entry.getValue());
+		}
+
+		for (Map.Entry<VariableName, Multiple<VariableName>> entry : local.getStructs().entrySet()) {
+			env.getStructs().put(entry.getKey(), entry.getValue());
 		}
 
 		return env;
@@ -54,6 +75,10 @@ public class Environment {
 			final var variable = definition.getVariable();
 			final var value = definition.getExpression().evaluate(this);
 			this.addDefinition(variable, value);
+		}
+
+		for (var struct : library.structs()) {
+			this.addStruct(struct.getName(), struct.getFields());
 		}
 	}
 }

@@ -17,6 +17,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		// keywords
 		REQUIRE,
 		DEFINE,
+		DEFINE_STRUCT,
 		LAMBDA,
 		LOCAL,
 

@@ -5,5 +5,5 @@ import de.rbuurman.jisl.utils.Multiple;
 /**
  * Library
  */
-public record Library(Multiple<Definition> definitions) {
+public record Library(Multiple<Definition> definitions, Multiple<StructDefinition> structs) {
 }

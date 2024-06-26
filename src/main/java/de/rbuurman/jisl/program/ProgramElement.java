@@ -40,6 +40,8 @@ public abstract class ProgramElement {
             VariableName variable = definition.getVariable();
             Value value = definition.getExpression().evaluate(environment);
             environment.addDefinition(variable, value);
+        } else if (this instanceof StructDefinition struct) {
+            environment.addStruct(struct.getName(), struct.getFields());
         } else if (this instanceof Expression expression) {
             return Optional.of(expression.evaluate(environment));
         }
