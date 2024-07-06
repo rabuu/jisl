@@ -23,10 +23,6 @@ public final class SExpressionParser extends Parser<SExpression> {
             args.add(new ExpressionParser().parse(tokens));
         }
 
-        if (args.size() < 1) {
-            throw new ParsingException("S-expression must have at least one argument", open.getSourcePosition());
-        }
-
         tokens.expect(SimpleTokenType.CLOSE);
 
         return new SExpression(func, args, open.getSourcePosition());
