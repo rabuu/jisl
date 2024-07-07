@@ -3,6 +3,10 @@ package de.rbuurman.jisl.program;
 import de.rbuurman.jisl.utils.SourcePosition;
 import de.rbuurman.jisl.utils.Multiple;
 
+/**
+ * A StructDefinition consists of a struct VariableName
+ * and a number of struct field VariableNames
+ */
 public final class StructDefinition extends ProgramElement {
     private VariableName name;
     private Multiple<VariableName> fields;

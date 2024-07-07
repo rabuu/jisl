@@ -3,6 +3,9 @@ package de.rbuurman.jisl.program;
 import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.utils.SourcePosition;
 
+/**
+ * A Definition maps a VariableName to an Expression
+ */
 public final class Definition extends ProgramElement {
     private VariableName variable;
     private Expression expression;

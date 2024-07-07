@@ -14,6 +14,13 @@ import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.SourcePosition;
 
+/**
+ * A ProgramElement is one of the following:
+ * - LibraryRequirement (e.g. (require "foo.rkt"))
+ * - Definition (e.g. (define FOO "hello"))
+ * - StructDefinition (e.g. (define-struct foo (bar baz)))
+ * - Expression (e.g. (+ 1 2))
+ */
 public abstract class ProgramElement {
     private SourcePosition sourcePosition;
 
@@ -30,6 +37,15 @@ public abstract class ProgramElement {
         return this.sourcePosition;
     }
 
+    /**
+     * Process the element according to its type
+     * <br>
+     * This method modifies the environment when the element is a
+     * LibraryRequirement, Definition or StructDefinition
+     * or it evaluates itself it is an Expression
+     *
+     * @return the evaluated Value if element is an Expression, otherwise nothing
+     */
     public Optional<Value> process(Environment environment, Path baseDir)
             throws IOException, LexingException, ParsingException, EvaluationException {
         if (this instanceof LibraryRequirement require) {

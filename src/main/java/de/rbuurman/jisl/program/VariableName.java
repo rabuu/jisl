@@ -8,6 +8,10 @@ import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.SourcePosition;
 
+/**
+ * A VariableName encapsulates a String that is used
+ * as an identifier in the program
+ */
 public final class VariableName extends Expression {
     private String name;
 
