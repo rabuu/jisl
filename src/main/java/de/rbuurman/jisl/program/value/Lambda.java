@@ -34,6 +34,7 @@ public final class Lambda extends Applicable {
         return this.expression.evaluate(mergedEnvironment);
     }
 
+    // FIXME: better display
     @Override
     public final String toString() {
         return "(lambda (...) ...)";

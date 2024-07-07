@@ -1,6 +1,7 @@
 package de.rbuurman.jisl.program.expression;
 
 import de.rbuurman.jisl.program.Definition;
+import de.rbuurman.jisl.program.StructDefinition;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
@@ -11,12 +12,15 @@ import de.rbuurman.jisl.utils.SourcePosition;
  * LocalExpression
  */
 public final class LocalExpression extends Expression {
-    private Multiple<Definition> definitions;
-    private Expression expression;
+    private final Multiple<Definition> definitions;
+    private final Multiple<StructDefinition> structs;
+    private final Expression expression;
 
-    public LocalExpression(Multiple<Definition> definitions, Expression expression, SourcePosition sourcePosition) {
+    public LocalExpression(Multiple<Definition> definitions, Multiple<StructDefinition> structs, Expression expression,
+            SourcePosition sourcePosition) {
         super(sourcePosition);
         this.definitions = definitions;
+        this.structs = structs;
         this.expression = expression;
     }
 
@@ -29,6 +33,13 @@ public final class LocalExpression extends Expression {
             final var value = def.getExpression().evaluate(mergedEnvironment);
 
             localEnvironment.addDefinition(variable, value);
+            mergedEnvironment = Environment.merge(environment, localEnvironment);
+        }
+        for (StructDefinition struct : this.structs) {
+            final var name = struct.getName();
+            final var fields = struct.getFields();
+
+            localEnvironment.addStruct(name, fields);
             mergedEnvironment = Environment.merge(environment, localEnvironment);
         }
 
@@ -47,6 +58,7 @@ public final class LocalExpression extends Expression {
         return this.definitions.equals(other.definitions) && this.expression.equals(other.expression);
     }
 
+    // FIXME: better display
     @Override
     public String toString() {
         return "(local ([...] ...) ...)";

@@ -16,6 +16,10 @@ public final class VariableName extends Expression {
         this.name = name;
     }
 
+    public String getInner() {
+        return this.name;
+    }
+
     @Override
     public Value evaluate(Environment environment) throws EvaluationException {
         return environment.getValue(this);

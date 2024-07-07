@@ -3,8 +3,11 @@ package de.rbuurman.jisl.parsing.expression;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.definition.DefinitionParser;
 import de.rbuurman.jisl.parsing.Parser;
+import de.rbuurman.jisl.parsing.ProgramElementParser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.program.Definition;
+import de.rbuurman.jisl.program.ProgramElement;
+import de.rbuurman.jisl.program.StructDefinition;
 import de.rbuurman.jisl.program.expression.LocalExpression;
 import de.rbuurman.jisl.utils.Multiple;
 
@@ -20,20 +23,25 @@ public final class LocalExpressionParser extends Parser<LocalExpression> {
         var openDefinitions = tokens.expect(SimpleTokenType.OPEN);
 
         Multiple<Definition> definitions = new Multiple<>();
+        Multiple<StructDefinition> structs = new Multiple<>();
         while (!tokens.endOfExpression()) {
-            definitions.add(new DefinitionParser().parse(tokens));
+            ProgramElement e = new ProgramElementParser().parse(tokens);
+            if (e instanceof Definition def) {
+                definitions.add(def);
+            } else if (e instanceof StructDefinition struct) {
+                structs.add(struct);
+            } else {
+                throw new ParsingException("Expected definitions or struct definitions",
+                        openDefinitions.getSourcePosition());
+            }
         }
 
-        if (definitions.size() < 1) {
-            throw new ParsingException("At least one local definition must be specified",
-                    openDefinitions.getSourcePosition());
-        }
         tokens.expect(SimpleTokenType.CLOSE);
 
         var expression = new ExpressionParser().parse(tokens);
         tokens.expect(SimpleTokenType.CLOSE);
 
-        return new LocalExpression(definitions, expression, open.getSourcePosition());
+        return new LocalExpression(definitions, structs, expression, open.getSourcePosition());
     }
 
 }

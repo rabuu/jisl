@@ -10,6 +10,12 @@ import java.util.Objects;
 public class Multiple<T> implements Iterable<T> {
 	private ArrayDeque<T> elements = new ArrayDeque<>();
 
+	public static <T> Multiple<T> copy(Multiple<T> other) {
+		var id = new Multiple<T>();
+		id.elements = other.elements.clone();
+		return id;
+	}
+
 	public void add(T element) {
 		this.elements.addLast(element);
 	}
@@ -24,6 +30,18 @@ public class Multiple<T> implements Iterable<T> {
 
 	public boolean isEmpty() {
 		return this.elements.isEmpty();
+	}
+
+	public int find(final T element) {
+		var copy = Multiple.copy(this);
+		int i = 0;
+		for (var other : copy) {
+			if (other.equals(element)) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
 	}
 
 	@Override

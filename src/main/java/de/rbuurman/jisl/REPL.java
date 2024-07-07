@@ -24,16 +24,18 @@ public final class REPL {
      * according to the language rules
      */
     public void run() throws IOException {
-        loop: for (;;) {
-
+        for (;;) {
             final String input = expectInput(this.reader);
-            if (input == null)
-                break loop;
 
-            final String[] exitSequences = { "quit", "exit", "(quit)", "(exit)" };
-            for (String seq : exitSequences) {
-                if (input.equals(seq))
-                    break loop;
+            if (input == null)
+                break;
+
+            if (input.equals("quit") || input.equals("exit"))
+                break;
+
+            if (input.equals("reset")) {
+                this.environment.reset();
+                continue;
             }
 
             try {
