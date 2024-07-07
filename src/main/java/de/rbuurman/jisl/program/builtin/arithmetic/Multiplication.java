@@ -5,7 +5,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Multiplication
  */
-public final class Multiplication extends DyadicArithmeticBuiltin {
+public final class Multiplication extends ArithmeticOperation {
 
     public Multiplication(SourcePosition sourcePosition) {
         super(sourcePosition);

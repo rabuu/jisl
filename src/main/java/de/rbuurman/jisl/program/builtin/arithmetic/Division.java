@@ -5,7 +5,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Division
  */
-public final class Division extends DyadicArithmeticBuiltin {
+public final class Division extends ArithmeticOperation {
 
     public Division(SourcePosition sourcePosition) {
         super(sourcePosition);

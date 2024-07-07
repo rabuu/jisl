@@ -5,7 +5,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Subtraction
  */
-public final class Subtraction extends DyadicArithmeticBuiltin {
+public final class Subtraction extends ArithmeticOperation {
 
     public Subtraction(SourcePosition sourcePosition) {
         super(sourcePosition);

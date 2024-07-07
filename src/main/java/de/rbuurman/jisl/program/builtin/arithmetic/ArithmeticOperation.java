@@ -11,9 +11,9 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Add
  */
-public abstract class DyadicArithmeticBuiltin extends Applicable {
+public abstract class ArithmeticOperation extends Applicable {
 
-    public DyadicArithmeticBuiltin(SourcePosition sourcePosition) {
+    public ArithmeticOperation(SourcePosition sourcePosition) {
         super(sourcePosition);
     }
 
