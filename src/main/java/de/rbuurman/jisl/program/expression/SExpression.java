@@ -50,7 +50,7 @@ public final class SExpression extends Expression {
         var builder = new StringBuilder();
         builder.append("(");
         builder.append(this.function);
-        for (var arg : this.arguments) {
+        for (var arg : Multiple.copy(this.arguments)) {
             builder.append(" ");
             builder.append(arg);
         }

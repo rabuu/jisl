@@ -1,2 +1,3 @@
-(local [(define (foo a b) (+ a b)) (define-struct bar (baz))] (make-bar))
-(define-struct a (b c))
+(cond
+  [(eq? 2 1) 2]
+  [else 1])

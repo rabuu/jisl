@@ -62,6 +62,6 @@ public final class ConditionExpression extends Expression {
 
     @Override
     public String toString() {
-        return "(cond " + this.conditionals + this.elseClause + ")";
+        return "(cond ...)";
     }
 }
