@@ -1,6 +1,7 @@
 package de.rbuurman.jisl.parsing.value;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
+import de.rbuurman.jisl.lexing.token.SimpleToken;
 import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
@@ -15,6 +16,8 @@ import de.rbuurman.jisl.program.builtin.logic.*;
 import de.rbuurman.jisl.program.builtin.list.*;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.value.list.EmptyList;
+
+import java.util.Optional;
 
 /**
  * ValueParser
@@ -32,26 +35,11 @@ public final class ValueParser extends Parser<Value> {
 
         final var token = tokens.poll();
 
-        if (token.is(SimpleTokenType.IDENTITY)) {
-            return new Identity(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.EQUALITY)) {
-            return new Equality(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.PLUS)) {
-            return new Addition(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.MINUS)) {
-            return new Subtraction(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.ASTERISK)) {
-            return new Multiplication(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.SLASH)) {
-            return new Division(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.IF)) {
-            return new If(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.AND)) {
-            return new And(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.EMPTY)) {
-            return new EmptyList(token.getSourcePosition());
-        } else if (token.is(SimpleTokenType.CONS)) {
-            return new ListConstructor(token.getSourcePosition());
+        if (token instanceof SimpleToken simpleToken) {
+            final Optional<Value> value = simpleToken.value();
+            if (value.isPresent()) {
+                return value.get();
+            }
         } else if (token instanceof PrimitiveToken<?> primitive) {
             return primitive.toPrimitive();
         }

@@ -9,7 +9,7 @@ import de.rbuurman.jisl.utils.Multiple;
 import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
- * Add
+ * Abstract ArithmeticOperation
  */
 public abstract class ArithmeticOperation extends Applicable {
 
@@ -25,7 +25,7 @@ public abstract class ArithmeticOperation extends Applicable {
 
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
-        if (arguments.size() < 1) {
+        if (arguments.isEmpty()) {
             throw new EvaluationException(this + " expects at least one argument", this.getSourcePosition());
         }
 

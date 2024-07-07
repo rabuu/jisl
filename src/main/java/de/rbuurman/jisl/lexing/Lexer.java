@@ -97,27 +97,11 @@ public final class Lexer {
 			case ')', ']':
 				this.bump();
 				return new SimpleToken(SimpleTokenType.CLOSE, firstPosition);
-			case '+':
-				this.bump();
-				return new SimpleToken(SimpleTokenType.PLUS, firstPosition);
-			case '-':
-				final char following = this.chars.peekSecond();
-				if (Character.isDigit(following)) {
-					break;
-				}
-				this.bump();
-				return new SimpleToken(SimpleTokenType.MINUS, firstPosition);
-			case '*':
-				this.bump();
-				return new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
-			case '/':
-				this.bump();
-				return new SimpleToken(SimpleTokenType.SLASH, firstPosition);
 		}
 
 		final String word = this.eat(new WordMatcher());
 
-		if (word.length() == 0) {
+		if (word.isEmpty()) {
 			throw new LexingException("Failed to tokenize " + this.peek(), firstPosition);
 		}
 
@@ -146,6 +130,15 @@ public final class Lexer {
 			case "cons" -> new SimpleToken(SimpleTokenType.CONS, firstPosition);
 			case "identity" -> new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
 			case "eq?" -> new SimpleToken(SimpleTokenType.EQUALITY, firstPosition);
+			case "+" -> new SimpleToken(SimpleTokenType.PLUS, firstPosition);
+			case "-" -> new SimpleToken(SimpleTokenType.MINUS, firstPosition);
+			case "*" -> new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
+			case "/" -> new SimpleToken(SimpleTokenType.SLASH, firstPosition);
+			case "=" -> new SimpleToken(SimpleTokenType.EQUALS, firstPosition);
+			case "<" -> new SimpleToken(SimpleTokenType.LESS, firstPosition);
+			case "<=" -> new SimpleToken(SimpleTokenType.LESSEQ, firstPosition);
+			case ">" -> new SimpleToken(SimpleTokenType.GREATER, firstPosition);
+			case ">=" -> new SimpleToken(SimpleTokenType.GREATEREQ, firstPosition);
 			default -> new VariableNameToken(word, firstPosition);
 		};
 	}
@@ -198,7 +191,7 @@ public final class Lexer {
 		}
 
 		final String word = this.eat(new WordMatcher());
-		if (word.length() == 0) {
+		if (word.isEmpty()) {
 			throw new LexingException("Empty symbol is not allowed", firstPosition);
 		}
 
