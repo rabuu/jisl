@@ -58,10 +58,9 @@ public final class LocalExpression extends Expression {
         return this.definitions.equals(other.definitions) && this.expression.equals(other.expression);
     }
 
-    // FIXME: better display
     @Override
     public String toString() {
-        return "(local ([...] ...) ...)";
+        return "(local (" + this.definitions + this.structs + ") " + this.expression + ")";
     }
 
 }
