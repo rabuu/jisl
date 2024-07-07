@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.program.builtin.arithmetic;
+package de.rbuurman.jisl.program.builtin.arithmetic.operation;
 
 import de.rbuurman.jisl.utils.SourcePosition;
 
