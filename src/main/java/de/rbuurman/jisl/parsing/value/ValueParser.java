@@ -1,6 +1,7 @@
 package de.rbuurman.jisl.parsing.value;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
+import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
@@ -19,8 +20,11 @@ public final class ValueParser extends Parser<Value> {
 
     @Override
     public Value parse(TokenQueue tokens) throws ParsingException {
-        if (tokens.peekSecond().is(SimpleTokenType.LAMBDA)) {
-            return new LambdaParser().parse(tokens);
+        final Token<?> second = tokens.peekSecond();
+        if (second != null) {
+            if (second.is(SimpleTokenType.LAMBDA)) {
+                return new LambdaParser().parse(tokens);
+            }
         }
 
         final var token = tokens.poll();

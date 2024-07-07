@@ -134,7 +134,7 @@ public final class Lexer {
 			case "false" -> new BooleanPrimitive(false).toToken(firstPosition);
 			case "define" -> new SimpleToken(SimpleTokenType.DEFINE, firstPosition);
 			case "define-struct" -> new SimpleToken(SimpleTokenType.DEFINE_STRUCT, firstPosition);
-			case "lambda" -> new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
+			case "lambda", "λ" -> new SimpleToken(SimpleTokenType.LAMBDA, firstPosition);
 			case "local" -> new SimpleToken(SimpleTokenType.LOCAL, firstPosition);
 			case "cond" -> new SimpleToken(SimpleTokenType.COND, firstPosition);
 			case "else" -> new SimpleToken(SimpleTokenType.ELSE, firstPosition);
