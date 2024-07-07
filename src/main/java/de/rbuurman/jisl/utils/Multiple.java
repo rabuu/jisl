@@ -5,33 +5,57 @@ import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * Multiple
+ * Multiple is a custom collection type for JISL.
+ * It is just a Queue with some custom implementations.
  */
 public class Multiple<T> implements Iterable<T> {
 	private ArrayDeque<T> elements = new ArrayDeque<>();
 
+	/**
+	 * Copy a Multiple
+	 * 
+	 * @param other the Multiple that should be copied
+	 * @return the copy
+	 */
 	public static <T> Multiple<T> copy(Multiple<T> other) {
 		var id = new Multiple<T>();
 		id.elements = other.elements.clone();
 		return id;
 	}
 
+	/**
+	 * Add an element to the Multiple queue
+	 */
 	public void add(T element) {
 		this.elements.addLast(element);
 	}
 
+	/**
+	 * Poll the next element
+	 */
 	public T poll() {
 		return this.elements.pollFirst();
 	}
 
+	/**
+	 * Returns how many elements are in the Multiple queue
+	 */
 	public int size() {
 		return this.elements.size();
 	}
 
+	/**
+	 * Returns whether the Multiple queue is empty
+	 */
 	public boolean isEmpty() {
 		return this.elements.isEmpty();
 	}
 
+	/**
+	 * Returns the index of a given element
+	 *
+	 * @return the index if the element was found, -1 otherwise
+	 */
 	public int find(final T element) {
 		var copy = Multiple.copy(this);
 		int i = 0;
