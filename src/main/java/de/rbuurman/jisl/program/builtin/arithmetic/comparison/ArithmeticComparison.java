@@ -33,12 +33,12 @@ public abstract class ArithmeticComparison extends Applicable {
 
         var prev = arguments.poll();
         if (!(prev instanceof NumberPrimitive prevNum)) {
-            throw new EvaluationException(this + " expects boolean arguments", this.getSourcePosition());
+            throw new EvaluationException(this + " expects numerical arguments", this.getSourcePosition());
         }
 
         for (var arg : arguments) {
             if (!(arg instanceof NumberPrimitive argNum)) {
-                throw new EvaluationException(this + " expects boolean arguments", this.getSourcePosition());
+                throw new EvaluationException(this + " expects numerical arguments", this.getSourcePosition());
             }
 
             if (!this.comparison(prevNum.getInner(), argNum.getInner())) {

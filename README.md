@@ -19,23 +19,22 @@ mvn clean package    # to generate a JAR executable
 - [x] Source position of ProgramElements
 - [x] Lists
 - [x] Symbols/Atoms
-- [ ] Structures
-- [ ] All important builtins
-- [ ] Good [standard library](stdlib/)
+- [x] Structures
 - [ ] Write tests & comments
-- [ ] (Nested libraries)
-- [ ] (quoted/quasiquoted)
+- [ ] All important builtins + stdlib
+- [ ] Samples
 
 ## Not Todo
 - There will be no support for images.
 - For now there are no plans to implement `let`, `let*` and `letrec`.
 - Also probably we will not implement signatures.
+- quoted/quasiquoted
 
 ## Things to note
 
 ### Lambdas
 Two lambdas are equals if they have the same definition.
-So the must share the same argument names and also the same expression in the exakt same form to be equal.
+So they must share the same argument names and also the same expression in the exact same form to be equal.
 
 #### Functions are Lambdas
 We handle functions a little different than the default interpreter.
@@ -49,6 +48,13 @@ Therefore, equality between functions may act a little weird.
 
 (eq? foo bar) ; evaluates to #true
 (eq? foo baz) ; evaluates to #false
+```
+
+## Structs
+```racket
+(define-struct foo (a))
+(foo? (local [(define-struct foo (b))] (make-foo 1)))
+; evaluates to #true but arguably should be #false
 ```
 
 ## More resources
