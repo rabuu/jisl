@@ -10,11 +10,11 @@ import de.rbuurman.jisl.utils.Multiple;
 import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
- * ListConstructor
+ * Cons
  */
-public final class ListConstructor extends Applicable {
+public final class Cons extends Applicable {
 
-    public ListConstructor(SourcePosition sourcePosition) {
+    public Cons(SourcePosition sourcePosition) {
         super(sourcePosition);
     }
 

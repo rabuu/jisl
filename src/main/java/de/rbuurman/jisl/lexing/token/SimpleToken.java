@@ -7,7 +7,7 @@ import de.rbuurman.jisl.program.builtin.arithmetic.operation.Addition;
 import de.rbuurman.jisl.program.builtin.arithmetic.operation.Division;
 import de.rbuurman.jisl.program.builtin.arithmetic.operation.Multiplication;
 import de.rbuurman.jisl.program.builtin.arithmetic.operation.Subtraction;
-import de.rbuurman.jisl.program.builtin.list.ListConstructor;
+import de.rbuurman.jisl.program.builtin.list.Cons;
 import de.rbuurman.jisl.program.builtin.logic.And;
 import de.rbuurman.jisl.program.builtin.logic.Or;
 import de.rbuurman.jisl.program.builtin.logic.Not;
@@ -75,7 +75,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 	public Optional<Value> value() {
 		return switch (this.getState()) {
 			case EMPTY -> Optional.of(new EmptyList(this.getSourcePosition()));
-			case CONS -> Optional.of(new ListConstructor(this.getSourcePosition()));
+			case CONS -> Optional.of(new Cons(this.getSourcePosition()));
 			case PLUS -> Optional.of(new Addition(this.getSourcePosition()));
 			case MINUS -> Optional.of(new Subtraction(this.getSourcePosition()));
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));
