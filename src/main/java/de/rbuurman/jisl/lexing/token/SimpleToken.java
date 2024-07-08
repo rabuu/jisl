@@ -2,7 +2,7 @@ package de.rbuurman.jisl.lexing.token;
 
 import de.rbuurman.jisl.program.builtin.Equality;
 import de.rbuurman.jisl.program.builtin.Identity;
-import de.rbuurman.jisl.program.builtin.arithmetic.comparison.Equals;
+import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.operation.Addition;
 import de.rbuurman.jisl.program.builtin.arithmetic.operation.Division;
 import de.rbuurman.jisl.program.builtin.arithmetic.operation.Multiplication;
@@ -81,7 +81,10 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));
 			case SLASH -> Optional.of(new Division(this.getSourcePosition()));
 			case EQUALS -> Optional.of(new Equals(this.getSourcePosition()));
-			// TODO: <, >, <=, >=
+			case LESS -> Optional.of(new Less(this.getSourcePosition()));
+			case LESSEQ -> Optional.of(new LessEq(this.getSourcePosition()));
+			case GREATER -> Optional.of(new Greater(this.getSourcePosition()));
+			case GREATEREQ -> Optional.of(new GreaterEq(this.getSourcePosition()));
 			case IF -> Optional.of(new If(this.getSourcePosition()));
 			case AND -> Optional.of(new And(this.getSourcePosition()));
 			case OR -> Optional.of(new Or(this.getSourcePosition()));
