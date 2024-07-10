@@ -2,7 +2,6 @@ package de.rbuurman.jisl.program.evaluation;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.builtin.struct.FieldSelector;
@@ -17,8 +16,8 @@ import de.rbuurman.jisl.utils.Multiple;
  */
 public class Environment {
 
-	private Map<VariableName, Value> definitions = new HashMap<>();
-	private Map<VariableName, Multiple<VariableName>> structs = new HashMap<>();
+	private final Map<VariableName, Value> definitions = new HashMap<>();
+	private final Map<VariableName, Multiple<VariableName>> structs = new HashMap<>();
 
 	protected Map<VariableName, Value> getDefinitions() {
 		return this.definitions;
@@ -28,14 +27,14 @@ public class Environment {
 		return this.structs;
 	}
 
-	public void addDefinition(VariableName variable, Value value) throws EvaluationException {
+	public void addDefinition(final VariableName variable, final Value value) throws EvaluationException {
 		if (this.definitions.containsKey(variable) || this.structs.containsKey(variable)) {
 			throw new EvaluationException("Duplicate definition for " + variable, variable.getSourcePosition());
 		}
 		this.definitions.put(variable, value);
 	}
 
-	public void addStruct(VariableName name, Multiple<VariableName> fields) throws EvaluationException {
+	public void addStruct(final VariableName name, final Multiple<VariableName> fields) throws EvaluationException {
 		if (this.definitions.containsKey(name) || this.structs.containsKey(name)) {
 			throw new EvaluationException("Duplicate definition for struct " + name, name.getSourcePosition());
 		}
@@ -43,8 +42,8 @@ public class Environment {
 		final var makeStruct = new VariableName("make-" + name.getInner(), name.getSourcePosition());
 		final var isStruct = new VariableName(name.getInner() + "?", name.getSourcePosition());
 
-		var fieldSelectors = new Multiple<VariableName>();
-		for (var field : Multiple.copy(fields)) {
+		final var fieldSelectors = new Multiple<VariableName>();
+		for (final var field : Multiple.copy(fields)) {
 			fieldSelectors.add(new VariableName(name.getInner() + "-" + field.getInner(), name.getSourcePosition()));
 		}
 
@@ -52,7 +51,7 @@ public class Environment {
 			throw new EvaluationException("Conflicting definition for " + name, name.getSourcePosition());
 		}
 
-		for (var selector : Multiple.copy(fieldSelectors)) {
+		for (final var selector : Multiple.copy(fieldSelectors)) {
 			if (this.definitions.containsKey(selector)) {
 				throw new EvaluationException("Conflicting definition for " + name, name.getSourcePosition());
 			}
@@ -62,14 +61,14 @@ public class Environment {
 		this.definitions.put(makeStruct, new MakeStruct(name, name.getSourcePosition()));
 		this.definitions.put(isStruct, new IsStruct(name, name.getSourcePosition()));
 
-		var fieldsCopy = Multiple.copy(fields);
-		for (var selector : fieldSelectors) {
-			var field = fieldsCopy.poll();
+		final var fieldsCopy = Multiple.copy(fields);
+		for (final var selector : fieldSelectors) {
+			final var field = fieldsCopy.poll();
 			this.definitions.put(selector, new FieldSelector(name, field, name.getSourcePosition()));
 		}
 	}
 
-	public Value getValue(VariableName variable) throws EvaluationException {
+	public Value getValue(final VariableName variable) throws EvaluationException {
 		final var value = this.definitions.get(variable);
 
 		if (value == null) {
@@ -98,36 +97,36 @@ public class Environment {
 		return index;
 	}
 
-	public static Environment merge(Environment base, Environment local) throws EvaluationException {
-		var env = new Environment();
+	public static Environment merge(final Environment base, final Environment local) throws EvaluationException {
+		final var env = new Environment();
 
-		for (Map.Entry<VariableName, Value> entry : base.getDefinitions().entrySet()) {
+		for (final Map.Entry<VariableName, Value> entry : base.getDefinitions().entrySet()) {
 			env.getDefinitions().put(entry.getKey(), entry.getValue());
 		}
 
-		for (Map.Entry<VariableName, Multiple<VariableName>> entry : base.getStructs().entrySet()) {
+		for (final Map.Entry<VariableName, Multiple<VariableName>> entry : base.getStructs().entrySet()) {
 			env.getStructs().put(entry.getKey(), entry.getValue());
 		}
 
-		for (Map.Entry<VariableName, Value> entry : local.getDefinitions().entrySet()) {
+		for (final Map.Entry<VariableName, Value> entry : local.getDefinitions().entrySet()) {
 			env.getDefinitions().put(entry.getKey(), entry.getValue());
 		}
 
-		for (Map.Entry<VariableName, Multiple<VariableName>> entry : local.getStructs().entrySet()) {
+		for (final Map.Entry<VariableName, Multiple<VariableName>> entry : local.getStructs().entrySet()) {
 			env.getStructs().put(entry.getKey(), entry.getValue());
 		}
 
 		return env;
 	}
 
-	public void loadLibrary(Library library) throws EvaluationException {
-		for (var definition : library.definitions()) {
+	public void loadLibrary(final Library library) throws EvaluationException {
+		for (final var definition : library.definitions()) {
 			final var variable = definition.getVariable();
 			final var value = definition.getExpression().evaluate(this);
 			this.addDefinition(variable, value);
 		}
 
-		for (var struct : library.structs()) {
+		for (final var struct : library.structs()) {
 			this.addStruct(struct.getName(), struct.getFields());
 		}
 	}
