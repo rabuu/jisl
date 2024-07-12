@@ -10,6 +10,7 @@ import de.rbuurman.jisl.lexing.LexingException;
 import de.rbuurman.jisl.parsing.ProgramElementParser;
 import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.program.value.Value;
+import de.rbuurman.jisl.program.LibraryRequirement;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 
@@ -42,6 +43,12 @@ public final class REPL {
                 // reset the REPL by inputting "reset"
                 if (input.equals("reset")) {
                     this.environment.reset();
+                    continue;
+                }
+
+                // shorthand for (require "stdlib.rkt")
+                if (input.equals("std")) {
+                    new LibraryRequirement(Paths.get("./stdlib.rkt"), null).process(environment, Paths.get("."));
                     continue;
                 }
 
