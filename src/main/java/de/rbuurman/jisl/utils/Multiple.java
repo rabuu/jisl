@@ -68,6 +68,19 @@ public class Multiple<T> implements Iterable<T> {
 		return -1;
 	}
 
+	/**
+	 * Get the Multiple in reversed order (without modifying it)
+	 *
+	 * @return the reversed Multiple
+	 */
+	public Multiple<T> reversed() {
+		Multiple<T> reversed = new Multiple<>();
+		for (var elem : this) {
+			reversed.elements.addFirst(elem);
+		}
+		return reversed;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
