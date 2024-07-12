@@ -128,13 +128,13 @@ public final class Lexer {
 			case "not" -> new SimpleToken(SimpleTokenType.NOT, firstPosition);
 			case "empty" -> new SimpleToken(SimpleTokenType.EMPTY, firstPosition);
 			case "cons" -> new SimpleToken(SimpleTokenType.CONS, firstPosition);
-			case "identity" -> new SimpleToken(SimpleTokenType.IDENTITY, firstPosition);
 			case "eq?" -> new SimpleToken(SimpleTokenType.EQUALITY, firstPosition);
 			case "+" -> new SimpleToken(SimpleTokenType.PLUS, firstPosition);
 			case "-" -> new SimpleToken(SimpleTokenType.MINUS, firstPosition);
 			case "*" -> new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
 			case "/" -> new SimpleToken(SimpleTokenType.SLASH, firstPosition);
 			case "exp" -> new SimpleToken(SimpleTokenType.EXP, firstPosition);
+			case "expt" -> new SimpleToken(SimpleTokenType.EXPT, firstPosition);
 			case "log" -> new SimpleToken(SimpleTokenType.LOG, firstPosition);
 			case "sqrt" -> new SimpleToken(SimpleTokenType.SQRT, firstPosition);
 			case "ceiling" -> new SimpleToken(SimpleTokenType.CEILING, firstPosition);

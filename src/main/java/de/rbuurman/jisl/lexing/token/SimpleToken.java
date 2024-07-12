@@ -1,7 +1,7 @@
 package de.rbuurman.jisl.lexing.token;
 
 import de.rbuurman.jisl.program.builtin.Equality;
-import de.rbuurman.jisl.program.builtin.Identity;
+import de.rbuurman.jisl.program.builtin.arithmetic.binary.Exponentiation;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.basic.Addition;
 import de.rbuurman.jisl.program.builtin.arithmetic.basic.Division;
@@ -48,6 +48,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		ASTERISK,
 		SLASH,
 		EXP,
+		EXPT,
 		LOG,
 		SQRT,
 		CEILING,
@@ -67,7 +68,6 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		NOT,
 
 		// other builtins
-		IDENTITY,
 		EQUALITY,
 
 		// end of file
@@ -86,7 +86,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case MINUS -> Optional.of(new Subtraction(this.getSourcePosition()));
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));
 			case SLASH -> Optional.of(new Division(this.getSourcePosition()));
-			case EXP -> Optional.of(new Exponentiation(this.getSourcePosition()));
+			case EXP -> Optional.of(new NaturalExponentiation(this.getSourcePosition()));
+			case EXPT -> Optional.of(new Exponentiation(this.getSourcePosition()));
 			case LOG -> Optional.of(new Logarithm(this.getSourcePosition()));
 			case SQRT -> Optional.of(new SquareRoot(this.getSourcePosition()));
 			case CEILING -> Optional.of(new Ceiling(this.getSourcePosition()));
@@ -100,7 +101,6 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case AND -> Optional.of(new And(this.getSourcePosition()));
 			case OR -> Optional.of(new Or(this.getSourcePosition()));
 			case NOT -> Optional.of(new Not(this.getSourcePosition()));
-			case IDENTITY -> Optional.of(new Identity(this.getSourcePosition()));
 			case EQUALITY -> Optional.of(new Equality(this.getSourcePosition()));
 			default -> Optional.empty();
 		};

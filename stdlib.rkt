@@ -1,5 +1,9 @@
+(define-struct posn (x y))
+
 (define e (exp 1))
 (define pi 245850992/78256779)
+
+(define (identity x) x)
 
 (define (positive? x)
   (> x 0))
@@ -24,5 +28,3 @@
 
 (define (sub1 x)
   (- x 1))
-
-(define-struct posn (x y))
