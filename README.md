@@ -21,7 +21,7 @@ mvn clean package    # to generate a JAR executable
 - [x] Symbols/Atoms
 - [x] Structures
 - [ ] Write tests & comments
-- [ ] All important builtins + stdlib
+- [ ] Important builtins + [stdlib](./stdlib.rkt)
 - [ ] Samples
 
 ## Not Todo
@@ -29,6 +29,8 @@ mvn clean package    # to generate a JAR executable
 - For now there are no plans to implement `let`, `let*` and `letrec`.
 - Also probably we will not implement signatures.
 - quoted/quasiquoted
+- complex numbers
+- inexact numbers
 
 ## Things to note
 
