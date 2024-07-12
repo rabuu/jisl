@@ -15,6 +15,10 @@ public abstract class UnaryArithmeticOperation<OUTPUT extends Value> extends App
 
     protected abstract OUTPUT operation(double x);
 
+    protected boolean argumentIsValid(double arg) {
+        return true;
+    }
+
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
         if (arguments.size() != 1) {
@@ -23,7 +27,11 @@ public abstract class UnaryArithmeticOperation<OUTPUT extends Value> extends App
 
         var val = arguments.poll();
         if (!(val instanceof NumberPrimitive num)) {
-            throw new EvaluationException(this + "expects a numerical argument", this.getSourcePosition());
+            throw new EvaluationException(this + "expects a numerical argument", val.getSourcePosition());
+        }
+
+        if (!argumentIsValid(num.getInner())) {
+            throw new EvaluationException("Number " + num + " is invalid for " + this, val.getSourcePosition());
         }
 
         return (Value) operation(num.getInner()).withSourcePosition(this.getSourcePosition());

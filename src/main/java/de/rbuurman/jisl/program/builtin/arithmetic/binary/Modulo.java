@@ -10,7 +10,7 @@ public class Modulo extends BinaryArithmeticOperation<NumberPrimitive> {
 
     @Override
     protected boolean argumentIsValid(double arg) {
-        return (double) (int) arg == arg;
+        return (arg % 1) == 0;
     }
 
     @Override

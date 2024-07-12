@@ -133,6 +133,8 @@ public final class Lexer {
 			case "-" -> new SimpleToken(SimpleTokenType.MINUS, firstPosition);
 			case "*" -> new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
 			case "/" -> new SimpleToken(SimpleTokenType.SLASH, firstPosition);
+			case "min" -> new SimpleToken(SimpleTokenType.MIN, firstPosition);
+			case "max" -> new SimpleToken(SimpleTokenType.MAX, firstPosition);
 			case "exp" -> new SimpleToken(SimpleTokenType.EXP, firstPosition);
 			case "expt" -> new SimpleToken(SimpleTokenType.EXPT, firstPosition);
 			case "log" -> new SimpleToken(SimpleTokenType.LOG, firstPosition);
@@ -140,6 +142,7 @@ public final class Lexer {
 			case "ceiling" -> new SimpleToken(SimpleTokenType.CEILING, firstPosition);
 			case "floor" -> new SimpleToken(SimpleTokenType.FLOOR, firstPosition);
 			case "modulo" -> new SimpleToken(SimpleTokenType.MODULO, firstPosition);
+			case "random" -> new SimpleToken(SimpleTokenType.RANDOM, firstPosition);
 			case "=" -> new SimpleToken(SimpleTokenType.EQUALS, firstPosition);
 			case "<" -> new SimpleToken(SimpleTokenType.LESS, firstPosition);
 			case "<=" -> new SimpleToken(SimpleTokenType.LESSEQ, firstPosition);

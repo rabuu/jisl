@@ -1,13 +1,10 @@
 package de.rbuurman.jisl.lexing.token;
 
 import de.rbuurman.jisl.program.builtin.Equality;
+import de.rbuurman.jisl.program.builtin.arithmetic.basic.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.binary.Exponentiation;
 import de.rbuurman.jisl.program.builtin.arithmetic.binary.Modulo;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
-import de.rbuurman.jisl.program.builtin.arithmetic.basic.Addition;
-import de.rbuurman.jisl.program.builtin.arithmetic.basic.Division;
-import de.rbuurman.jisl.program.builtin.arithmetic.basic.Multiplication;
-import de.rbuurman.jisl.program.builtin.arithmetic.basic.Subtraction;
 import de.rbuurman.jisl.program.builtin.arithmetic.unary.*;
 import de.rbuurman.jisl.program.builtin.list.Cons;
 import de.rbuurman.jisl.program.builtin.logic.And;
@@ -48,6 +45,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		MINUS,
 		ASTERISK,
 		SLASH,
+		MIN,
+		MAX,
 		EXP,
 		EXPT,
 		LOG,
@@ -71,6 +70,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 
 		// other builtins
 		EQUALITY,
+		RANDOM,
 
 		// end of file
 		EOF;
@@ -88,6 +88,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case MINUS -> Optional.of(new Subtraction(this.getSourcePosition()));
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));
 			case SLASH -> Optional.of(new Division(this.getSourcePosition()));
+			case MIN -> Optional.of(new Minimum(this.getSourcePosition()));
+			case MAX -> Optional.of(new Maximum(this.getSourcePosition()));
 			case EXP -> Optional.of(new NaturalExponentiation(this.getSourcePosition()));
 			case EXPT -> Optional.of(new Exponentiation(this.getSourcePosition()));
 			case LOG -> Optional.of(new Logarithm(this.getSourcePosition()));
@@ -105,6 +107,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case OR -> Optional.of(new Or(this.getSourcePosition()));
 			case NOT -> Optional.of(new Not(this.getSourcePosition()));
 			case EQUALITY -> Optional.of(new Equality(this.getSourcePosition()));
+			case RANDOM -> Optional.of(new Random(this.getSourcePosition()));
 			default -> Optional.empty();
 		};
 	}
