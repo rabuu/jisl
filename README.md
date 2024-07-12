@@ -34,6 +34,20 @@ mvn clean package    # to generate a JAR executable
 
 ## Things to note
 
+### Equality
+The standard interpreter has three basic equality comparators:
+`eq?`, `equal?` and `=`.
+`eq?` matches the exact same object.
+`equal?` matches structurally same objects.
+`=` matches equal numbers.
+
+This example illustrates the subtle difference between `eq?` and `equal?`:
+```racket
+(define A (list 1 2))
+(eq? A A) ; evaluates to #true
+(eq? (list 1 2) (list 1 2)) ; evaluates to #false
+```
+
 ### Lambdas
 Two lambdas are equals if they have the same definition.
 So they must share the same argument names and also the same expression in the exact same form to be equal.
