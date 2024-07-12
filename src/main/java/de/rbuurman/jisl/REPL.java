@@ -18,8 +18,8 @@ import de.rbuurman.jisl.program.evaluation.EvaluationException;
  * An interactive "on-the-fly" interpreter
  */
 public final class REPL {
-    private Environment environment = new Environment();
-    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private final Environment environment = new Environment();
+    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Run the REPL:
@@ -57,9 +57,7 @@ public final class REPL {
                 final Optional<Value> value = element.process(this.environment, Paths.get("."));
 
                 // if element evaluated, print out value
-                if (value.isPresent()) {
-                    System.out.println(value.get());
-                }
+                value.ifPresent(System.out::println);
             } catch (IOException e) {
                 System.err.println("IOException: " + e.getMessage());
             } catch (LexingException e) {

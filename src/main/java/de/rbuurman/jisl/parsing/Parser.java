@@ -21,6 +21,12 @@ public abstract class Parser<T> {
     public T parse(final String text) throws LexingException, ParsingException {
         final var lexer = new Lexer(text);
         final TokenQueue tokens = lexer.tokenize();
-        return parse(tokens);
+        final T parsed = parse(tokens);
+
+        if (!tokens.finished()) {
+            throw new ParsingException("Expected EOF but got " + tokens);
+        }
+
+        return parsed;
     }
 }
