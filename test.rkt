@@ -1,3 +1,2 @@
-(cond
-  [(eq? 2 1) 2]
-  [else 1])
+(require "lib.rkt")
+(foo 5 1)

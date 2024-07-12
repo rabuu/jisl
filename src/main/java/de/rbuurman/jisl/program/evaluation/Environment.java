@@ -16,8 +16,8 @@ import de.rbuurman.jisl.utils.Multiple;
  */
 public class Environment {
 
-	private final Map<VariableName, Value> definitions = new HashMap<>();
-	private final Map<VariableName, Multiple<VariableName>> structs = new HashMap<>();
+	private Map<VariableName, Value> definitions = new HashMap<>();
+	private Map<VariableName, Multiple<VariableName>> structs = new HashMap<>();
 
 	protected Map<VariableName, Value> getDefinitions() {
 		return this.definitions;
@@ -120,15 +120,9 @@ public class Environment {
 	}
 
 	public void loadLibrary(final Library library) throws EvaluationException {
-		for (final var definition : library.definitions()) {
-			final var variable = definition.getVariable();
-			final var value = definition.getExpression().evaluate(this);
-			this.addDefinition(variable, value);
-		}
-
-		for (final var struct : library.structs()) {
-			this.addStruct(struct.getName(), struct.getFields());
-		}
+		Environment merged = merge(this, library.environment());
+		this.definitions = merged.definitions;
+		this.structs = merged.structs;
 	}
 
 	public void reset() {

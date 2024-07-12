@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import de.rbuurman.jisl.lexing.LexingException;
-import de.rbuurman.jisl.parsing.LibraryParser;
 import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
@@ -49,8 +48,9 @@ public abstract class ProgramElement {
     public Optional<Value> process(Environment environment, Path baseDir)
             throws IOException, LexingException, ParsingException, EvaluationException {
         if (this instanceof LibraryRequirement require) {
-            final String libraryCode = Files.readString(baseDir.resolve(require.getPath()));
-            final Library library = new LibraryParser().parse(libraryCode);
+            final Path libraryPath = baseDir.resolve(require.getPath());
+            final String libraryCode = Files.readString(libraryPath);
+            final Library library = new Library(libraryCode, libraryPath);
             environment.loadLibrary(library);
         } else if (this instanceof Definition definition) {
             VariableName variable = definition.getVariable();

@@ -14,7 +14,7 @@ mvn clean package    # to generate a JAR executable
 - [x] Parser
 - [x] Basic Evaluation
 - [x] REPL
-- [x] Simple library support
+- [x] Simple library support (+ nested)
 - [x] Local definitions
 - [x] Source position of ProgramElements
 - [x] Lists
