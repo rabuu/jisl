@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import de.rbuurman.jisl.lexing.LexingException;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.expression.Expression;

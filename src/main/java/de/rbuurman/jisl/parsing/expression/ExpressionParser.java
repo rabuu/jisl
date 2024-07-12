@@ -3,6 +3,7 @@ package de.rbuurman.jisl.parsing.expression;
 import de.rbuurman.jisl.lexing.token.VariableNameToken;
 import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.parsing.VariableNameParser;
 import de.rbuurman.jisl.parsing.value.LambdaParser;
 import de.rbuurman.jisl.parsing.Parser;

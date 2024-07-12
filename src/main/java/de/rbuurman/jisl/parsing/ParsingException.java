@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.parsing.expression;
+package de.rbuurman.jisl.parsing;
 
 import de.rbuurman.jisl.utils.SourcePosition;
 

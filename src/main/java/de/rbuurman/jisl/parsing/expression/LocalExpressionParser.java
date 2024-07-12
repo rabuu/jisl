@@ -1,7 +1,7 @@
 package de.rbuurman.jisl.parsing.expression;
 
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
-import de.rbuurman.jisl.parsing.definition.DefinitionParser;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.ProgramElementParser;
 import de.rbuurman.jisl.parsing.TokenQueue;

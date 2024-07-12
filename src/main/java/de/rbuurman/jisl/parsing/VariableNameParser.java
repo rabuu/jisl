@@ -1,7 +1,6 @@
 package de.rbuurman.jisl.parsing;
 
 import de.rbuurman.jisl.lexing.token.VariableNameToken;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.VariableName;
 
 /**

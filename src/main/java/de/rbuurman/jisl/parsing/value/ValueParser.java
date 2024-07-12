@@ -6,16 +6,8 @@ import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
-import de.rbuurman.jisl.program.builtin.*;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Addition;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Division;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Multiplication;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Subtraction;
-import de.rbuurman.jisl.program.builtin.logic.*;
-import de.rbuurman.jisl.program.builtin.list.*;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.program.value.Value;
-import de.rbuurman.jisl.program.value.list.EmptyList;
 
 import java.util.Optional;
 

@@ -2,7 +2,6 @@ package de.rbuurman.jisl.parsing;
 
 import java.nio.file.Path;
 
-import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.Program;
 
 public final class ProgramParser extends Parser<Program> {

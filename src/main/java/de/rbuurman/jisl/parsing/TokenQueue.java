@@ -2,7 +2,6 @@ package de.rbuurman.jisl.parsing;
 
 import de.rbuurman.jisl.lexing.token.Token;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.utils.PeekableQueue;
 
 public class TokenQueue extends PeekableQueue<Token<?>> {

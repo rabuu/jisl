@@ -4,7 +4,7 @@ import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
 import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.parsing.VariableNameParser;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.program.StructDefinition;
 import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.utils.Multiple;

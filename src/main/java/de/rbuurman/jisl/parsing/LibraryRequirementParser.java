@@ -4,7 +4,6 @@ import java.nio.file.Paths;
 
 import de.rbuurman.jisl.lexing.token.PrimitiveToken;
 import de.rbuurman.jisl.lexing.token.SimpleToken.SimpleTokenType;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
 import de.rbuurman.jisl.program.LibraryRequirement;
 import de.rbuurman.jisl.program.value.primitive.StringPrimitive;
 

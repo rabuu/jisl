@@ -5,7 +5,7 @@ import de.rbuurman.jisl.parsing.Parser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.parsing.expression.ExpressionParser;
 import de.rbuurman.jisl.parsing.VariableNameParser;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.program.Definition;
 
 public final class DefinitionParser extends Parser<Definition> {

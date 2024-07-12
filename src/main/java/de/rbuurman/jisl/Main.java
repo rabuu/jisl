@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import de.rbuurman.jisl.lexing.Lexer;
 import de.rbuurman.jisl.lexing.LexingException;
-import de.rbuurman.jisl.parsing.expression.ParsingException;
+import de.rbuurman.jisl.parsing.ParsingException;
 import de.rbuurman.jisl.parsing.ProgramParser;
 import de.rbuurman.jisl.parsing.TokenQueue;
 import de.rbuurman.jisl.program.Program;
