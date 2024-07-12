@@ -11,9 +11,9 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Abstract ArithmeticOperation
  */
-public abstract class ArithmeticOperation extends Applicable {
+public abstract class BasicArithmeticOperation extends Applicable {
 
-    public ArithmeticOperation(SourcePosition sourcePosition) {
+    public BasicArithmeticOperation(SourcePosition sourcePosition) {
         super(sourcePosition);
     }
 
