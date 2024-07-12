@@ -6,6 +6,7 @@ import de.rbuurman.jisl.program.builtin.arithmetic.binary.Exponentiation;
 import de.rbuurman.jisl.program.builtin.arithmetic.binary.Modulo;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.unary.*;
+import de.rbuurman.jisl.program.builtin.is.*;
 import de.rbuurman.jisl.program.builtin.list.Cons;
 import de.rbuurman.jisl.program.builtin.logic.And;
 import de.rbuurman.jisl.program.builtin.logic.If;
@@ -68,6 +69,19 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		OR,
 		NOT,
 
+		// is of type ...? builtins
+		IS_FALSE,
+		IS_BOOLEAN,
+		IS_NUMBER,
+		IS_INTEGER,
+		IS_SYMBOL,
+		IS_LIST,
+		IS_CONS,
+		IS_CHARACTER,
+		IS_STRING,
+		IS_STRUCT,
+		IS_PROCEDURE,
+
 		// other builtins
 		EQUALITY,
 		RANDOM,
@@ -106,6 +120,17 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case AND -> Optional.of(new And(this.getSourcePosition()));
 			case OR -> Optional.of(new Or(this.getSourcePosition()));
 			case NOT -> Optional.of(new Not(this.getSourcePosition()));
+			case IS_FALSE -> Optional.of(new IsFalse(this.getSourcePosition()));
+			case IS_BOOLEAN -> Optional.of(new IsBoolean(this.getSourcePosition()));
+			case IS_NUMBER -> Optional.of(new IsNumber(this.getSourcePosition()));
+			case IS_INTEGER -> Optional.of(new IsInteger(this.getSourcePosition()));
+			case IS_SYMBOL -> Optional.of(new IsSymbol(this.getSourcePosition()));
+			case IS_LIST -> Optional.of(new IsList(this.getSourcePosition()));
+			case IS_CONS -> Optional.of(new IsCons(this.getSourcePosition()));
+			case IS_CHARACTER -> Optional.of(new IsCharacter(this.getSourcePosition()));
+			case IS_STRING -> Optional.of(new IsString(this.getSourcePosition()));
+			case IS_STRUCT -> Optional.of(new IsStruct(this.getSourcePosition()));
+			case IS_PROCEDURE -> Optional.of(new IsProcedure(this.getSourcePosition()));
 			case EQUALITY -> Optional.of(new Equality(this.getSourcePosition()));
 			case RANDOM -> Optional.of(new Random(this.getSourcePosition()));
 			default -> Optional.empty();

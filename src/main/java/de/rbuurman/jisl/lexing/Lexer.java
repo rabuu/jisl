@@ -148,6 +148,17 @@ public final class Lexer {
 			case "<=" -> new SimpleToken(SimpleTokenType.LESSEQ, firstPosition);
 			case ">" -> new SimpleToken(SimpleTokenType.GREATER, firstPosition);
 			case ">=" -> new SimpleToken(SimpleTokenType.GREATEREQ, firstPosition);
+			case "false?" -> new SimpleToken(SimpleTokenType.IS_FALSE, firstPosition);
+			case "boolean?" -> new SimpleToken(SimpleTokenType.IS_BOOLEAN, firstPosition);
+			case "number?" -> new SimpleToken(SimpleTokenType.IS_NUMBER, firstPosition);
+			case "integer?" -> new SimpleToken(SimpleTokenType.IS_INTEGER, firstPosition);
+			case "symbol?" -> new SimpleToken(SimpleTokenType.IS_SYMBOL, firstPosition);
+			case "list?" -> new SimpleToken(SimpleTokenType.IS_LIST, firstPosition);
+			case "cons?" -> new SimpleToken(SimpleTokenType.IS_CONS, firstPosition);
+			case "char?" -> new SimpleToken(SimpleTokenType.IS_CHARACTER, firstPosition);
+			case "string?" -> new SimpleToken(SimpleTokenType.IS_STRING, firstPosition);
+			case "struct?" -> new SimpleToken(SimpleTokenType.IS_STRUCT, firstPosition);
+			case "procedure?" -> new SimpleToken(SimpleTokenType.IS_PROCEDURE, firstPosition);
 			default -> new VariableNameToken(word, firstPosition);
 		};
 	}

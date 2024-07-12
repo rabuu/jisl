@@ -59,7 +59,7 @@ For example, this won't fail:
 (and #false (modulo 0 0))
 ```
 Interestingly, normal lambdas are not lazy,
-this will in fact fail (in the default interpreter too):
+this will in fact fail (in the standard interpreter too):
 ```racket
 (define myAnd (lambda (x y) (and x y)))
 (myAnd #false (modulo 0 0))
@@ -70,6 +70,15 @@ this will in fact fail (in the default interpreter too):
 (define-struct foo (a))
 (foo? (local [(define-struct foo (b))] (make-foo 1)))
 ; evaluates to #true but arguably should be #false
+```
+
+### Builtins
+
+#### Differences between standard and our implementation
+There is syntax that we handle as normal builtin applicables/procedures
+where the standard implementation does not.
+```racket
+(procedure? if) ; we return #true, standard interpreter fails
 ```
 
 ## More resources

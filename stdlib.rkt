@@ -36,4 +36,9 @@
   (- x 1))
 
 (define (gcd x y)
-  (if (= y 0) x (gcd y (modulo x y))))
+  (if (= y 0)
+    x
+    (gcd y (modulo x y))))
+
+(define (lcm x y)
+    (/ (* x y) (gcd x y)))
