@@ -2,7 +2,7 @@ package de.rbuurman.jisl.program.builtin;
 
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.value.primitive.BooleanPrimitive;
-import de.rbuurman.jisl.program.evaluation.Applicable;
+import de.rbuurman.jisl.program.evaluation.ValueApplicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.utils.Multiple;
@@ -11,7 +11,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Equality (eq?)
  */
-public final class Equality extends Applicable {
+public final class Equality extends ValueApplicable {
 
     public Equality(SourcePosition sourcePosition) {
         super(sourcePosition);

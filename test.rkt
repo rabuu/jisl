@@ -1,2 +1,3 @@
-(require "lib.rkt")
-(foo 5 1)
+(require "stdlib.rkt")
+
+(gcd 15 20)

@@ -52,7 +52,20 @@ Therefore, equality between functions may act a little weird.
 (eq? foo baz) ; evaluates to #false
 ```
 
-## Structs
+#### Lazy evaluation
+There are builtin lazy "lambdas" like and `and`, `or` and `if`.
+For example, this won't fail:
+```racket
+(and #false (modulo 0 0))
+```
+Interestingly, normal lambdas are not lazy,
+this will in fact fail (in the default interpreter too):
+```racket
+(define myAnd (lambda (x y) (and x y)))
+(myAnd #false (modulo 0 0))
+```
+
+### Structs
 ```racket
 (define-struct foo (a))
 (foo? (local [(define-struct foo (b))] (make-foo 1)))

@@ -105,7 +105,7 @@ public final class Lexer {
 			throw new LexingException("Failed to tokenize " + this.peek(), firstPosition);
 		}
 
-		if (new NumericMatcher().matches(word)) {
+		if (new NumericMatcher().matches(word) && !word.equals("/")) {
 			try {
 				return advanceNumber(word, firstPosition);
 			} catch (NumberFormatException ignored) {

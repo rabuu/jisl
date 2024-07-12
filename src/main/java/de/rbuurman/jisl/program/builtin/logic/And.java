@@ -1,5 +1,6 @@
 package de.rbuurman.jisl.program.builtin.logic;
 
+import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
@@ -18,14 +19,15 @@ public final class And extends Applicable {
     }
 
     @Override
-    public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
+    public Value lazy_apply(Multiple<Expression> arguments, Environment environment) throws EvaluationException {
 
         if (arguments.size() < 2) {
             throw new EvaluationException(this + " expects at least two arguments", this.getSourcePosition());
         }
 
         for (var arg : arguments) {
-            if (!(arg instanceof BooleanPrimitive b)) {
+            final Value val = arg.evaluate(environment);
+            if (!(val instanceof BooleanPrimitive b)) {
                 throw new EvaluationException("Argument of " + this + " must be boolean", this.getSourcePosition());
             }
 

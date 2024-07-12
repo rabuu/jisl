@@ -1,5 +1,6 @@
 package de.rbuurman.jisl.program.evaluation;
 
+import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.Multiple;
 import de.rbuurman.jisl.utils.SourcePosition;
@@ -13,7 +14,7 @@ public abstract class Applicable extends Value {
 		super(sourcePosition);
 	}
 
-	public abstract Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException;
+	public abstract Value lazy_apply(Multiple<Expression> arguments, Environment environment) throws EvaluationException;
 
 	@Override
 	public boolean equals(Object obj) {

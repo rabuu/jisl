@@ -1,7 +1,7 @@
 package de.rbuurman.jisl.program.builtin.struct;
 
 import de.rbuurman.jisl.program.VariableName;
-import de.rbuurman.jisl.program.evaluation.Applicable;
+import de.rbuurman.jisl.program.evaluation.ValueApplicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.Struct;
@@ -13,7 +13,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * IsStruct
  */
-public final class IsStruct extends Applicable {
+public final class IsStruct extends ValueApplicable {
     private final VariableName struct;
 
     public IsStruct(final VariableName struct, SourcePosition sourcePosition) {

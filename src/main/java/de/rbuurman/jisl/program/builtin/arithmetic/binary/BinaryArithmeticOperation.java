@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.program.builtin.arithmetic.binary;
 
-import de.rbuurman.jisl.program.evaluation.Applicable;
+import de.rbuurman.jisl.program.evaluation.ValueApplicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.Value;
@@ -8,7 +8,7 @@ import de.rbuurman.jisl.program.value.primitive.NumberPrimitive;
 import de.rbuurman.jisl.utils.Multiple;
 import de.rbuurman.jisl.utils.SourcePosition;
 
-public abstract class BinaryArithmeticOperation<OUTPUT extends Value> extends Applicable {
+public abstract class BinaryArithmeticOperation<OUTPUT extends Value> extends ValueApplicable {
     public BinaryArithmeticOperation(SourcePosition sourcePosition) {
         super(sourcePosition);
     }

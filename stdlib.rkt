@@ -34,3 +34,6 @@
 
 (define (sub1 x)
   (- x 1))
+
+(define (gcd x y)
+  (if (= y 0) x (gcd y (modulo x y))))

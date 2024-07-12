@@ -1,6 +1,6 @@
 package de.rbuurman.jisl.program.builtin.list;
 
-import de.rbuurman.jisl.program.evaluation.Applicable;
+import de.rbuurman.jisl.program.evaluation.ValueApplicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.Value;
@@ -12,7 +12,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * Cons
  */
-public final class Cons extends Applicable {
+public final class Cons extends ValueApplicable {
 
     public Cons(SourcePosition sourcePosition) {
         super(sourcePosition);

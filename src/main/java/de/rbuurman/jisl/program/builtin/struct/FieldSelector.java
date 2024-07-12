@@ -1,7 +1,7 @@
 package de.rbuurman.jisl.program.builtin.struct;
 
 import de.rbuurman.jisl.program.VariableName;
-import de.rbuurman.jisl.program.evaluation.Applicable;
+import de.rbuurman.jisl.program.evaluation.ValueApplicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.value.Struct;
@@ -12,7 +12,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 /**
  * FieldSelector
  */
-public final class FieldSelector extends Applicable {
+public final class FieldSelector extends ValueApplicable {
     private final VariableName struct;
     private final VariableName field;
 
