@@ -15,6 +15,10 @@ public abstract class BinaryArithmeticOperation<OUTPUT extends Value> extends Ap
 
     protected abstract OUTPUT operation(double x, double y);
 
+    protected boolean argumentIsValid(double arg) {
+        return true;
+    }
+
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
         if (arguments.size() != 2) {
@@ -26,9 +30,17 @@ public abstract class BinaryArithmeticOperation<OUTPUT extends Value> extends Ap
             throw new EvaluationException(this + "expects a numerical argument", val1.getSourcePosition());
         }
 
+        if (!argumentIsValid(num1.getInner())) {
+            throw new EvaluationException("Number " + num1 + " is invalid for " + this, val1.getSourcePosition());
+        }
+
         var val2 = arguments.poll();
         if (!(val2 instanceof NumberPrimitive num2)) {
             throw new EvaluationException(this + "expects a numerical argument", val2.getSourcePosition());
+        }
+
+        if (!argumentIsValid(num2.getInner())) {
+            throw new EvaluationException("Number " + num2 + " is invalid for " + this, val2.getSourcePosition());
         }
 
         return (Value) operation(num1.getInner(), num2.getInner()).withSourcePosition(this.getSourcePosition());

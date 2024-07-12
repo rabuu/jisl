@@ -2,6 +2,7 @@ package de.rbuurman.jisl.lexing.token;
 
 import de.rbuurman.jisl.program.builtin.Equality;
 import de.rbuurman.jisl.program.builtin.arithmetic.binary.Exponentiation;
+import de.rbuurman.jisl.program.builtin.arithmetic.binary.Modulo;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.basic.Addition;
 import de.rbuurman.jisl.program.builtin.arithmetic.basic.Division;
@@ -53,6 +54,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		SQRT,
 		CEILING,
 		FLOOR,
+		MODULO,
 		EQUALS,
 		LESS,
 		LESSEQ,
@@ -92,6 +94,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case SQRT -> Optional.of(new SquareRoot(this.getSourcePosition()));
 			case CEILING -> Optional.of(new Ceiling(this.getSourcePosition()));
 			case FLOOR -> Optional.of(new Floor(this.getSourcePosition()));
+			case MODULO -> Optional.of(new Modulo(this.getSourcePosition()));
 			case EQUALS -> Optional.of(new Equals(this.getSourcePosition()));
 			case LESS -> Optional.of(new Less(this.getSourcePosition()));
 			case LESSEQ -> Optional.of(new LessEq(this.getSourcePosition()));

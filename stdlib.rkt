@@ -14,6 +14,12 @@
 (define (zero? x)
   (= x 0))
 
+(define (even? x)
+  (= (modulo x 2) 0))
+
+(define (odd? x)
+  (= (modulo x 2) 1))
+
 (define (sgn x)
   (if (positive? x) 1 -1))
 
