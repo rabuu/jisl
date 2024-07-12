@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.program.builtin.arithmetic.operation;
+package de.rbuurman.jisl.program.builtin.arithmetic.basic;
 
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;

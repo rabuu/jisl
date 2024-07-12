@@ -1,3 +1,6 @@
+(define e (exp 1))
+(define pi 245850992/78256779)
+
 (define (positive? x)
   (> x 0))
 

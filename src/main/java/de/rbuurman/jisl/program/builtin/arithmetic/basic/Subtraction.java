@@ -1,4 +1,4 @@
-package de.rbuurman.jisl.program.builtin.arithmetic.operation;
+package de.rbuurman.jisl.program.builtin.arithmetic.basic;
 
 import de.rbuurman.jisl.utils.SourcePosition;
 
@@ -9,6 +9,10 @@ public final class Subtraction extends BasicArithmeticOperation {
 
     public Subtraction(SourcePosition sourcePosition) {
         super(sourcePosition);
+    }
+
+    protected double singleValue(double x) {
+        return -x;
     }
 
     @Override

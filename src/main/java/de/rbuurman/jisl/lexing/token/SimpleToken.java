@@ -3,10 +3,11 @@ package de.rbuurman.jisl.lexing.token;
 import de.rbuurman.jisl.program.builtin.Equality;
 import de.rbuurman.jisl.program.builtin.Identity;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Addition;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Division;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Multiplication;
-import de.rbuurman.jisl.program.builtin.arithmetic.operation.Subtraction;
+import de.rbuurman.jisl.program.builtin.arithmetic.basic.Addition;
+import de.rbuurman.jisl.program.builtin.arithmetic.basic.Division;
+import de.rbuurman.jisl.program.builtin.arithmetic.basic.Multiplication;
+import de.rbuurman.jisl.program.builtin.arithmetic.basic.Subtraction;
+import de.rbuurman.jisl.program.builtin.arithmetic.unary.*;
 import de.rbuurman.jisl.program.builtin.list.Cons;
 import de.rbuurman.jisl.program.builtin.logic.And;
 import de.rbuurman.jisl.program.builtin.logic.Or;
@@ -46,6 +47,11 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		MINUS,
 		ASTERISK,
 		SLASH,
+		EXP,
+		LOG,
+		SQRT,
+		CEILING,
+		FLOOR,
 		EQUALS,
 		LESS,
 		LESSEQ,
@@ -80,6 +86,11 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case MINUS -> Optional.of(new Subtraction(this.getSourcePosition()));
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));
 			case SLASH -> Optional.of(new Division(this.getSourcePosition()));
+			case EXP -> Optional.of(new Exponentiation(this.getSourcePosition()));
+			case LOG -> Optional.of(new Logarithm(this.getSourcePosition()));
+			case SQRT -> Optional.of(new SquareRoot(this.getSourcePosition()));
+			case CEILING -> Optional.of(new Ceiling(this.getSourcePosition()));
+			case FLOOR -> Optional.of(new Floor(this.getSourcePosition()));
 			case EQUALS -> Optional.of(new Equals(this.getSourcePosition()));
 			case LESS -> Optional.of(new Less(this.getSourcePosition()));
 			case LESSEQ -> Optional.of(new LessEq(this.getSourcePosition()));
