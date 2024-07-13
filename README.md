@@ -1,12 +1,33 @@
 # JISL
 A **J**ava interpreter for the [**I**ntermediate **S**tudent **L**anguage (with lambda abstraction)](https://docs.racket-lang.org/htdp-langs/intermediate-lam.html).
 
-## Build instructions
-This project is built with [Maven](https://maven.apache.org/).
+This is our final project for the course Praktische Informatik 2 (OOP)
+at the University of Tübingen.
+
+## Usage (end user)
+There are four execution modes:
+- Run a source file (default)
+- Inspect the lexer output of a given source file
+- Inspect the parser output of a given source file
+- Run an interactive REPL
+
+If you got a JAR executable you can use the following commands:
 ```sh
-./jisl-run FILENAME  # to run the project
-mvn test             # to run the test suite
-mvn clean package    # to generate a JAR executable
+java -jar jisl-0.0.1.jar FILENAME # to run
+java -jar jisl-0.0.1.jar inspect-lexing FILENAME
+java -jar jisl-0.0.1.jar inspect-parsing FILENAME
+java -jar jisl-0.0.1.jar repl
+```
+
+## Build instructions (developer)
+This project is built with [Maven](https://maven.apache.org/).
+There is a POSIX [wrapper script](./jisl-run.sh) to run the program directly.
+Running the project with IntelliJ is also easily possible,
+either by using the Maven functionality or by manually running `de.rbuurman.jisl.Main`.
+```sh
+./jisl-run ARGS   # to run the project
+mvn test          # to run the test suite
+mvn clean package # to generate a JAR executable
 ```
 
 ## Todo
