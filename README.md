@@ -21,8 +21,8 @@ mvn clean package    # to generate a JAR executable
 - [x] Symbols/Atoms
 - [x] Structures
 - [ ] Write tests & comments
-- [ ] Important builtins + [stdlib](./stdlib.rkt)
-- [ ] Samples
+- [x] Important builtins + [stdlib](./stdlib.rkt)
+- [x] Samples
 
 ## Not Todo
 - There will be no support for images.

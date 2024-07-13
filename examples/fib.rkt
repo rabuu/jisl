@@ -1,3 +1,4 @@
+; compute n-th fibonacci number
 (define (fib n)
   (cond
 	[(eq? n 0) 0]
