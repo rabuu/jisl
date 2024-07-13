@@ -139,6 +139,23 @@
       (if (p? (first lst)) (list (first lst)) empty)
       (filter p? (rest lst)))))
 
+; Fold a list with a given operation from the right
+(define (foldr op neutrum lst)
+  (if (empty? lst) neutrum
+    (op (first lst) (foldr op neutrum (rest lst)))))
+
+; Fold a list with a given operation from the left
+(define (foldl op neutrum lst)
+  (local [(define (fold lst acc)
+            (if (empty? lst) acc
+              (fold (rest lst) (op (first lst) acc))))]
+    (fold lst neutrum)))
+
+; Apply an operation on each element of a list
+(define (map op lst)
+  (if (empty? lst) empty
+    (cons (op (first lst)) (map op (rest lst)))))
+
 ; Determines whether p? holds for every item of lst
 (define (andmap p? lst)
   (if (empty? lst)
@@ -150,3 +167,19 @@
   (if (empty? lst)
     #false
     (or (p? (first lst)) (ormap p? (rest lst)))))
+
+;; some more list helpers using higher-order functions
+
+; Get length of a list
+(define (length lst)
+  (foldr (lambda (x y) (add1 y)) 0 lst))
+
+; Reverse a list
+(define (reverse lst)
+  (foldl cons empty lst))
+
+; Returns #true if lst contains x
+(define (member x lst)
+  (ormap (lambda (y) (eq? x y)) lst))
+
+(define member? member)
