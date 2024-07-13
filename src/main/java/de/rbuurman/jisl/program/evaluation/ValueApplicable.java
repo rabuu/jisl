@@ -23,8 +23,6 @@ public abstract class ValueApplicable extends Applicable {
 			values.add(arg.evaluate(environment));
 		}
 
-		System.err.println("DEBUG: " + values);
-
 		return apply(values, environment);
 	}
 

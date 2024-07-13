@@ -21,7 +21,9 @@ public final class Lambda extends ValueApplicable {
     @Override
     public Value apply(Multiple<Value> arguments, Environment environment) throws EvaluationException {
         if (this.variables.size() != arguments.size()) {
-            throw new EvaluationException("Lambda expected " + this.variables.size() + " arguments but got " + arguments.size(), this.getSourcePosition());
+            throw new EvaluationException(
+                    "Lambda expected " + this.variables.size() + " arguments but got " + arguments.size(),
+                    this.getSourcePosition());
         }
 
         var localEnvironment = new Environment();
@@ -31,10 +33,6 @@ public final class Lambda extends ValueApplicable {
         }
 
         var mergedEnvironment = Environment.merge(environment, localEnvironment);
-        for (var variable : this.variables) {
-            System.err.println("DEBUG: " + mergedEnvironment.getValue(variable));
-        }
-
         return this.expression.evaluate(mergedEnvironment);
     }
 
