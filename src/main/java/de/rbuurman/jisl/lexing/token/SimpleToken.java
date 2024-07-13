@@ -7,8 +7,7 @@ import de.rbuurman.jisl.program.builtin.arithmetic.binary.Modulo;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.unary.*;
 import de.rbuurman.jisl.program.builtin.is.*;
-import de.rbuurman.jisl.program.builtin.list.Cons;
-import de.rbuurman.jisl.program.builtin.list.ListConstructor;
+import de.rbuurman.jisl.program.builtin.list.*;
 import de.rbuurman.jisl.program.builtin.logic.And;
 import de.rbuurman.jisl.program.builtin.logic.If;
 import de.rbuurman.jisl.program.builtin.logic.Or;
@@ -42,6 +41,10 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		EMPTY,
 		CONS,
 		LIST,
+		MAKE_LIST,
+		CAR,
+		CDR,
+		APPEND,
 
 		// arithmetic builtins
 		PLUS,
@@ -101,6 +104,10 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case EMPTY -> Optional.of(new EmptyList(this.getSourcePosition()));
 			case CONS -> Optional.of(new Cons(this.getSourcePosition()));
 			case LIST -> Optional.of(new ListConstructor(this.getSourcePosition()));
+			case MAKE_LIST -> Optional.of(new MakeList(this.getSourcePosition()));
+			case CAR -> Optional.of(new Car(this.getSourcePosition()));
+			case CDR -> Optional.of(new Cdr(this.getSourcePosition()));
+			case APPEND -> Optional.of(new Append(this.getSourcePosition()));
 			case PLUS -> Optional.of(new Addition(this.getSourcePosition()));
 			case MINUS -> Optional.of(new Subtraction(this.getSourcePosition()));
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));

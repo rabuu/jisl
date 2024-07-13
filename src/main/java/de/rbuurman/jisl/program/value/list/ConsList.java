@@ -16,6 +16,14 @@ public final class ConsList extends List {
         this.tail = tail;
     }
 
+    public Value getHead() {
+        return head;
+    }
+
+    public List getTail() {
+        return tail;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
