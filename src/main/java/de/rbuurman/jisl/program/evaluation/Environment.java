@@ -19,7 +19,7 @@ public class Environment {
 	private Map<VariableName, Value> definitions = new HashMap<>();
 	private Map<VariableName, Multiple<VariableName>> structs = new HashMap<>();
 
-	protected Map<VariableName, Value> getDefinitions() {
+	public Map<VariableName, Value> getDefinitions() {
 		return this.definitions;
 	}
 

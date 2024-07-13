@@ -2,6 +2,7 @@ package de.rbuurman.jisl.program.expression;
 
 import de.rbuurman.jisl.program.Definition;
 import de.rbuurman.jisl.program.StructDefinition;
+import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
@@ -14,7 +15,7 @@ import de.rbuurman.jisl.utils.SourcePosition;
 public final class LocalExpression extends Expression {
     private final Multiple<Definition> definitions;
     private final Multiple<StructDefinition> structs;
-    private final Expression expression;
+    private Expression expression;
 
     public LocalExpression(Multiple<Definition> definitions, Multiple<StructDefinition> structs, Expression expression,
             SourcePosition sourcePosition) {
@@ -44,6 +45,20 @@ public final class LocalExpression extends Expression {
         }
 
         return this.expression.evaluate(mergedEnvironment);
+    }
+
+    @Override
+    public Expression replace(VariableName variable, Value value) {
+        for (var def : this.definitions) {
+            if (def.getVariable().equals(variable)) {
+                return this;
+            }
+        }
+
+        // TODO: structs shadowing
+
+        var newExpr = this.expression.replace(variable, value);
+        return new LocalExpression(definitions, structs, newExpr, this.getSourcePosition());
     }
 
     @Override

@@ -33,12 +33,27 @@ public final class Lambda extends ValueApplicable {
         }
 
         var mergedEnvironment = Environment.merge(environment, localEnvironment);
-        return this.expression.evaluate(mergedEnvironment);
+        Value evaluated = this.expression.evaluate(mergedEnvironment);
+
+        if (evaluated instanceof Lambda) {
+            return evaluated.replace(localEnvironment).evaluate(mergedEnvironment);
+        }
+
+        return evaluated;
     }
 
     @Override
     public String toString() {
         return "(λ " + this.variables + " " + this.expression + ")";
+    }
+
+    @Override
+    public Expression replace(VariableName variable, Value value) {
+        if (!this.variables.contains(variable)) {
+            Expression newExpr = this.expression.replace(variable, value);
+            return new Lambda(Multiple.copy(this.variables), newExpr, this.getSourcePosition());
+        }
+        return this;
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.rbuurman.jisl.utils;
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Multiple is a custom collection type for JISL.
@@ -73,6 +74,15 @@ public class Multiple<T> implements Iterable<T> {
 			i++;
 		}
 		return -1;
+	}
+
+	/**
+	 * Returns whether a given element is in the Multiple queue
+	 *
+	 * @return true if it contains the element, false otherwise
+	 */
+	public boolean contains(final T element) {
+		return this.elements.contains(element);
 	}
 
 	/**

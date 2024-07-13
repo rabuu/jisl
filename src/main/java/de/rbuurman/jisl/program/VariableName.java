@@ -30,6 +30,15 @@ public final class VariableName extends Expression {
     }
 
     @Override
+    public Expression replace(VariableName variable, Value value) {
+        if (this.equals(variable)) {
+            return value;
+        } else {
+            return this;
+        }
+    }
+
+    @Override
     public String toString() {
         return "`" + this.name + "`";
     }

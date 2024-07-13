@@ -1,5 +1,6 @@
 package de.rbuurman.jisl.program.value;
 
+import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.expression.Expression;
@@ -9,6 +10,11 @@ public abstract class Value extends Expression {
 
     public Value(SourcePosition sourcePosition) {
         super(sourcePosition);
+    }
+
+    @Override
+    public Expression replace(VariableName variable, Value value) {
+        return this;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package de.rbuurman.jisl.program.expression;
 
+import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Applicable;
 import de.rbuurman.jisl.program.evaluation.Environment;
@@ -25,6 +26,16 @@ public final class SExpression extends Expression {
         }
 
         return applicable.lazy_apply(Multiple.copy(arguments), environment);
+    }
+
+    @Override
+    public Expression replace(VariableName variable, Value value) {
+        Expression newFunction = this.function.replace(variable, value);
+        Multiple<Expression> newArguments = new Multiple<>();
+        for (var arg : this.arguments) {
+            newArguments.add(arg.replace(variable, value));
+        }
+        return new SExpression(newFunction, newArguments, this.getSourcePosition());
     }
 
     @Override

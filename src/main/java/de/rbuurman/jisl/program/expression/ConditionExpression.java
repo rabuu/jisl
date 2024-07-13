@@ -2,6 +2,7 @@ package de.rbuurman.jisl.program.expression;
 
 import java.util.Optional;
 
+import de.rbuurman.jisl.program.VariableName;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.evaluation.Environment;
 import de.rbuurman.jisl.program.evaluation.EvaluationException;
@@ -45,6 +46,24 @@ public final class ConditionExpression extends Expression {
         }
 
         throw new EvaluationException("No conditional clauses were true", this.getSourcePosition());
+    }
+
+    @Override
+    public Expression replace(VariableName variable, Value value) {
+        Multiple<Expression[]> newConditionals = new Multiple<>();
+        for (var conditional : this.conditionals) {
+            var cond0 = conditional[0].replace(variable, value);
+            var cond1 = conditional[1].replace(variable, value);
+            Expression[] conds = { cond0, cond1 };
+            newConditionals.add(conds);
+        }
+
+        Optional<Expression> newElseClause = Optional.empty();
+        if (this.elseClause.isPresent()) {
+            newElseClause = Optional.of(this.elseClause.get().replace(variable, value));
+        }
+
+        return new ConditionExpression(newConditionals, newElseClause, this.getSourcePosition());
     }
 
     @Override
