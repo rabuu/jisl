@@ -1,8 +1,6 @@
-(define-struct 3d-point (x y z))
+(require "../stdlib.rkt")
 
-(define (abs x) (cond
-                  [(>= x 0) x]
-                  [else (- 0 x)]))
+(define-struct 3d-point (x y z))
 
 (define (max-norm p)
   (local [(define x (abs (3d-point-x p))) (define y (abs (3d-point-y p))) (define z (abs (3d-point-z p)))]
