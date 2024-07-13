@@ -79,6 +79,15 @@ this will in fact fail (in the standard interpreter too):
 (myAnd #false (modulo 0 0))
 ```
 
+#### Our Lambda definitions are _very_ lazy
+In our implementation a lambda/function definition is
+not semantically checked, at all.
+```racket
+(define (foo x y) (* BAR BAZ)) ; this does not throw an error
+```
+The standard implementation would throw an error because neither `BAR` nor `BAZ`
+are defined.
+
 ### Structs
 ```racket
 (define-struct foo (a))
