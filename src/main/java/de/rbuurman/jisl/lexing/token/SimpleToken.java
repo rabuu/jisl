@@ -1,6 +1,7 @@
 package de.rbuurman.jisl.lexing.token;
 
-import de.rbuurman.jisl.program.builtin.Equality;
+import de.rbuurman.jisl.program.builtin.equality.StrictEquality;
+import de.rbuurman.jisl.program.builtin.equality.StructuralEquality;
 import de.rbuurman.jisl.program.builtin.arithmetic.basic.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.binary.Exponentiation;
 import de.rbuurman.jisl.program.builtin.arithmetic.binary.Modulo;
@@ -61,7 +62,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		CEILING,
 		FLOOR,
 		MODULO,
-		EQUALS,
+		ARITHMETIC_EQUALITY,
 		LESS,
 		LESSEQ,
 		GREATER,
@@ -90,7 +91,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		IS_PROCEDURE,
 
 		// other builtins
-		EQUALITY,
+		STRICT_EQUALITY,
+		STRUCTURAL_EQUALITY,
 		RANDOM,
 
 		// end of file
@@ -124,7 +126,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case CEILING -> Optional.of(new Ceiling(this.getSourcePosition()));
 			case FLOOR -> Optional.of(new Floor(this.getSourcePosition()));
 			case MODULO -> Optional.of(new Modulo(this.getSourcePosition()));
-			case EQUALS -> Optional.of(new Equals(this.getSourcePosition()));
+			case ARITHMETIC_EQUALITY -> Optional.of(new ArithmeticEquality(this.getSourcePosition()));
 			case LESS -> Optional.of(new Less(this.getSourcePosition()));
 			case LESSEQ -> Optional.of(new LessEq(this.getSourcePosition()));
 			case GREATER -> Optional.of(new Greater(this.getSourcePosition()));
@@ -145,7 +147,8 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case IS_STRING -> Optional.of(new IsString(this.getSourcePosition()));
 			case IS_STRUCT -> Optional.of(new IsStruct(this.getSourcePosition()));
 			case IS_PROCEDURE -> Optional.of(new IsProcedure(this.getSourcePosition()));
-			case EQUALITY -> Optional.of(new Equality(this.getSourcePosition()));
+			case STRICT_EQUALITY -> Optional.of(new StrictEquality(this.getSourcePosition()));
+			case STRUCTURAL_EQUALITY -> Optional.of(new StructuralEquality(this.getSourcePosition()));
 			case RANDOM -> Optional.of(new Random(this.getSourcePosition()));
 			default -> Optional.empty();
 		};

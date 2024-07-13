@@ -134,7 +134,8 @@ public final class Lexer {
 			case "car" -> new SimpleToken(SimpleTokenType.CAR, firstPosition);
 			case "cdr" -> new SimpleToken(SimpleTokenType.CDR, firstPosition);
 			case "append" -> new SimpleToken(SimpleTokenType.APPEND, firstPosition);
-			case "eq?" -> new SimpleToken(SimpleTokenType.EQUALITY, firstPosition);
+			case "eq?" -> new SimpleToken(SimpleTokenType.STRICT_EQUALITY, firstPosition);
+			case "equal?" -> new SimpleToken(SimpleTokenType.STRUCTURAL_EQUALITY, firstPosition);
 			case "+" -> new SimpleToken(SimpleTokenType.PLUS, firstPosition);
 			case "-" -> new SimpleToken(SimpleTokenType.MINUS, firstPosition);
 			case "*" -> new SimpleToken(SimpleTokenType.ASTERISK, firstPosition);
@@ -149,7 +150,7 @@ public final class Lexer {
 			case "floor" -> new SimpleToken(SimpleTokenType.FLOOR, firstPosition);
 			case "modulo" -> new SimpleToken(SimpleTokenType.MODULO, firstPosition);
 			case "random" -> new SimpleToken(SimpleTokenType.RANDOM, firstPosition);
-			case "=" -> new SimpleToken(SimpleTokenType.EQUALS, firstPosition);
+			case "=" -> new SimpleToken(SimpleTokenType.ARITHMETIC_EQUALITY, firstPosition);
 			case "<" -> new SimpleToken(SimpleTokenType.LESS, firstPosition);
 			case "<=" -> new SimpleToken(SimpleTokenType.LESSEQ, firstPosition);
 			case ">" -> new SimpleToken(SimpleTokenType.GREATER, firstPosition);

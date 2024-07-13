@@ -180,6 +180,6 @@
 
 ; Returns #true if lst contains x
 (define (member x lst)
-  (ormap (lambda (y) (eq? x y)) lst))
+  (ormap (lambda (y) (equal? x y)) lst))
 
 (define member? member)

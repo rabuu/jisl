@@ -2,13 +2,13 @@ package de.rbuurman.jisl.program.builtin.arithmetic.comparison;
 
 import de.rbuurman.jisl.utils.SourcePosition;
 
-public final class Equals extends ArithmeticComparison {
+public final class ArithmeticEquality extends ArithmeticComparison {
     @Override
     protected boolean allowSingleArgument() {
         return true;
     }
 
-    public Equals(SourcePosition sourcePosition) {
+    public ArithmeticEquality(SourcePosition sourcePosition) {
         super(sourcePosition);
     }
 

@@ -35,7 +35,7 @@ mvn clean package    # to generate a JAR executable
 ## Things to note
 
 ### Equality
-The standard interpreter has three basic equality comparators:
+Our (as the standard) interpreter has three basic equality comparators:
 `eq?`, `equal?` and `=`.
 `eq?` matches the exact same object.
 `equal?` matches structurally same objects.
@@ -46,10 +46,11 @@ This example illustrates the subtle difference between `eq?` and `equal?`:
 (define A (list 1 2))
 (eq? A A) ; evaluates to #true
 (eq? (list 1 2) (list 1 2)) ; evaluates to #false
+(equal? (list 1 2) (list 1 2)) ; evaluates to #true
 ```
 
 ### Lambdas
-Two lambdas are equals if they have the same definition.
+Two lambdas are equal if they have the same definition.
 So they must share the same argument names and also the same expression in the exact same form to be equal.
 
 #### Functions are Lambdas
@@ -62,8 +63,8 @@ Therefore, equality between functions may act a little weird.
 (define (bar x y) (+ x y))
 (define (baz a b) (+ a b))
 
-(eq? foo bar) ; evaluates to #true
-(eq? foo baz) ; evaluates to #false
+(equal? foo bar) ; evaluates to #true
+(equal? foo baz) ; evaluates to #false
 ```
 
 #### Lazy evaluation
@@ -72,8 +73,8 @@ For example, this won't fail:
 ```racket
 (and #false (modulo 0 0))
 ```
-Interestingly, normal lambdas are not lazy,
-this will in fact fail (in the standard interpreter too):
+Interestingly, normal lambdas do not evaluate lazily,
+this will in fact fail (like the standard intepreter):
 ```racket
 (define myAnd (lambda (x y) (and x y)))
 (myAnd #false (modulo 0 0))
