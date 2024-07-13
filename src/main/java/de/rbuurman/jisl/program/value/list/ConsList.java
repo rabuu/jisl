@@ -37,9 +37,16 @@ public final class ConsList extends List {
         return this.head.equals(other.head) && this.tail.equals(other.tail);
     }
 
+    private String toInnerString() {
+        if (this.tail instanceof ConsList consList) {
+            return this.head + " " + consList.toInnerString();
+        }
+        return this.head.toString();
+    }
+
     @Override
     public String toString() {
-        return "(cons " + this.head + " " + this.tail + ")";
+        return "(list " + this.toInnerString() + ")";
     }
 
     @Override
