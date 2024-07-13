@@ -83,6 +83,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		IS_SYMBOL,
 		IS_LIST,
 		IS_CONS,
+		IS_EMPTY,
 		IS_CHARACTER,
 		IS_STRING,
 		IS_STRUCT,
@@ -139,6 +140,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case IS_SYMBOL -> Optional.of(new IsSymbol(this.getSourcePosition()));
 			case IS_LIST -> Optional.of(new IsList(this.getSourcePosition()));
 			case IS_CONS -> Optional.of(new IsCons(this.getSourcePosition()));
+			case IS_EMPTY -> Optional.of(new IsEmpty(this.getSourcePosition()));
 			case IS_CHARACTER -> Optional.of(new IsCharacter(this.getSourcePosition()));
 			case IS_STRING -> Optional.of(new IsString(this.getSourcePosition()));
 			case IS_STRUCT -> Optional.of(new IsStruct(this.getSourcePosition()));

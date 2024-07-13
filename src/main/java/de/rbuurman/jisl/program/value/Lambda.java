@@ -31,6 +31,10 @@ public final class Lambda extends ValueApplicable {
         }
 
         var mergedEnvironment = Environment.merge(environment, localEnvironment);
+        for (var variable : this.variables) {
+            System.err.println("DEBUG: " + mergedEnvironment.getValue(variable));
+        }
+
         return this.expression.evaluate(mergedEnvironment);
     }
 

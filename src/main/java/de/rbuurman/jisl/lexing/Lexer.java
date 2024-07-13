@@ -161,6 +161,7 @@ public final class Lexer {
 			case "symbol?" -> new SimpleToken(SimpleTokenType.IS_SYMBOL, firstPosition);
 			case "list?" -> new SimpleToken(SimpleTokenType.IS_LIST, firstPosition);
 			case "cons?" -> new SimpleToken(SimpleTokenType.IS_CONS, firstPosition);
+			case "empty?" -> new SimpleToken(SimpleTokenType.IS_EMPTY, firstPosition);
 			case "char?" -> new SimpleToken(SimpleTokenType.IS_CHARACTER, firstPosition);
 			case "string?" -> new SimpleToken(SimpleTokenType.IS_STRING, firstPosition);
 			case "struct?" -> new SimpleToken(SimpleTokenType.IS_STRUCT, firstPosition);

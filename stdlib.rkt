@@ -123,4 +123,30 @@
   (cdr lst))
 
 ;; higher-order functions
+
+; Return x for every x
 (define (identity x) x)
+
+; Composes two functions into a single function
+(define (compose g f)
+  (lambda (x) (g (f x))))
+
+; Constructs a list from all those items on a list for which p? holds
+(define (filter p? lst)
+  (if (empty? lst)
+    empty
+    (append
+      (if (p? (first lst)) (list (first lst)) empty)
+      (filter p? (rest lst)))))
+
+; Determines whether p? holds for every item of lst
+(define (andmap p? lst)
+  (if (empty? lst)
+    #true
+    (and (p? (first lst)) (andmap p? (rest lst)))))
+
+; Determines whether p? holds for at least one item of lst
+(define (ormap p? lst)
+  (if (empty? lst)
+    #false
+    (or (p? (first lst)) (ormap p? (rest lst)))))
