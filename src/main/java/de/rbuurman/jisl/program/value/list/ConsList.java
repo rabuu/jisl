@@ -1,6 +1,7 @@
 package de.rbuurman.jisl.program.value.list;
 
 import de.rbuurman.jisl.program.value.Value;
+import de.rbuurman.jisl.utils.Multiple;
 import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
@@ -41,4 +42,10 @@ public final class ConsList extends List {
         return "(cons " + this.head + " " + this.tail + ")";
     }
 
+    @Override
+    public Multiple<Value> toValues() {
+        var values =  this.tail.toValues();
+        values.addFront(this.head);
+        return values;
+    }
 }

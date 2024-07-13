@@ -31,6 +31,13 @@ public class Multiple<T> implements Iterable<T> {
 	}
 
 	/**
+	 * Add an element to the front of the Multiple queue
+	 */
+	public void addFront(T element) {
+		this.elements.addFirst(element);
+	}
+
+	/**
 	 * Poll the next element
 	 */
 	public T poll() {

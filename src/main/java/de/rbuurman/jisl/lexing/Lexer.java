@@ -130,6 +130,7 @@ public final class Lexer {
 			case "cons" -> new SimpleToken(SimpleTokenType.CONS, firstPosition);
 			case "list" -> new SimpleToken(SimpleTokenType.LIST, firstPosition);
 			case "make-list" -> new SimpleToken(SimpleTokenType.MAKE_LIST, firstPosition);
+			case "apply" -> new SimpleToken(SimpleTokenType.APPLY, firstPosition);
 			case "car" -> new SimpleToken(SimpleTokenType.CAR, firstPosition);
 			case "cdr" -> new SimpleToken(SimpleTokenType.CDR, firstPosition);
 			case "append" -> new SimpleToken(SimpleTokenType.APPEND, firstPosition);

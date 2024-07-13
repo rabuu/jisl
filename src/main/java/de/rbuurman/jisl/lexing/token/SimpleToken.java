@@ -45,6 +45,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		CAR,
 		CDR,
 		APPEND,
+		APPLY,
 
 		// arithmetic builtins
 		PLUS,
@@ -108,6 +109,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case CAR -> Optional.of(new Car(this.getSourcePosition()));
 			case CDR -> Optional.of(new Cdr(this.getSourcePosition()));
 			case APPEND -> Optional.of(new Append(this.getSourcePosition()));
+			case APPLY -> Optional.of(new Apply(this.getSourcePosition()));
 			case PLUS -> Optional.of(new Addition(this.getSourcePosition()));
 			case MINUS -> Optional.of(new Subtraction(this.getSourcePosition()));
 			case ASTERISK -> Optional.of(new Multiplication(this.getSourcePosition()));
