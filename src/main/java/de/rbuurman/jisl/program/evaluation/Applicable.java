@@ -6,7 +6,11 @@ import de.rbuurman.jisl.utils.Multiple;
 import de.rbuurman.jisl.utils.SourcePosition;
 
 /**
- * Applicable
+ * Applicables are Values that can transform S-expressions to other values.
+ * You can think about them as functions.
+ * <br>
+ * The most important form of Applicable is the Lambda.
+ * Also, there a a ton of builtin Applicables.
  */
 public abstract class Applicable extends Value {
 
@@ -14,7 +18,8 @@ public abstract class Applicable extends Value {
 		super(sourcePosition);
 	}
 
-	public abstract Value lazy_apply(Multiple<Expression> arguments, Environment environment) throws EvaluationException;
+	public abstract Value lazy_apply(Multiple<Expression> arguments, Environment environment)
+			throws EvaluationException;
 
 	@Override
 	public boolean equals(Object obj) {

@@ -12,7 +12,13 @@ import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.utils.Multiple;
 
 /**
- * Environment
+ * An Environment stores the current state of a Program execution.
+ * <br>
+ * This is the memory of the interpreter that remembers what things are already
+ * defined and can be used to retreive them.
+ * <br>
+ * Also, there may be local sub-Environments (for example in lambdas and local
+ * expressions). This is why Environments can merge().
  */
 public class Environment {
 

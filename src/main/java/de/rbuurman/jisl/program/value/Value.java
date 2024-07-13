@@ -6,6 +6,16 @@ import de.rbuurman.jisl.program.evaluation.EvaluationException;
 import de.rbuurman.jisl.program.expression.Expression;
 import de.rbuurman.jisl.utils.SourcePosition;
 
+/**
+ * A Value is the end product of the evaluation.
+ * This is what eventually gets printed to screen if we run a program.
+ *
+ * There are a few different Value types:
+ * - Primtives like Numbers, String, Booleans, ...
+ * - List data
+ * - Lambdas/functions
+ * - Instances of structs
+ */
 public abstract class Value extends Expression {
 
     public Value(SourcePosition sourcePosition) {

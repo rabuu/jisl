@@ -44,9 +44,10 @@ public class Main {
     }
 
     /**
-     * The run method checks the CLI arguments executes the corresponding functions
-     * At the moment, there are four modes:
-     * - read a source file and evaluate it (default)
+     * The run method checks the CLI arguments and executes the corresponding
+     * functions
+     * There are four modes:
+     * - read a source file and evaluate it
      * - dump the lexical tokens of a given source file
      * - dump the parsed program elements of a given source file
      * - start an interactive REPL

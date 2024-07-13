@@ -32,6 +32,7 @@ public final class Program extends PeekableQueue<ProgramElement> {
      * Run the program.
      * <br>
      * It goes through the elements and processes them according to their type.
+     * See ProgramElement.process().
      */
     public Multiple<Value> run() throws EvaluationException, IOException, ParsingException, LexingException {
         Multiple<Value> results = new Multiple<>();

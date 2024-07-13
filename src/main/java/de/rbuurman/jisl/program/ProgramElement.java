@@ -41,7 +41,7 @@ public abstract class ProgramElement {
      * <br>
      * This method modifies the environment when the element is a
      * LibraryRequirement, Definition or StructDefinition
-     * or it evaluates itself it is an Expression
+     * or it evaluates itself if it is an Expression
      *
      * @return the evaluated Value if element is an Expression, otherwise nothing
      */
