@@ -18,19 +18,19 @@
 (define (zero? x)
   (= x 0))
 
+; absolute value of a number
+(define (abs x)
+  (if (negative? x) (- x) x))
+
 (define (even? x)
-  (= (modulo x 2) 0))
+  (= (modulo (abs x) 2) 0))
 
 (define (odd? x)
-  (= (modulo x 2) 1))
+  (= (modulo (abs x) 2) 1))
 
 ; signum of a number
 (define (sgn x)
   (if (positive? x) 1 -1))
-
-; absolute value of a number
-(define (abs x)
-  (if (negative? x) (- x) x))
 
 ; square of a number
 (define (sqr x)
