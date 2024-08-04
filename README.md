@@ -41,7 +41,7 @@ mvn clean package # to generate a JAR executable
 - [x] Lists
 - [x] Symbols/Atoms
 - [x] Structures
-- [?] Write a few comments & (even less) tests
+- [x] Write a comments & tests (always room for improvement)
 - [x] Important builtins + [stdlib](./stdlib.rkt)
 - [x] Samples
 
