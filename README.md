@@ -45,13 +45,15 @@ mvn clean package # to generate a JAR executable
 - [x] Important builtins + [stdlib](./stdlib.rkt)
 - [x] Samples
 
+### Planned for 0.1.0
+- Better REPL (using [JLine](https://github.com/jline/jline3))
+- `let`, `let*` and `letrec`
+
 ## Not Todo
-- There will be no support for images.
-- For now there are no plans to implement `let`, `let*` and `letrec`.
-- Also probably we will not implement signatures.
-- quoted/quasiquoted
-- complex numbers
-- inexact numbers
+- images (never)
+- signatures (maybe)
+- quoted/quasiquoted (maybe)
+- complex/inexact numbers (probably never)
 
 ## Things to note
 
@@ -88,42 +90,41 @@ Therefore, equality between functions may act a little weird.
 (equal? foo baz) ; evaluates to #false
 ```
 
-#### Lazy evaluation
-There are builtin lazy "lambdas" like and `and`, `or` and `if`.
-For example, this won't fail:
+#### Short circuiting
+There are builtin "lazy procedures" like and `and`, `or` and `if`.
+For example, this won't fail although `(modulo 0 0)` on its own would:
 ```racket
 (and #false (modulo 0 0))
 ```
-Interestingly, normal lambdas do not evaluate lazily,
-this will in fact fail (like the standard intepreter):
+Interestingly, normal lambdas do not evaluate lazily, this will in fact fail (like with the standard intepreter):
 ```racket
 (define myAnd (lambda (x y) (and x y)))
 (myAnd #false (modulo 0 0))
 ```
 
 #### Our Lambda definitions are _very_ lazy
-In our implementation a lambda/function definition is
-not semantically checked, at all.
+In our implementation a lambda/function definition is not semantically checked, at all.
 ```racket
 (define (foo x y) (* BAR BAZ)) ; this does not throw an error
 ```
-The standard implementation would throw an error because neither `BAR` nor `BAZ`
-are defined.
+The standard implementation would throw an error because neither `BAR` nor `BAZ` are defined.
 
 ### Structs
+At the time, we compare structs based on their names.
+With local definitions (that allow shadowing) this leads to problems.
 ```racket
-(define-struct foo (a))
-(foo? (local [(define-struct foo (b))] (make-foo 1)))
+(define-struct foo (a b))
+(foo? (local [(define-struct foo (c))] (make-foo 1)))
 ; evaluates to #true but arguably should be #false
 ```
 
 ### Builtins
 
-#### Differences between standard and our implementation
+#### Builtin procedure vs language syntax
 There is syntax that we handle as normal builtin applicables/procedures
 where the standard implementation does not.
 ```racket
-(procedure? if) ; we return #true, standard interpreter fails
+(procedure? if) ; we return #true, standard interpreter #false
 ```
 
 ## More resources
