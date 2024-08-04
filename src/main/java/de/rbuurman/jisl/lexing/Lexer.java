@@ -149,6 +149,7 @@ public final class Lexer {
 			case "ceiling" -> new SimpleToken(SimpleTokenType.CEILING, firstPosition);
 			case "floor" -> new SimpleToken(SimpleTokenType.FLOOR, firstPosition);
 			case "modulo" -> new SimpleToken(SimpleTokenType.MODULO, firstPosition);
+			case "remainder" -> new SimpleToken(SimpleTokenType.REMAINDER, firstPosition);			
 			case "random" -> new SimpleToken(SimpleTokenType.RANDOM, firstPosition);
 			case "=" -> new SimpleToken(SimpleTokenType.ARITHMETIC_EQUALITY, firstPosition);
 			case "<" -> new SimpleToken(SimpleTokenType.LESS, firstPosition);

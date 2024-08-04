@@ -23,10 +23,10 @@
   (if (negative? x) (- x) x))
 
 (define (even? x)
-  (= (modulo (abs x) 2) 0))
+  (= (modulo x 2) 0))
 
 (define (odd? x)
-  (= (modulo (abs x) 2) 1))
+  (= (modulo x 2) 1))
 
 ; signum of a number
 (define (sgn x)

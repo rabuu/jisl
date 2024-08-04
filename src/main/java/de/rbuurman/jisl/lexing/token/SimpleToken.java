@@ -1,18 +1,13 @@
 package de.rbuurman.jisl.lexing.token;
 
-import de.rbuurman.jisl.program.builtin.equality.StrictEquality;
-import de.rbuurman.jisl.program.builtin.equality.StructuralEquality;
+import de.rbuurman.jisl.program.builtin.equality.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.basic.*;
-import de.rbuurman.jisl.program.builtin.arithmetic.binary.Exponentiation;
-import de.rbuurman.jisl.program.builtin.arithmetic.binary.Modulo;
+import de.rbuurman.jisl.program.builtin.arithmetic.binary.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.comparison.*;
 import de.rbuurman.jisl.program.builtin.arithmetic.unary.*;
 import de.rbuurman.jisl.program.builtin.is.*;
 import de.rbuurman.jisl.program.builtin.list.*;
-import de.rbuurman.jisl.program.builtin.logic.And;
-import de.rbuurman.jisl.program.builtin.logic.If;
-import de.rbuurman.jisl.program.builtin.logic.Or;
-import de.rbuurman.jisl.program.builtin.logic.Not;
+import de.rbuurman.jisl.program.builtin.logic.*;
 import de.rbuurman.jisl.program.value.Value;
 import de.rbuurman.jisl.program.value.list.EmptyList;
 import de.rbuurman.jisl.utils.SourcePosition;
@@ -62,6 +57,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 		CEILING,
 		FLOOR,
 		MODULO,
+		REMAINDER,
 		ARITHMETIC_EQUALITY,
 		LESS,
 		LESSEQ,
@@ -126,6 +122,7 @@ public final class SimpleToken extends Token<SimpleToken.SimpleTokenType> {
 			case CEILING -> Optional.of(new Ceiling(this.getSourcePosition()));
 			case FLOOR -> Optional.of(new Floor(this.getSourcePosition()));
 			case MODULO -> Optional.of(new Modulo(this.getSourcePosition()));
+			case REMAINDER -> Optional.of(new Remainder(this.getSourcePosition()));			
 			case ARITHMETIC_EQUALITY -> Optional.of(new ArithmeticEquality(this.getSourcePosition()));
 			case LESS -> Optional.of(new Less(this.getSourcePosition()));
 			case LESSEQ -> Optional.of(new LessEq(this.getSourcePosition()));
