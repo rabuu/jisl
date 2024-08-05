@@ -6,6 +6,11 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
 import de.rbuurman.jisl.lexing.LexingException;
 import de.rbuurman.jisl.parsing.ProgramElementParser;
 import de.rbuurman.jisl.parsing.ParsingException;
@@ -20,7 +25,12 @@ import de.rbuurman.jisl.program.evaluation.EvaluationException;
  */
 public final class REPL {
     private final Environment environment = new Environment();
-    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private final LineReader reader;
+
+    public REPL() throws IOException {
+        final Terminal term = TerminalBuilder.terminal();
+        this.reader = LineReaderBuilder.builder().terminal(term).build();
+    }
 
     /**
      * Run the REPL:
@@ -30,30 +40,30 @@ public final class REPL {
     public void run() {
         for (;;) {
             try {
-                final String input = expectInput(this.reader);
+                final String input = reader.readLine("> ");
 
                 // quit the REPL if there is no input (e.g. CTRL-D)
                 if (input == null)
                     break;
 
                 // quit the REPL by inputting "quit" or "exit"
-                if (input.equals("quit") || input.equals("exit"))
+                if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("exit"))
                     break;
 
                 // reset the REPL by inputting "reset"
-                if (input.equals("reset")) {
+                if (input.equalsIgnoreCase("reset")) {
                     this.environment.reset();
                     continue;
                 }
 
                 // shorthand for (require "stdlib.rkt")
-                if (input.equals("std")) {
+                if (input.equalsIgnoreCase("std")) {
                     new LibraryRequirement(Paths.get("./stdlib.rkt"), null).process(environment, Paths.get("."));
                     continue;
                 }
 
                 // clear the console by inputting "clear"
-                if (input.equals("clear")) {
+                if (input.equalsIgnoreCase("clear")) {
                     System.out.println("\033[H\033[2J");
                     System.out.flush();
                     continue;
@@ -75,10 +85,5 @@ public final class REPL {
                 System.err.println("Evaluating failed: " + e.getMessage());
             }
         }
-    }
-
-    private static String expectInput(BufferedReader reader) throws IOException {
-        System.out.print("> ");
-        return reader.readLine();
     }
 }
