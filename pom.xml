@@ -7,7 +7,7 @@
   <groupId>de.rbuurman.jisl</groupId>
   <artifactId>jisl</artifactId>
   <version>0.1.0</version>
-
+  <packaging>jar</packaging>
   <name>jisl</name>
   <url>http://github.com/rabuu/jisl</url>
 
@@ -86,6 +86,19 @@
               </archive>
             </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.6.0</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
