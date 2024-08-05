@@ -13,10 +13,10 @@ There are four execution modes:
 
 If you got a JAR executable you can use the following commands:
 ```sh
-java -jar jisl-0.0.1.jar FILENAME # to run
-java -jar jisl-0.0.1.jar inspect-lexing FILENAME
-java -jar jisl-0.0.1.jar inspect-parsing FILENAME
-java -jar jisl-0.0.1.jar repl
+java -jar jisl.jar FILENAME # to run
+java -jar jisl.jar inspect-lexing FILENAME
+java -jar jisl.jar inspect-parsing FILENAME
+java -jar jisl.jar repl
 ```
 
 ## Build instructions (developer)

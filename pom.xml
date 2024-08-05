@@ -6,10 +6,10 @@
 
   <groupId>de.rbuurman.jisl</groupId>
   <artifactId>jisl</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0</version>
 
   <name>jisl</name>
-  <url>http://dev.rbuurman.de/jisl</url>
+  <url>http://github.com/rabuu/jisl</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
