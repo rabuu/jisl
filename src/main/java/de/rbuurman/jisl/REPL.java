@@ -6,10 +6,13 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import org.jline.utils.InfoCmp.Capability;
 
 import de.rbuurman.jisl.lexing.LexingException;
 import de.rbuurman.jisl.parsing.ProgramElementParser;
@@ -28,8 +31,10 @@ public final class REPL {
     private final LineReader reader;
 
     public REPL() throws IOException {
-        final Terminal term = TerminalBuilder.terminal();
-        this.reader = LineReaderBuilder.builder().terminal(term).build();
+        final Terminal terminal = TerminalBuilder.terminal();
+        final Completer completer = new StringsCompleter("quit", "exit", "reset", "std", "clear");
+
+        this.reader = LineReaderBuilder.builder().terminal(terminal).completer(completer).build();
     }
 
     /**
@@ -64,8 +69,9 @@ public final class REPL {
 
                 // clear the console by inputting "clear"
                 if (input.equalsIgnoreCase("clear")) {
-                    System.out.println("\033[H\033[2J");
-                    System.out.flush();
+                    final Terminal term = this.reader.getTerminal();
+                    term.puts(Capability.clear_screen);
+                    term.flush();
                     continue;
                 }
 
