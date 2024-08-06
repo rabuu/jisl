@@ -44,10 +44,11 @@ mvn clean package # to generate a JAR executable
 - [x] Write a comments & tests (always room for improvement)
 - [x] Important builtins + [stdlib](./stdlib.rkt)
 - [x] Samples
+- [ ] Correct error messages
 
 ### Planned for 0.1.0
-- Better REPL (using [JLine](https://github.com/jline/jline3))
-- `let`, `let*` and `letrec`
+- [x] Better REPL (using [JLine](https://github.com/jline/jline3))
+- [ ] `let`, `let*` and `letrec`
 
 ## Not Todo
 - images (never)
