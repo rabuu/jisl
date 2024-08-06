@@ -63,7 +63,7 @@ public final class REPL {
 
                 // shorthand for (require "stdlib.rkt")
                 if (input.equalsIgnoreCase("std")) {
-                    new LibraryRequirement(Paths.get("./stdlib.rkt"), null).process(environment, Paths.get("."));
+                    new LibraryRequirement(Paths.get("stdlib.rkt"), null).process(environment, Paths.get("."));
                     continue;
                 }
 
