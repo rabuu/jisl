@@ -1,10 +1,19 @@
 package de.rbuurman.jisl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Optional;
+
+import org.jline.reader.Completer;
+import org.jline.reader.EndOfFileException;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.UserInterruptException;
+import org.jline.reader.impl.completer.StringsCompleter;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+import org.jline.utils.InfoCmp.Capability;
+import org.jline.widget.AutopairWidgets;
 
 import de.rbuurman.jisl.lexing.LexingException;
 import de.rbuurman.jisl.parsing.ProgramElementParser;
@@ -20,7 +29,20 @@ import de.rbuurman.jisl.program.evaluation.EvaluationException;
  */
 public final class REPL {
     private final Environment environment = new Environment();
-    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private final LineReader reader;
+
+    public REPL() throws IOException {
+        final Terminal terminal = TerminalBuilder.terminal();
+        final Completer completer = new StringsCompleter("quit", "exit", "reset", "std", "clear");
+
+        this.reader = LineReaderBuilder.builder()
+                .terminal(terminal)
+                .completer(completer)
+                .build();
+
+        AutopairWidgets autopair = new AutopairWidgets(this.reader);
+        autopair.enable();
+    }
 
     /**
      * Run the REPL:
@@ -30,32 +52,33 @@ public final class REPL {
     public void run() {
         for (;;) {
             try {
-                final String input = expectInput(this.reader);
+                final String input = reader.readLine("> ");
 
                 // quit the REPL if there is no input (e.g. CTRL-D)
                 if (input == null)
                     break;
 
                 // quit the REPL by inputting "quit" or "exit"
-                if (input.equals("quit") || input.equals("exit"))
+                if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("exit"))
                     break;
 
                 // reset the REPL by inputting "reset"
-                if (input.equals("reset")) {
+                if (input.equalsIgnoreCase("reset")) {
                     this.environment.reset();
                     continue;
                 }
 
                 // shorthand for (require "stdlib.rkt")
-                if (input.equals("std")) {
-                    new LibraryRequirement(Paths.get("./stdlib.rkt"), null).process(environment, Paths.get("."));
+                if (input.equalsIgnoreCase("std")) {
+                    new LibraryRequirement(Paths.get("stdlib.rkt"), null).process(environment, Paths.get("."));
                     continue;
                 }
 
                 // clear the console by inputting "clear"
-                if (input.equals("clear")) {
-                    System.out.println("\033[H\033[2J");
-                    System.out.flush();
+                if (input.equalsIgnoreCase("clear")) {
+                    final Terminal term = this.reader.getTerminal();
+                    term.puts(Capability.clear_screen);
+                    term.flush();
                     continue;
                 }
 
@@ -65,6 +88,7 @@ public final class REPL {
 
                 // if element evaluated, print out value
                 value.ifPresent(System.out::println);
+
             } catch (IOException e) {
                 System.err.println("IOException: " + e.getMessage());
             } catch (LexingException e) {
@@ -73,12 +97,11 @@ public final class REPL {
                 System.err.println("Parsing failed: " + e.getMessage());
             } catch (EvaluationException e) {
                 System.err.println("Evaluating failed: " + e.getMessage());
+            } catch (UserInterruptException e) {
+                break;
+            } catch (EndOfFileException e) {
+                break;
             }
         }
-    }
-
-    private static String expectInput(BufferedReader reader) throws IOException {
-        System.out.print("> ");
-        return reader.readLine();
     }
 }
