@@ -6,11 +6,9 @@ import java.util.Optional;
 
 import org.jline.reader.Completer;
 import org.jline.reader.EndOfFileException;
-import org.jline.reader.Highlighter;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
-import org.jline.reader.impl.DefaultHighlighter;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -36,12 +34,10 @@ public final class REPL {
     public REPL() throws IOException {
         final Terminal terminal = TerminalBuilder.terminal();
         final Completer completer = new StringsCompleter("quit", "exit", "reset", "std", "clear");
-        final Highlighter highlighter = new DefaultHighlighter();
 
         this.reader = LineReaderBuilder.builder()
                 .terminal(terminal)
                 .completer(completer)
-                .highlighter(highlighter)
                 .build();
 
         AutopairWidgets autopair = new AutopairWidgets(this.reader);
